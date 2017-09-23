@@ -94,17 +94,17 @@
 
 
 
-<meta name="description" content="#代码 ##head.s    .equ        sdram_base,        0x30000000  @仅仅是宏定义而已    .equ        mem_ctrl_reg,    0x48000000     @;//////////////////////////////////////////////////////////////////////////////////">
+<meta name="description" content="代码head.s.equ        sdram_base,        0x30000000  @仅仅是宏定义而已 .equ        mem_ctrl_reg,    0x48000000      @;////////////////////////////////////////////////////////////////////////////////////////////">
 <meta property="og:type" content="article">
 <meta property="og:title" content="s3c2440嵌入式之SDRAM">
-<meta property="og:url" content="http://yoursite.com/2017/09/22/s3c2440嵌入式之SDRAM/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/09/22/S3C2440嵌入式之SDRAM/index.html">
 <meta property="og:site_name" content="YanLin">
-<meta property="og:description" content="#代码 ##head.s    .equ        sdram_base,        0x30000000  @仅仅是宏定义而已    .equ        mem_ctrl_reg,    0x48000000     @;//////////////////////////////////////////////////////////////////////////////////">
+<meta property="og:description" content="代码head.s.equ        sdram_base,        0x30000000  @仅仅是宏定义而已 .equ        mem_ctrl_reg,    0x48000000      @;////////////////////////////////////////////////////////////////////////////////////////////">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-22T14:05:56.781Z">
+<meta property="og:updated_time" content="2017-09-23T03:46:27.010Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="s3c2440嵌入式之SDRAM">
-<meta name="twitter:description" content="#代码 ##head.s    .equ        sdram_base,        0x30000000  @仅仅是宏定义而已    .equ        mem_ctrl_reg,    0x48000000     @;//////////////////////////////////////////////////////////////////////////////////">
+<meta name="twitter:description" content="代码head.s.equ        sdram_base,        0x30000000  @仅仅是宏定义而已 .equ        mem_ctrl_reg,    0x48000000      @;////////////////////////////////////////////////////////////////////////////////////////////">
 
 
 
@@ -133,7 +133,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/22/s3c2440嵌入式之SDRAM/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/22/S3C2440嵌入式之SDRAM/"/>
 
 
 
@@ -252,7 +252,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/22/s3c2440嵌入式之SDRAM/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/22/S3C2440嵌入式之SDRAM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuyanlin">
@@ -319,9 +319,10 @@
       
 
       
-        <p>#代码</p>
-<p>##head.s<br>    .equ        sdram_base,        0x30000000  @仅仅是宏定义而已<br>    .equ        mem_ctrl_reg,    0x48000000    </p>
-<pre><code>@;////////////////////////////////////////////////////////////////////////////////////////////    
+        <h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><h2 id="head-s"><a href="#head-s" class="headerlink" title="head.s"></a>head.s</h2><pre><code>.equ        sdram_base,        0x30000000  @仅仅是宏定义而已
+.equ        mem_ctrl_reg,    0x48000000    
+
+@;////////////////////////////////////////////////////////////////////////////////////////////    
 .text
 .global _start
 _start:
@@ -373,7 +374,7 @@ loop2:
     mov pc,lr
 
 @;////////////////////////////////////////////////////////////////////////////////////////////    
-    @存储控制器的13个寄存器的值
+    @存储控制器的13个寄存器的值，这里顺便把其他外部设备如100M网卡DM9000等也一并配置了
 .align 4   @好像少了这个是不行的
 memory_control_register_value:
     .long    0x22011110    @BWSCON
@@ -389,42 +390,24 @@ memory_control_register_value:
     .long    0x000000B1    @BANKSIZE
     .long    0x00000030    @MRAR6
     .long    0x00000030    @MRAR7
-</code></pre><p>##leds.c</p>
-<pre><code>#define GPFCON    *(volatile unsigned int*)0x56000050
-#define GPFDAT    *(volatile unsigned int*)0x56000054
-
-#define GPF4CON_mask    0x0300
-#define GPF5CON_mask    0x0C00
-#define GPF6CON_mask    0x3000
-
-#define GPF4_out    0x0100
-#define GPF5_out    0x0400
-#define GPF6_out    0x1000
-
-void delay(unsigned int t)
-{
-    while(t--);
-}
-
-int main(void)
-{
-    short i = 4;
-    GPFCON &amp;= (GPF4CON_mask | GPF5CON_mask | GPF6CON_mask);
-    GPFCON |= (GPF4_out | GPF5_out | GPF6_out);
-    GPFDAT &amp;= (7&lt;&lt;4);
-    while(1)
-    {
-        GPFDAT ^= (1&lt;&lt;i++);
-        delay(10000);
-        if(i == 7)
-        {
-            i = 4;
-        }
-    }
-    return 0;
-}
-</code></pre><p>#总结</p>
-<p>##1、</p>
+</code></pre><hr>
+<h1 id="分析：这个汇编源文件主要是设置使用外部SDRAM运行程序。主要经过下面几步"><a href="#分析：这个汇编源文件主要是设置使用外部SDRAM运行程序。主要经过下面几步" class="headerlink" title="分析：这个汇编源文件主要是设置使用外部SDRAM运行程序。主要经过下面几步"></a>分析：这个汇编源文件主要是设置使用外部SDRAM运行程序。主要经过下面几步</h1><h2 id="1、关闭看门狗"><a href="#1、关闭看门狗" class="headerlink" title="1、关闭看门狗"></a>1、关闭看门狗</h2><h2 id="2、设置位于0x48000000地址的13个存储控制器的值，使之支持SDRAM"><a href="#2、设置位于0x48000000地址的13个存储控制器的值，使之支持SDRAM" class="headerlink" title="2、设置位于0x48000000地址的13个存储控制器的值，使之支持SDRAM"></a>2、设置位于0x48000000地址的13个存储控制器的值，使之支持SDRAM</h2><p>由于这几个寄存器都是32位的，所以都是4个字节对齐了，严谨点要强制使用4个字节对齐：</p>
+<pre><code>.align 4
+</code></pre><p><strong>尤其注意：</strong>当获取13个控制寄存器的绝对地址时，直接使用ldr获取之前的宏定义即可，但是获取代码最后定义的13个寄存器的值的地址时，不能用ldr获取绝对地址。当时在链接时，我们指定代码存在的地址是外部SDRAM，即0x30000000开始的，但是目前程序还是在内部SRAM中运行，所以当前代码都处在“错误”的绝对地址，但是其相对偏移地址是正确的（自行脑补），所以此处一定要使用addl指令跳转至相对偏移地址。我之前就是使用ldr跳转的，当查看反汇编代码时，发现取不到寄存器的值，pc指针居然跳到了最后一个，即第13个寄存器的值的下一个位置，具体是怎么回事我也没有仔细研究了。</p>
+<pre><code>ldr r0,=mem_ctrl_reg
+adrl r1,memory_control_register_value
+</code></pre><h2 id="3、将SteppingStone中的4KB代码复制到外部SDRAM"><a href="#3、将SteppingStone中的4KB代码复制到外部SDRAM" class="headerlink" title="3、将SteppingStone中的4KB代码复制到外部SDRAM"></a>3、将SteppingStone中的4KB代码复制到外部SDRAM</h2><p>在一开始开发板是不带操作系统的并且是从Nand Flash启动，在CPU一上电启动，硬件会自动将Nand Flash中前4KB的代码复制到CPU中一个叫做SteppingStone中去，其本质就是内部SRAM中的全部4KB的空间，然后程序从内部SRAM中执行。仅仅使用一个简单的循环即可。</p>
+<p><strong>cmp和bne：</strong>在下面的语句中，先比较r1和r3的值是否相等，然后操作相应标志位，bne检查相应标志位，判断从而实现跳转或者退出循环</p>
+<p><em>cmp的详解可以参考</em><br><a href="http://blog.csdn.net/ftx2540993425/article/details/29926075" target="_blank" rel="external">http://blog.csdn.net/ftx2540993425/article/details/29926075</a></p>
+<p><em>bne的详解可以参考</em><br><a href="http://www.cnblogs.com/HangZhe/p/6916502.html" target="_blank" rel="external">http://www.cnblogs.com/HangZhe/p/6916502.html</a></p>
+<pre><code>cmp r1,r3
+bne loop2
+</code></pre><h2 id="4、跳转至外部SDRAM中继续执行代码"><a href="#4、跳转至外部SDRAM中继续执行代码" class="headerlink" title="4、跳转至外部SDRAM中继续执行代码"></a>4、跳转至外部SDRAM中继续执行代码</h2><p>在程序运行到下面这步之前，其实际上还是在内部SRAM中执行代码，由于之前已经将外部SDRAM初始化了，所以现在需要让程序回到其应该运行的地方继续执行代码，即让pc指向SDRAM的某个地址。</p>
+<p><strong>注意：</strong>在第2条中说到过程序代码排列和链接其实地址有关，所有代码的地址都是（0x30000000+相对偏移地址），而现在pc仍在内部SRAM中，所以下一步必须跳转到绝对地址（正确的地址）运行程序。</p>
+<pre><code>ldr pc,=sdram_on
+</code></pre><p><strong>sdram_on标号的作用：</strong>我曾经使用“ldr pc,=0x30000000”直接跳到外部SDRAM的其实地址，发现程序死机了，因为它一执行到“ldr pc,=0x30000000”就会进行跳转到开头又重新运行，所以并不是随便跳的，一定要跳到在<strong>在外部SDRAM中和当前内部SRAM中即将执行一致的代码</strong><br>处继续执行，即可转移到外部SDRAM中执行，不然还是在内部SRAM中执行，所以上面的跳转<strong>非常重要</strong>。</p>
+<h2 id="5、设置栈顶指针"><a href="#5、设置栈顶指针" class="headerlink" title="5、设置栈顶指针"></a>5、设置栈顶指针</h2><p>栈顶指针设置的必要性就不阐述了，不然局部变量和函数跳转的寄存器的值放哪~</p>
+<h2 id="6、跳至main函数"><a href="#6、跳至main函数" class="headerlink" title="6、跳至main函数"></a>6、跳至main函数</h2><p>一般是跳转到C源代码中的main函数了，到此为止，使用外部SDRAM的配置已全部完成，可以在main函数中尽情地编写代码了。</p>
 
       
     </div>
@@ -509,8 +492,17 @@ int main(void)
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -554,6 +546,22 @@ int main(void)
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#代码"><span class="nav-number">1.</span> <span class="nav-text">代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#head-s"><span class="nav-number">1.1.</span> <span class="nav-text">head.s</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分析：这个汇编源文件主要是设置使用外部SDRAM运行程序。主要经过下面几步"><span class="nav-number">2.</span> <span class="nav-text">分析：这个汇编源文件主要是设置使用外部SDRAM运行程序。主要经过下面几步</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、关闭看门狗"><span class="nav-number">2.1.</span> <span class="nav-text">1、关闭看门狗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、设置位于0x48000000地址的13个存储控制器的值，使之支持SDRAM"><span class="nav-number">2.2.</span> <span class="nav-text">2、设置位于0x48000000地址的13个存储控制器的值，使之支持SDRAM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、将SteppingStone中的4KB代码复制到外部SDRAM"><span class="nav-number">2.3.</span> <span class="nav-text">3、将SteppingStone中的4KB代码复制到外部SDRAM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、跳转至外部SDRAM中继续执行代码"><span class="nav-number">2.4.</span> <span class="nav-text">4、跳转至外部SDRAM中继续执行代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、设置栈顶指针"><span class="nav-number">2.5.</span> <span class="nav-text">5、设置栈顶指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、跳至main函数"><span class="nav-number">2.6.</span> <span class="nav-text">6、跳至main函数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
