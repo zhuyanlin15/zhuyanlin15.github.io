@@ -94,16 +94,17 @@
 
 
 
-<meta name="description" content="zhuyanlin的个人博客">
+<meta name="description" content="代码head.s.equ        sdram_base,        0x30000000  @仅仅是宏定义而已 .equ        mem_ctrl_reg,    0x48000000      @;////////////////////////////////////////////////////////////////////////////////////////////">
 <meta property="og:type" content="website">
-<meta property="og:title" content="YanLin">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:title" content="s3c2440嵌入式之SDRAM">
+<meta property="og:url" content="http://yoursite.com/bk_posts/S3C2440嵌入式之SDRAM.html">
 <meta property="og:site_name" content="YanLin">
-<meta property="og:description" content="zhuyanlin的个人博客">
+<meta property="og:description" content="代码head.s.equ        sdram_base,        0x30000000  @仅仅是宏定义而已 .equ        mem_ctrl_reg,    0x48000000      @;////////////////////////////////////////////////////////////////////////////////////////////">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-23T03:46:27.010Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="YanLin">
-<meta name="twitter:description" content="zhuyanlin的个人博客">
+<meta name="twitter:title" content="s3c2440嵌入式之SDRAM">
+<meta name="twitter:description" content="代码head.s.equ        sdram_base,        0x30000000  @仅仅是宏定义而已 .equ        mem_ctrl_reg,    0x48000000      @;////////////////////////////////////////////////////////////////////////////////////////////">
 
 
 
@@ -132,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/bk_posts/S3C2440嵌入式之SDRAM.html"/>
 
 
 
 
 
-  <title>YanLin</title>
+  <title>s3c2440嵌入式之SDRAM | YanLin</title>
   
 
 
@@ -163,9 +164,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -238,93 +237,27 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/22/S3C2440嵌入式之SDRAM/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuyanlin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YanLin">
-    </span>
-
     
+    
+    <div class="post-block page">
       <header class="post-header">
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/22/S3C2440嵌入式之SDRAM/" itemprop="url">s3c2440嵌入式之SDRAM</a></h1>
-        
+	<h1 class="post-title" itemprop="name headline">s3c2440嵌入式之SDRAM</h1>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-22T22:01:53+08:00">
-                2017-09-22
-              </time>
-            
 
-            
 
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+</header>
 
       
       
-
       
+      <div class="post-body">
         
-          
-            <h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><h2 id="head-s"><a href="#head-s" class="headerlink" title="head.s"></a>head.s</h2><pre><code>.equ        sdram_base,        0x30000000  @仅仅是宏定义而已
+        
+          <h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><h2 id="head-s"><a href="#head-s" class="headerlink" title="head.s"></a>head.s</h2><pre><code>.equ        sdram_base,        0x30000000  @仅仅是宏定义而已
 .equ        mem_ctrl_reg,    0x48000000    
 
 @;////////////////////////////////////////////////////////////////////////////////////////////    
@@ -414,163 +347,16 @@ bne loop2
 <h2 id="5、设置栈顶指针"><a href="#5、设置栈顶指针" class="headerlink" title="5、设置栈顶指针"></a>5、设置栈顶指针</h2><p>栈顶指针设置的必要性就不阐述了，不然局部变量和函数跳转的寄存器的值放哪~</p>
 <h2 id="6、跳至main函数"><a href="#6、跳至main函数" class="headerlink" title="6、跳至main函数"></a>6、跳至main函数</h2><p>一般是跳转到C源代码中的main函数了，到此为止，使用外部SDRAM的配置已全部完成，可以在main函数中尽情地编写代码了。</p>
 
-          
         
+      </div>
+      
+      
       
     </div>
     
     
     
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/21/zhuyanlin的第一个博客/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuyanlin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YanLin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/21/zhuyanlin的第一个博客/" itemprop="url">zhuyanlin的第一个博文</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-21T11:43:08+08:00">
-                2017-09-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这是zhuyanlin的第一条博文，以后我就可以将我的个人经历、学习方法和经验等等记录在博客上！</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -578,6 +364,10 @@ bne loop2
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -598,8 +388,17 @@ bne loop2
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -643,6 +442,22 @@ bne loop2
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#代码"><span class="nav-number">1.</span> <span class="nav-text">代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#head-s"><span class="nav-number">1.1.</span> <span class="nav-text">head.s</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分析：这个汇编源文件主要是设置使用外部SDRAM运行程序。主要经过下面几步"><span class="nav-number">2.</span> <span class="nav-text">分析：这个汇编源文件主要是设置使用外部SDRAM运行程序。主要经过下面几步</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、关闭看门狗"><span class="nav-number">2.1.</span> <span class="nav-text">1、关闭看门狗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、设置位于0x48000000地址的13个存储控制器的值，使之支持SDRAM"><span class="nav-number">2.2.</span> <span class="nav-text">2、设置位于0x48000000地址的13个存储控制器的值，使之支持SDRAM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、将SteppingStone中的4KB代码复制到外部SDRAM"><span class="nav-number">2.3.</span> <span class="nav-text">3、将SteppingStone中的4KB代码复制到外部SDRAM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、跳转至外部SDRAM中继续执行代码"><span class="nav-number">2.4.</span> <span class="nav-text">4、跳转至外部SDRAM中继续执行代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、设置栈顶指针"><span class="nav-number">2.5.</span> <span class="nav-text">5、设置栈顶指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、跳至main函数"><span class="nav-number">2.6.</span> <span class="nav-text">6、跳至main函数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
