@@ -211,6 +211,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
@@ -239,6 +259,172 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/24/Android应用开发之点击事件的四种写法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuyanlin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanLin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/24/Android应用开发之点击事件的四种写法/" itemprop="url">Android应用开发之点击事件的四种写法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-24T10:42:46+08:00">
+                2017-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android应用开发/" itemprop="url" rel="index">
+                    <span itemprop="name">Android应用开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Android应用开发之点击事件的四种写法"><a href="#Android应用开发之点击事件的四种写法" class="headerlink" title="Android应用开发之点击事件的四种写法"></a>Android应用开发之点击事件的四种写法</h1><h2 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h2><h3 id="●先在布局里面增加一个按钮控件"><a href="#●先在布局里面增加一个按钮控件" class="headerlink" title="●先在布局里面增加一个按钮控件"></a>●先在布局里面增加一个按钮控件</h3><pre><code>&lt;Button
+    android:id=&quot;@+id/btn1&quot;
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_centerHorizontal=&quot;true&quot;
+    android:layout_centerVertical=&quot;true&quot;
+    android:text=&quot;点击&quot; /&gt;
+</code></pre><p><strong>注意:</strong>上面按钮控件的id中，@+id表示创建一个控件，@id表示引用一个控件</p>
+<h3 id="●然后在MainActive-java中的onCreate方法中操作"><a href="#●然后在MainActive-java中的onCreate方法中操作" class="headerlink" title="●然后在MainActive.java中的onCreate方法中操作"></a>●然后在MainActive.java中的onCreate方法中操作</h3><h4 id="1、获取控件"><a href="#1、获取控件" class="headerlink" title="1、获取控件"></a>1、获取控件</h4><pre><code>Button botton = (Button) findViewById(R.id.btn1);
+</code></pre><p>findViewByid()返回的是一个控件，但是我希望使用按钮控件来定义，本来按钮这个类就是控件的子类，这里注意要强制转换一下，传入参数是这个控件的id，值得一提的是很多控件的id都在R这个类的id类下。</p>
+<h4 id="2、设置控件的点击事件"><a href="#2、设置控件的点击事件" class="headerlink" title="2、设置控件的点击事件"></a>2、设置控件的点击事件</h4><pre><code>botton.setOnClickListener(new OnClickListener(){
+
+        @Override
+        public void onClick(View arg0) {
+            //点击事件的内容
+        }
+
+    });
+</code></pre><p>直接调用Button的方法即可，其参数是一个接口类型，在本例子中选择的是new一个局部内部类，名称就是这个接口的名称，然后覆盖掉里面的方法</p>
+<h4 id="3、设置点击事件的内容"><a href="#3、设置点击事件的内容" class="headerlink" title="3、设置点击事件的内容"></a>3、设置点击事件的内容</h4><pre><code>public void onClick(View arg0) {
+
+    System.out.println(&quot;zhuyanlin&quot;);
+
+}
+</code></pre><p>比如上面的System.out.println()语句就是一个内容，在这里的操作将会在点击事件触发时生效，即按下按钮的时候。</p>
+<h2 id="第二种方法"><a href="#第二种方法" class="headerlink" title="第二种方法"></a>第二种方法</h2><h3 id="●增加按钮控件方式和第一种方法一致"><a href="#●增加按钮控件方式和第一种方法一致" class="headerlink" title="●增加按钮控件方式和第一种方法一致"></a>●增加按钮控件方式和第一种方法一致</h3><h3 id="●除了设置控件点击事件，其他与第一种方法一致"><a href="#●除了设置控件点击事件，其他与第一种方法一致" class="headerlink" title="●除了设置控件点击事件，其他与第一种方法一致"></a>●除了设置控件点击事件，其他与第一种方法一致</h3><h4 id="2、设置控件的点击事件-1"><a href="#2、设置控件的点击事件-1" class="headerlink" title="2、设置控件的点击事件"></a>2、设置控件的点击事件</h4>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -294,6 +480,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/嵌入式linux开发/" itemprop="url" rel="index">
+                    <span itemprop="name">嵌入式linux开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -614,14 +822,32 @@ bne loop2
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
 
           
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
 
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
           
 
         </nav>

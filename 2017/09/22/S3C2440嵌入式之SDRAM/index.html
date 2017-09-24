@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="S3C2440,外部SDRAM," />
 
 
 
@@ -95,13 +95,14 @@
 
 
 <meta name="description" content="代码head.s.equ        sdram_base,        0x30000000  @仅仅是宏定义而已 .equ        mem_ctrl_reg,    0x48000000      @;////////////////////////////////////////////////////////////////////////////////////////////">
+<meta name="keywords" content="S3C2440,外部SDRAM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="s3c2440嵌入式之SDRAM">
 <meta property="og:url" content="http://yoursite.com/2017/09/22/S3C2440嵌入式之SDRAM/index.html">
 <meta property="og:site_name" content="YanLin">
 <meta property="og:description" content="代码head.s.equ        sdram_base,        0x30000000  @仅仅是宏定义而已 .equ        mem_ctrl_reg,    0x48000000      @;////////////////////////////////////////////////////////////////////////////////////////////">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-23T03:46:27.010Z">
+<meta property="og:updated_time" content="2017-09-24T03:33:06.681Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="s3c2440嵌入式之SDRAM">
 <meta name="twitter:description" content="代码head.s.equ        sdram_base,        0x30000000  @仅仅是宏定义而已 .equ        mem_ctrl_reg,    0x48000000      @;////////////////////////////////////////////////////////////////////////////////////////////">
@@ -210,6 +211,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
@@ -291,6 +312,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/嵌入式linux开发/" itemprop="url" rel="index">
+                    <span itemprop="name">嵌入式linux开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -423,6 +466,14 @@ bne loop2
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/S3C2440/" rel="tag"># S3C2440</a>
+          
+            <a href="/tags/外部SDRAM/" rel="tag"># 外部SDRAM</a>
+          
+        </div>
+      
 
       
       
@@ -441,6 +492,10 @@ bne loop2
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/24/Android应用开发之点击事件的四种写法/" rel="prev" title="Android应用开发之点击事件的四种写法">
+                Android应用开发之点击事件的四种写法 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -517,14 +572,32 @@ bne loop2
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
 
           
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
 
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
           
 
         </nav>
