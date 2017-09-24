@@ -391,7 +391,42 @@
 
 }
 </code></pre><p>比如上面的System.out.println()语句就是一个内容，在这里的操作将会在点击事件触发时生效，即按下按钮的时候。</p>
-<h2 id="第二种方法"><a href="#第二种方法" class="headerlink" title="第二种方法"></a>第二种方法</h2><h3 id="●增加按钮控件方式和第一种方法一致"><a href="#●增加按钮控件方式和第一种方法一致" class="headerlink" title="●增加按钮控件方式和第一种方法一致"></a>●增加按钮控件方式和第一种方法一致</h3><h3 id="●除了设置控件点击事件，其他与第一种方法一致"><a href="#●除了设置控件点击事件，其他与第一种方法一致" class="headerlink" title="●除了设置控件点击事件，其他与第一种方法一致"></a>●除了设置控件点击事件，其他与第一种方法一致</h3><h4 id="2、设置控件的点击事件-1"><a href="#2、设置控件的点击事件-1" class="headerlink" title="2、设置控件的点击事件"></a>2、设置控件的点击事件</h4>
+<h2 id="第二种方法"><a href="#第二种方法" class="headerlink" title="第二种方法"></a>第二种方法</h2><h3 id="●增加按钮控件方式和第一种方法一致"><a href="#●增加按钮控件方式和第一种方法一致" class="headerlink" title="●增加按钮控件方式和第一种方法一致"></a>●增加按钮控件方式和第一种方法一致</h3><h3 id="●除了设置控件点击事件，其他与第一种方法一致"><a href="#●除了设置控件点击事件，其他与第一种方法一致" class="headerlink" title="●除了设置控件点击事件，其他与第一种方法一致"></a>●除了设置控件点击事件，其他与第一种方法一致</h3><h4 id="2、设置控件的点击事件-1"><a href="#2、设置控件的点击事件-1" class="headerlink" title="2、设置控件的点击事件"></a>2、设置控件的点击事件</h4><pre><code>button.setOnClickListener(this);
+</code></pre><p>setOnClickListener()的参数让当前类去实现，即MainActivity类去实现</p>
+<pre><code>public class MainActivity extends Activity implements OnClickListener
+</code></pre><p>让MainActivity类去引用OnClickListener这个借口，并在当前类中覆盖方法</p>
+<pre><code>@Override
+public void onClick(View arg0) {
+
+    System.out.println(&quot;zhuyanlin&quot;);
+
+}
+</code></pre><p>在此方法中编写点击事件的执行代码即可。</p>
+<h2 id="第三种方法"><a href="#第三种方法" class="headerlink" title="第三种方法"></a>第三种方法</h2><h3 id="●增加按钮控件方式和第一种方法一致-1"><a href="#●增加按钮控件方式和第一种方法一致-1" class="headerlink" title="●增加按钮控件方式和第一种方法一致"></a>●增加按钮控件方式和第一种方法一致</h3><h3 id="●除了设置控件点击事件，其他与第一种方法一致-1"><a href="#●除了设置控件点击事件，其他与第一种方法一致-1" class="headerlink" title="●除了设置控件点击事件，其他与第一种方法一致"></a>●除了设置控件点击事件，其他与第一种方法一致</h3><h4 id="2、设置控件的点击事件-2"><a href="#2、设置控件的点击事件-2" class="headerlink" title="2、设置控件的点击事件"></a>2、设置控件的点击事件</h4><pre><code>button.setOnClickListener(new MyClickListener());
+</code></pre><p>使用一个定义的类去实现这个接口</p>
+<pre><code>class MyClickListener implements OnClickListener {
+
+    @Override
+    public void onClick(View arg0) {
+        System.out.println(&quot;zhuyanlin&quot;);
+
+    }
+}
+</code></pre><p>可在MainActivity类中自定义一个内部类，并且引入这个接口即可。</p>
+<h2 id="第四种方法"><a href="#第四种方法" class="headerlink" title="第四种方法"></a>第四种方法</h2><h3 id="●先在布局里面增加一个按钮控件-1"><a href="#●先在布局里面增加一个按钮控件-1" class="headerlink" title="●先在布局里面增加一个按钮控件"></a>●先在布局里面增加一个按钮控件</h3><pre><code>&lt;Button
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_centerHorizontal=&quot;true&quot;
+    android:layout_centerVertical=&quot;true&quot;
+    android:onClick=&quot;MyClick&quot;
+    android:text=&quot;点击&quot; /&gt;
+</code></pre><p>这里把按钮的id给删除掉了，然后添加了android:onClick=”MyClick”这行代码，其中MyClick是一个方法名。</p>
+<h3 id="●然后在MainActive-java中的onCreate方法中操作-1"><a href="#●然后在MainActive-java中的onCreate方法中操作-1" class="headerlink" title="●然后在MainActive.java中的onCreate方法中操作"></a>●然后在MainActive.java中的onCreate方法中操作</h3><pre><code>public void MyClick(View v) {
+    System.out.println(&quot;zhuyanlin&quot;);
+}
+</code></pre><p>在MainActivity类中定义一个形如上述的方法即可，一定要public void的形式，并且参数一定是一个View形式的参数，然后在其中编写点击事件的代码即可。</p>
+<p><strong>注意：</strong>虽然第四种方法比较简单，代码也比较少，但是不推荐使用这种方法，连id都没有，而且比较跳跃，不像第一种方法，第一种方法比较直白，所以推荐第一种方法。</p>
+
           
         
       
