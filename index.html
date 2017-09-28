@@ -404,29 +404,26 @@
       
         
           
-            <h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><h2 id="head-s"><a href="#head-s" class="headerlink" title="head.s"></a>head.s</h2><pre><code>    @*************************************************************************
-    @ File：head.S
-    @ 功能：设置SDRAM，将第二部分代码复制到SDRAM，设置页表，启动MMU，
-    @       然后跳到SDRAM继续执行
-    @*************************************************************************       
+            <h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><h2 id="head-s"><a href="#head-s" class="headerlink" title="head.s"></a>head.s</h2><pre><code>@*************************************************************************
+@ File：head.S
+@ 功能：设置SDRAM，将第二部分代码复制到SDRAM，设置页表，启动MMU，
+@       然后跳到SDRAM继续执行
+@*************************************************************************       
 
-    .text
-    .global _start
-    _start:
-        ldr sp, =4096                       @ 设置栈指针，以下都是C函数，调用前需要设好栈
-        bl  disable_watch_dog               @ 关闭WATCHDOG，否则CPU会不断重启
-        bl  memsetup                        @ 设置存储控制器以使用SDRAM
-        bl  copy_2th_to_sdram               @ 将第二部分代码复制到SDRAM
-        bl  create_page_table               @ 设置页表
-        bl  mmu_init                        @ 启动MMU
-        ldr sp, =0xB4000000                 @ 重设栈指针，指向SDRAM顶端(使用虚拟地址)
-        ldr pc, =0xB0004000                 @ 跳到SDRAM中继续执行第二部分代码
-    halt_loop:
-        b   halt_loop
-
-## init.c
-
-/*
+.text
+.global _start
+_start:
+    ldr sp, =4096                       @ 设置栈指针，以下都是C函数，调用前需要设好栈
+    bl  disable_watch_dog               @ 关闭WATCHDOG，否则CPU会不断重启
+    bl  memsetup                        @ 设置存储控制器以使用SDRAM
+    bl  copy_2th_to_sdram               @ 将第二部分代码复制到SDRAM
+    bl  create_page_table               @ 设置页表
+    bl  mmu_init                        @ 启动MMU
+    ldr sp, =0xB4000000                 @ 重设栈指针，指向SDRAM顶端(使用虚拟地址)
+    ldr pc, =0xB0004000                 @ 跳到SDRAM中继续执行第二部分代码
+halt_loop:
+    b   halt_loop
+</code></pre><h2 id="init-c"><a href="#init-c" class="headerlink" title="init.c"></a>init.c</h2><pre><code>/*
  * init.c: 进行一些初始化，在Steppingstone中运行
  * 它和head.S同属第一部分程序，此时MMU未开启，使用物理地址
  */ 
