@@ -123,10 +123,10 @@
     },
     algolia: {
       applicationID: '',
-      apiKey: '',
-      indexName: '',
+      apiKey: '154664cad9247e0a815b49e17e029b04',
+      indexName: 'zhuyanlin',
       hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到与 [${query}] 相关的内容","hits_stats":"${hits} 条相关记录，共 ${time} ms"}
     }
   };
 </script>
@@ -241,9 +241,47 @@
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
   
 </nav>
 
@@ -282,7 +320,7 @@
                 目前共计 3 个标签
             </div>
             <div class="tag-cloud-tags">
-              <a href="/tags/S3C2440/" style="font-size: 12px; color: #ccc">S3C2440</a> <a href="/tags/外部SDRAM/" style="font-size: 12px; color: #ccc">外部SDRAM</a> <a href="/tags/点击事件/" style="font-size: 12px; color: #ccc">点击事件</a>
+              <a href="/tags/S3C2440/" style="font-size: 30px; color: #111">S3C2440</a> <a href="/tags/外部SDRAM/" style="font-size: 30px; color: #111">外部SDRAM</a> <a href="/tags/点击事件/" style="font-size: 12px; color: #ccc">点击事件</a>
             </div>
           </div>
         
@@ -342,7 +380,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -544,6 +582,19 @@
   
 
 
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
 
 
 
