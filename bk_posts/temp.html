@@ -94,17 +94,17 @@
 
 
 
-<meta name="description" content="zhuyanlin的个人博客">
+<meta name="description" content="RadioGroupMainActivity.javapackage com.m520it.test;  import android.app.Activity; import android.os.Bundle; import android.widget.CheckBox; import android.widget.CompoundButton; import android.widget.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://yoursite.com/tags/index.html">
+<meta property="og:title" content="temp">
+<meta property="og:url" content="http://yoursite.com/bk_posts/temp.html">
 <meta property="og:site_name" content="YanLin">
-<meta property="og:description" content="zhuyanlin的个人博客">
+<meta property="og:description" content="RadioGroupMainActivity.javapackage com.m520it.test;  import android.app.Activity; import android.os.Bundle; import android.widget.CheckBox; import android.widget.CompoundButton; import android.widget.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-24T03:13:36.091Z">
+<meta property="og:updated_time" content="2017-10-10T07:50:56.176Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
-<meta name="twitter:description" content="zhuyanlin的个人博客">
+<meta name="twitter:title" content="temp">
+<meta name="twitter:description" content="RadioGroupMainActivity.javapackage com.m520it.test;  import android.app.Activity; import android.os.Bundle; import android.widget.CheckBox; import android.widget.CompoundButton; import android.widget.">
 
 
 
@@ -133,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/"/>
+  <link rel="canonical" href="http://yoursite.com/bk_posts/temp.html"/>
 
 
 
 
 
-  <title>tags | YanLin</title>
+  <title>temp | YanLin</title>
   
 
 
@@ -303,7 +303,7 @@
     <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">tags</h1>
+	<h1 class="post-title" itemprop="name headline">temp</h1>
 
 
 
@@ -315,14 +315,179 @@
       <div class="post-body">
         
         
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-                目前共计 4 个标签
-            </div>
-            <div class="tag-cloud-tags">
-              <a href="/tags/S3C2440/" style="font-size: 30px; color: #111">S3C2440</a> <a href="/tags/外部SDRAM/" style="font-size: 30px; color: #111">外部SDRAM</a> <a href="/tags/点击事件/" style="font-size: 12px; color: #ccc">点击事件</a> <a href="/tags/登录界面/" style="font-size: 12px; color: #ccc">登录界面</a>
-            </div>
-          </div>
+          <h1 id="RadioGroup"><a href="#RadioGroup" class="headerlink" title="RadioGroup"></a>RadioGroup</h1><h2 id="MainActivity-java"><a href="#MainActivity-java" class="headerlink" title="MainActivity.java"></a>MainActivity.java</h2><pre><code>package com.m520it.test;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+
+
+public class MainActivity extends Activity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        //1、获取RadioGroup的id号
+        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+
+        //2、设置RadioGroup的事件
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                //3、判断点击的RadioButton
+                if(checkedId == R.id.radioButton1) {
+                    Toast.makeText(getApplicationContext(), &quot;男&quot;, Toast.LENGTH_SHORT).show();
+                }
+                else if(checkedId == R.id.radioButton2) {
+                    Toast.makeText(getApplicationContext(), &quot;女&quot;, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        CheckBox appleCbx = (CheckBox) findViewById(R.id.apple_cbx);
+        //一定要加上CompoundButton，因为上面已经有了RadioButton的OnCheckChangeListener了
+        appleCbx.setOnCheckedChangeListener(new  CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Toast.makeText(getApplicationContext(), isChecked?&quot;选中苹果&quot;:&quot;未选中苹果&quot;, Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+        CheckBox bananaCbx = (CheckBox) findViewById(R.id.banana_cbx);
+        //一定要加上CompoundButton，因为上面已经有了RadioButton的OnCheckChangeListener了
+        bananaCbx.setOnCheckedChangeListener(new  CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Toast.makeText(getApplicationContext(), isChecked?&quot;选中香蕉&quot;:&quot;未选中香蕉&quot;, Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+        CheckBox orangeCbx = (CheckBox) findViewById(R.id.orange_cbx);
+        //一定要加上CompoundButton，因为上面已经有了RadioButton的OnCheckChangeListener了
+        orangeCbx.setOnCheckedChangeListener(new  CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Toast.makeText(getApplicationContext(), isChecked?&quot;选中橘子&quot;:&quot;未选中橘子&quot;, Toast.LENGTH_SHORT).show();
+            }
+
+        });
+    }
+}
+</code></pre><h2 id="activity-main-xml"><a href="#activity-main-xml" class="headerlink" title="activity_main.xml"></a>activity_main.xml</h2><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:orientation=&quot;vertical&quot; &gt;
+
+    &lt;ToggleButton 
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot; /&gt;
+
+
+    &lt;RadioGroup
+        android:id=&quot;@+id/radioGroup&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:orientation=&quot;horizontal&quot;&gt;
+
+        &lt;RadioButton
+            android:id=&quot;@+id/radioButton1&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:checked=&quot;true&quot;
+            android:text=&quot;@string/male&quot;/&gt;
+
+        &lt;RadioButton 
+            android:id=&quot;@+id/radioButton2&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:text=&quot;@string/female&quot;/&gt;
+
+    &lt;/RadioGroup&gt;
+
+
+    &lt;CheckBox
+        android:id=&quot;@+id/apple_cbx&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:text=&quot;@string/apple&quot; /&gt;
+
+    &lt;CheckBox
+        android:id=&quot;@+id/banana_cbx&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:text=&quot;@string/banana&quot; /&gt;
+
+    &lt;CheckBox
+        android:id=&quot;@+id/orange_cbx&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:text=&quot;@string/orange&quot; /&gt;
+
+&lt;/LinearLayout&gt;
+</code></pre><h1 id="WebView"><a href="#WebView" class="headerlink" title="WebView"></a>WebView</h1><h2 id="MainActivity"><a href="#MainActivity" class="headerlink" title="MainActivity"></a>MainActivity</h2><pre><code>package com.m520it.temp;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.os.Bundle;
+import android.webkit.JsResult;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
+
+public class MainActivity extends Activity {
+
+    @SuppressLint(&quot;SetJavaScriptEnabled&quot;) @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        //1、找到WebView控件
+        WebView webView = (WebView) findViewById(R.id.webView1);
+
+        //2、加载网页
+        webView.loadUrl(&quot;http://www.qq.com&quot;);
+
+        webView.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+                //3、在当前的WebView中显示
+                view.loadUrl(url);
+                //4、禁止网页跳转
+                return true;
+            }
+        });
+
+        //5、JS默认是关闭的，可以打开
+        webView.getSettings().setJavaScriptEnabled(true);
+
+        //6、JS的弹窗如alerm()，prompt()，confirm()···默认是关闭的，而HTML的弹窗是默认开启的，当然是可以打开JS的弹窗的
+        webView.setWebChromeClient(new WebChromeClient() {
+
+            @Override
+            public boolean onJsAlert(WebView view, String url, String message,
+                    JsResult result) {
+                return false;
+            }
+
+        });
+    }
+}
+</code></pre>
         
       </div>
       
@@ -364,8 +529,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -427,6 +601,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RadioGroup"><span class="nav-number">1.</span> <span class="nav-text">RadioGroup</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MainActivity-java"><span class="nav-number">1.1.</span> <span class="nav-text">MainActivity.java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#activity-main-xml"><span class="nav-number">1.2.</span> <span class="nav-text">activity_main.xml</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WebView"><span class="nav-number">2.</span> <span class="nav-text">WebView</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MainActivity"><span class="nav-number">2.1.</span> <span class="nav-text">MainActivity</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
