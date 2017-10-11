@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="," />
 
 
 
@@ -94,17 +94,18 @@
 
 
 
-<meta name="description" content="RadioGroupMainActivity.javapackage com.m520it.test;  import android.app.Activity; import android.os.Bundle; import android.widget.CheckBox; import android.widget.CompoundButton; import android.widget.">
+<meta name="description" content="#MainActivity.java package com.m520it.temp;  import java.io.BufferedReader; import java.io.BufferedWriter; import java.io.File; import java.io.FileReader; import java.io.FileWriter; import java.io.IOE">
+<meta name="keywords" content="登录界面">
 <meta property="og:type" content="website">
-<meta property="og:title" content="temp">
-<meta property="og:url" content="http://yoursite.com/bk_posts/temp.html">
+<meta property="og:title" content="Android应用开发之QQ登录界面">
+<meta property="og:url" content="http://yoursite.com/bk_posts/Android应用开发之QQ登录界面.html">
 <meta property="og:site_name" content="YanLin">
-<meta property="og:description" content="RadioGroupMainActivity.javapackage com.m520it.test;  import android.app.Activity; import android.os.Bundle; import android.widget.CheckBox; import android.widget.CompoundButton; import android.widget.">
+<meta property="og:description" content="#MainActivity.java package com.m520it.temp;  import java.io.BufferedReader; import java.io.BufferedWriter; import java.io.File; import java.io.FileReader; import java.io.FileWriter; import java.io.IOE">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-10T07:50:56.176Z">
+<meta property="og:updated_time" content="2017-10-11T10:20:10.563Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="temp">
-<meta name="twitter:description" content="RadioGroupMainActivity.javapackage com.m520it.test;  import android.app.Activity; import android.os.Bundle; import android.widget.CheckBox; import android.widget.CompoundButton; import android.widget.">
+<meta name="twitter:title" content="Android应用开发之QQ登录界面">
+<meta name="twitter:description" content="#MainActivity.java package com.m520it.temp;  import java.io.BufferedReader; import java.io.BufferedWriter; import java.io.File; import java.io.FileReader; import java.io.FileWriter; import java.io.IOE">
 
 
 
@@ -133,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/bk_posts/temp.html"/>
+  <link rel="canonical" href="http://yoursite.com/bk_posts/Android应用开发之QQ登录界面.html"/>
 
 
 
 
 
-  <title>temp | YanLin</title>
+  <title>Android应用开发之QQ登录界面 | YanLin</title>
   
 
 
@@ -303,7 +304,7 @@
     <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">temp</h1>
+	<h1 class="post-title" itemprop="name headline">Android应用开发之QQ登录界面</h1>
 
 
 
@@ -315,178 +316,224 @@
       <div class="post-body">
         
         
-          <h1 id="RadioGroup"><a href="#RadioGroup" class="headerlink" title="RadioGroup"></a>RadioGroup</h1><h2 id="MainActivity-java"><a href="#MainActivity-java" class="headerlink" title="MainActivity.java"></a>MainActivity.java</h2><pre><code>package com.m520it.test;
+          <p>#MainActivity.java</p>
+<pre><code>package com.m520it.temp;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.RadioGroup;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 
-public class MainActivity extends Activity {
+@SuppressLint(&quot;SdCardPath&quot;) public class MainActivity extends Activity {
+
+    //1、定义全局变量，前面是m开头
+    private EditText mPassportEt;
+    private EditText mPasswordEt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //1、获取RadioGroup的id号
-        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 
-        //2、设置RadioGroup的事件
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        //2、获取账号和密码这两个控件的id
+        mPassportEt = (EditText) findViewById(R.id.passport_et);
+        mPasswordEt = (EditText) findViewById(R.id.password_et);
 
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                //3、判断点击的RadioButton
-                if(checkedId == R.id.radioButton1) {
-                    Toast.makeText(getApplicationContext(), &quot;男&quot;, Toast.LENGTH_SHORT).show();
-                }
-                else if(checkedId == R.id.radioButton2) {
-                    Toast.makeText(getApplicationContext(), &quot;女&quot;, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        CheckBox appleCbx = (CheckBox) findViewById(R.id.apple_cbx);
-        //一定要加上CompoundButton，因为上面已经有了RadioButton的OnCheckChangeListener了
-        appleCbx.setOnCheckedChangeListener(new  CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(getApplicationContext(), isChecked?&quot;选中苹果&quot;:&quot;未选中苹果&quot;, Toast.LENGTH_SHORT).show();
-            }
-
-        });
-
-        CheckBox bananaCbx = (CheckBox) findViewById(R.id.banana_cbx);
-        //一定要加上CompoundButton，因为上面已经有了RadioButton的OnCheckChangeListener了
-        bananaCbx.setOnCheckedChangeListener(new  CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(getApplicationContext(), isChecked?&quot;选中香蕉&quot;:&quot;未选中香蕉&quot;, Toast.LENGTH_SHORT).show();
-            }
-
-        });
-
-        CheckBox orangeCbx = (CheckBox) findViewById(R.id.orange_cbx);
-        //一定要加上CompoundButton，因为上面已经有了RadioButton的OnCheckChangeListener了
-        orangeCbx.setOnCheckedChangeListener(new  CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(getApplicationContext(), isChecked?&quot;选中橘子&quot;:&quot;未选中橘子&quot;, Toast.LENGTH_SHORT).show();
-            }
-
-        });
+        //6、读取保存的账号和密码，再下次打开app的时候回显，相当于记住账号和密码的功能
+        //本来是犯了一个很严重的错误，居然把读取数据放到了按钮下面，真是蠢啊
+        readData();
     }
+
+    public void loginClick(View v) {
+
+        //3、获取EditText中的文本
+        String passport = mPassportEt.getText().toString();
+        String password = mPasswordEt.getText().toString();
+
+        //4、判断账号和密码是不是为空，调用TextUtils工具类进行判断
+        if(TextUtils.isEmpty(passport)&amp;&amp;TextUtils.isEmpty(password)) {
+            Toast.makeText(getApplicationContext(), &quot;请填写账号和密码&quot;, 0).show();
+            //视频教程中说加上return，但是我试了一下，不加return也没有什么影响
+            //return;
+        }
+
+        else if(TextUtils.isEmpty(passport)) {
+            Toast.makeText(getApplicationContext(), &quot;请填写账号&quot;, 0).show();
+        }
+
+        else if(TextUtils.isEmpty(password)) {
+            Toast.makeText(getApplicationContext(), &quot;请填写密码&quot;, 0).show();
+        }
+
+        //5、保存信息，主要是账号和密码
+        savaData(passport,password);
+
+    }
+
+    private void savaData(String passport, String password) {
+
+        try {
+            //5-1、声明一个文件类
+            //File file = new File(&quot;/data/data/com.m520it.temp/cache/qqinfo.txt&quot;);
+            File file = new File(getCacheDir(), &quot;qqinfo.txt&quot;);
+
+            //5-2、声明一个字符流缓冲区，实际上FileWriter类型变量才是写入数据的主力而不是File类型变量
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+
+            //5-3、写入字符串，账号和密码以&quot;#&quot;分隔
+            writer.write(passport+&quot;#&quot;+password);
+
+            //5-4、关闭文件
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void readData() {
+
+
+        try {
+            //6-1、声明一个文件类
+            //File file = new File(&quot;/data/data/com.m520it.temp/cache/qqinfo.txt&quot;);
+            File file = new File(getCacheDir(), &quot;qqinfo.txt&quot;);
+
+            //6-2、检查文件是否存在，为了保险起见，同时检查文件中是否有内容
+            if(file.exists()) {
+
+                //6-3、字符流缓冲区，构造器中为FileReader类
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+
+                //6-4、读取文件中的单行数据
+                String line = reader.readLine();
+
+                //6-5、关闭文件
+                reader.close();
+
+                //6-6、判断文件中是否用&quot;#&quot;将账号和密码分隔开来
+                if(line.contains(&quot;#&quot;)) {
+
+                    //6-7、以&quot;#&quot;为参考分隔成两个字符串
+                    String[] datas = line.split(&quot;#&quot;);
+
+                    //6-8、使EditText回显
+                    mPassportEt.setText(datas[0]);
+                    mPasswordEt.setText(datas[1]);
+
+                }
+            }
+
+            //**注意这里原来是FileNotFoundException，但是因为已经检查文件是否存在了，就改为Exception
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
-</code></pre><h2 id="activity-main-xml"><a href="#activity-main-xml" class="headerlink" title="activity_main.xml"></a>activity_main.xml</h2><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+</code></pre><h1 id="activity-main-xml"><a href="#activity-main-xml" class="headerlink" title="activity_main.xml"></a>activity_main.xml</h1><pre><code>&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
     android:layout_width=&quot;match_parent&quot;
-    android:layout_height=&quot;match_parent&quot;
-    android:orientation=&quot;vertical&quot; &gt;
+    android:layout_height=&quot;match_parent&quot; 
+    android:orientation=&quot;vertical&quot;&gt;
 
-    &lt;ToggleButton 
-        android:layout_width=&quot;wrap_content&quot;
-        android:layout_height=&quot;wrap_content&quot; /&gt;
-
-
-    &lt;RadioGroup
-        android:id=&quot;@+id/radioGroup&quot;
+    &lt;ImageView 
         android:layout_width=&quot;wrap_content&quot;
         android:layout_height=&quot;wrap_content&quot;
-        android:orientation=&quot;horizontal&quot;&gt;
+        android:src=&quot;@drawable/qq&quot;
+        android:layout_gravity=&quot;center_horizontal&quot;
+        android:layout_marginTop=&quot;75dp&quot;
+        android:contentDescription=&quot;@string/QQlogin_imv_dec&quot;/&gt;
 
-        &lt;RadioButton
-            android:id=&quot;@+id/radioButton1&quot;
+    &lt;LinearLayout 
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:orientation=&quot;horizontal&quot;
+        android:layout_marginTop=&quot;60dp&quot;
+        android:paddingLeft=&quot;35dp&quot;
+        android:paddingRight=&quot;35dp&quot;&gt;
+
+        &lt;TextView 
             android:layout_width=&quot;wrap_content&quot;
             android:layout_height=&quot;wrap_content&quot;
-            android:checked=&quot;true&quot;
-            android:text=&quot;@string/male&quot;/&gt;
+            android:text=&quot;@string/passport_tvname&quot;
+            android:textSize=&quot;20sp&quot;/&gt;
 
-        &lt;RadioButton 
-            android:id=&quot;@+id/radioButton2&quot;
+        &lt;EditText 
+            android:id=&quot;@+id/passport_et&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:layout_marginLeft=&quot;10dp&quot;
+            android:hint=&quot;@string/passport_hint&quot;
+            android:textSize=&quot;20sp&quot;/&gt;
+
+    &lt;/LinearLayout&gt;
+
+    &lt;LinearLayout 
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:orientation=&quot;horizontal&quot;
+        android:layout_marginTop=&quot;20dp&quot;
+        android:paddingLeft=&quot;35dp&quot;
+        android:paddingRight=&quot;35dp&quot;&gt;
+
+        &lt;TextView 
             android:layout_width=&quot;wrap_content&quot;
             android:layout_height=&quot;wrap_content&quot;
-            android:text=&quot;@string/female&quot;/&gt;
+            android:text=&quot;@string/password_tvname&quot;
+            android:textSize=&quot;20sp&quot;/&gt;
 
-    &lt;/RadioGroup&gt;
+        &lt;EditText 
+            android:id=&quot;@+id/password_et&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:layout_marginLeft=&quot;10dp&quot;
+            android:hint=&quot;@string/password_hin&quot;
+            android:textSize=&quot;20sp&quot;
+            android:inputType=&quot;textPassword&quot;/&gt;
 
+    &lt;/LinearLayout&gt;
 
-    &lt;CheckBox
-        android:id=&quot;@+id/apple_cbx&quot;
-        android:layout_width=&quot;wrap_content&quot;
+    &lt;LinearLayout 
+        android:layout_width=&quot;match_parent&quot;
         android:layout_height=&quot;wrap_content&quot;
-        android:text=&quot;@string/apple&quot; /&gt;
+        android:orientation=&quot;horizontal&quot;
+        android:layout_marginTop=&quot;70dp&quot;
+        android:paddingLeft=&quot;10dp&quot;
+        android:paddingRight=&quot;10dp&quot;&gt;
 
-    &lt;CheckBox
-        android:id=&quot;@+id/banana_cbx&quot;
-        android:layout_width=&quot;wrap_content&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:text=&quot;@string/banana&quot; /&gt;
+        &lt;Button 
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;50dp&quot;
+            android:layout_weight=&quot;1&quot;
+            android:text=&quot;@string/sign_btn_info&quot;
+            style=&quot;@android:attr/buttonStyle&quot;/&gt;
 
-    &lt;CheckBox
-        android:id=&quot;@+id/orange_cbx&quot;
-        android:layout_width=&quot;wrap_content&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:text=&quot;@string/orange&quot; /&gt;
+        &lt;Button 
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_marginLeft=&quot;10dp&quot;
+            android:layout_height=&quot;50dp&quot;
+            android:layout_weight=&quot;1&quot;
+            android:onClick=&quot;loginClick&quot;
+            android:text=&quot;@string/login_btn_info&quot;
+            style=&quot;@android:attr/buttonStyle&quot;/&gt;
+
+    &lt;/LinearLayout&gt;
 
 &lt;/LinearLayout&gt;
-</code></pre><h1 id="WebView"><a href="#WebView" class="headerlink" title="WebView"></a>WebView</h1><h2 id="MainActivity"><a href="#MainActivity" class="headerlink" title="MainActivity"></a>MainActivity</h2><pre><code>package com.m520it.temp;
-
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.os.Bundle;
-import android.webkit.JsResult;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-
-
-public class MainActivity extends Activity {
-
-    @SuppressLint(&quot;SetJavaScriptEnabled&quot;) @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        //1、找到WebView控件
-        WebView webView = (WebView) findViewById(R.id.webView1);
-
-        //2、加载网页
-        webView.loadUrl(&quot;http://www.qq.com&quot;);
-
-        webView.setWebViewClient(new WebViewClient() {
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
-                //3、在当前的WebView中显示
-                view.loadUrl(url);
-                //4、禁止网页跳转
-                return true;
-            }
-        });
-
-        //5、JS默认是关闭的，可以打开
-        webView.getSettings().setJavaScriptEnabled(true);
-
-        //6、JS的弹窗如alerm()，prompt()，confirm()···默认是关闭的，而HTML的弹窗是默认开启的，当然是可以打开JS的弹窗的
-        webView.setWebChromeClient(new WebChromeClient() {
-
-            @Override
-            public boolean onJsAlert(WebView view, String url, String message,
-                    JsResult result) {
-                return false;
-            }
-
-        });
-    }
-}
 </code></pre>
         
       </div>
@@ -611,7 +658,7 @@ public class MainActivity extends Activity {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RadioGroup"><span class="nav-number">1.</span> <span class="nav-text">RadioGroup</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MainActivity-java"><span class="nav-number">1.1.</span> <span class="nav-text">MainActivity.java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#activity-main-xml"><span class="nav-number">1.2.</span> <span class="nav-text">activity_main.xml</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WebView"><span class="nav-number">2.</span> <span class="nav-text">WebView</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MainActivity"><span class="nav-number">2.1.</span> <span class="nav-text">MainActivity</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#activity-main-xml"><span class="nav-number">1.</span> <span class="nav-text">activity_main.xml</span></a></li></ol></div>
             
 
           </div>

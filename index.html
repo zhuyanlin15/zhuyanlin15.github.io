@@ -311,6 +311,253 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/11/S3C2440嵌入式之mkconfig文件分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuyanlin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanLin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/11/S3C2440嵌入式之mkconfig文件分析/" itemprop="url">S3C2440嵌入式之mkconfig文件分析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-11T20:25:08+08:00">
+                2017-10-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/嵌入式linux开发/" itemprop="url" rel="index">
+                    <span itemprop="name">嵌入式linux开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="mkconfig文件内容（关键语句旁边用“-”注释）"><a href="#mkconfig文件内容（关键语句旁边用“-”注释）" class="headerlink" title="mkconfig文件内容（关键语句旁边用“##”注释）"></a>mkconfig文件内容（关键语句旁边用“##”注释）</h1><pre><code>#!/bin/sh -e
+
+# Script to create header files and links to configure
+# U-Boot for a specific board.
+#
+# Parameters:  Target  Architecture  CPU  Board [VENDOR] [SOC]
+#
+# (C) 2002-2006 DENX Software Engineering, Wolfgang Denk &lt;wd@denx.de&gt;
+#
+
+##MakeFile中的配置指令，即执行make 100ask24x0_config
+##mkconfig 100ask24x0 arm arm920t 100ask24x0 NULL s3c24x0
+##              $1      $2    $3        $4     $5    $6
+
+APPEND=no    # Default: Create new config file
+BOARD_NAME=&quot;&quot;    # Name to print in make output
+
+while [ $# -gt 0 ] ; do
+    case &quot;$1&quot; in
+    --) shift ; break ;;
+    -a) shift ; APPEND=yes ;;
+    -n) shift ; BOARD_NAME=&quot;${1%%_config}&quot; ; shift ;;
+    *)  break ;;
+    esac
+done
+##上面16~22行是检查指令中是否有--,-a,-n,*的，显然是没有的
+
+[ &quot;${BOARD_NAME}&quot; ] || BOARD_NAME=&quot;$1&quot;
+##这个和C语言的条件编译好像，实际上这行代码与下一行意思一样
+##BOARD_NAME = 100ask24x0
+
+[ $# -lt 4 ] &amp;&amp; exit 1
+[ $# -gt 6 ] &amp;&amp; exit 1
+##参数个数小于4个或者大于6个则退出
+
+echo &quot;Configuring for ${BOARD_NAME} board...&quot;
+##打印后面的字符串
+
+#
+# Create link to architecture specific headers
+#
+if [ &quot;$SRCTREE&quot; != &quot;$OBJTREE&quot; ] ; then
+##显然条件不成立，执行else语句
+    mkdir -p ${OBJTREE}/include
+    mkdir -p ${OBJTREE}/include2
+    cd ${OBJTREE}/include2
+    rm -f asm
+    ln -s ${SRCTREE}/include/asm-$2 asm
+    LNPREFIX=&quot;../../include2/asm/&quot;
+    cd ../include
+    rm -rf asm-$2
+    rm -f asm
+    mkdir asm-$2
+    ln -s asm-$2 asm
+else
+    cd ./include
+    ##此时已经进入到了include文件夹中
+    rm -f asm
+    ln -s asm-$2 asm
+fi
+
+rm -f asm-$2/arch
+
+if [ -z &quot;$6&quot; -o &quot;$6&quot; = &quot;NULL&quot; ] ; then
+##判断第6个参数是为空或是等于&quot;NULL&quot;
+    ln -s ${LNPREFIX}arch-$3 asm-$2/arch
+else
+    ln -s ${LNPREFIX}arch-$6 asm-$2/arch
+fi
+
+if [ &quot;$2&quot; = &quot;arm&quot; ] ; then
+    rm -f asm-$2/proc
+    ln -s ${LNPREFIX}proc-armv asm-$2/proc
+fi
+
+#
+# Create include file for Make
+#
+echo &quot;ARCH   = $2&quot; &gt;  config.mk
+echo &quot;CPU    = $3&quot; &gt;&gt; config.mk
+echo &quot;BOARD  = $4&quot; &gt;&gt; config.mk
+##一个&quot;&lt;&quot;表示创建文件，两个&quot;&lt;&lt;&quot;表示追加内容
+##上面78~81行相当于config.mk内容为
+##ARCH = arm
+##CPU = arm920t
+## BOARD = 100ask24x0
+
+[ &quot;$5&quot; ] &amp;&amp; [ &quot;$5&quot; != &quot;NULL&quot; ] &amp;&amp; echo &quot;VENDOR = $5&quot; &gt;&gt; config.mk
+
+[ &quot;$6&quot; ] &amp;&amp; [ &quot;$6&quot; != &quot;NULL&quot; ] &amp;&amp; echo &quot;SOC    = $6&quot; &gt;&gt; config.mk
+##继续在config.mk中追加SOC = s3c24x0
+
+#
+# Create board specific header file
+#
+##创建一个单板相关的头文件
+if [ &quot;$APPEND&quot; = &quot;yes&quot; ]    # Append to existing config file
+then
+    echo &gt;&gt; config.h
+else
+    &gt; config.h        # Create new config file
+fi
+echo &quot;/* Automatically generated - do not edit */&quot; &gt;&gt;config.h
+echo &quot;#include &lt;configs/$1.h&gt;&quot; &gt;&gt;config.h
+
+exit 0
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/11/Android应用开发之QQ登录界面/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1654,7 +1901,7 @@ bne loop2
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1676,7 +1923,7 @@ bne loop2
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content=",," />
 
 
 
@@ -94,17 +94,18 @@
 
 
 
-<meta name="description" content="RadioGroupMainActivity.javapackage com.m520it.test;  import android.app.Activity; import android.os.Bundle; import android.widget.CheckBox; import android.widget.CompoundButton; import android.widget.">
+<meta name="description" content="mkconfig文件内容（关键语句旁边用“##”注释）#!/bin/sh -e  # Script to create header files and links to configure # U-Boot for a specific board. # # Parameters:  Target  Architecture  CPU  Board [VENDOR] [SOC] # # (C)">
+<meta name="keywords" content="S3C2440,mkconfig">
 <meta property="og:type" content="website">
-<meta property="og:title" content="temp">
-<meta property="og:url" content="http://yoursite.com/bk_posts/temp.html">
+<meta property="og:title" content="S3C2440嵌入式之mkconfig文件分析">
+<meta property="og:url" content="http://yoursite.com/bk_posts/S3C2440嵌入式之mkconfig文件分析.html">
 <meta property="og:site_name" content="YanLin">
-<meta property="og:description" content="RadioGroupMainActivity.javapackage com.m520it.test;  import android.app.Activity; import android.os.Bundle; import android.widget.CheckBox; import android.widget.CompoundButton; import android.widget.">
+<meta property="og:description" content="mkconfig文件内容（关键语句旁边用“##”注释）#!/bin/sh -e  # Script to create header files and links to configure # U-Boot for a specific board. # # Parameters:  Target  Architecture  CPU  Board [VENDOR] [SOC] # # (C)">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-10T07:50:56.176Z">
+<meta property="og:updated_time" content="2017-10-11T12:28:41.525Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="temp">
-<meta name="twitter:description" content="RadioGroupMainActivity.javapackage com.m520it.test;  import android.app.Activity; import android.os.Bundle; import android.widget.CheckBox; import android.widget.CompoundButton; import android.widget.">
+<meta name="twitter:title" content="S3C2440嵌入式之mkconfig文件分析">
+<meta name="twitter:description" content="mkconfig文件内容（关键语句旁边用“##”注释）#!/bin/sh -e  # Script to create header files and links to configure # U-Boot for a specific board. # # Parameters:  Target  Architecture  CPU  Board [VENDOR] [SOC] # # (C)">
 
 
 
@@ -133,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/bk_posts/temp.html"/>
+  <link rel="canonical" href="http://yoursite.com/bk_posts/S3C2440嵌入式之mkconfig文件分析.html"/>
 
 
 
 
 
-  <title>temp | YanLin</title>
+  <title>S3C2440嵌入式之mkconfig文件分析 | YanLin</title>
   
 
 
@@ -303,7 +304,7 @@
     <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">temp</h1>
+	<h1 class="post-title" itemprop="name headline">S3C2440嵌入式之mkconfig文件分析</h1>
 
 
 
@@ -315,178 +316,112 @@
       <div class="post-body">
         
         
-          <h1 id="RadioGroup"><a href="#RadioGroup" class="headerlink" title="RadioGroup"></a>RadioGroup</h1><h2 id="MainActivity-java"><a href="#MainActivity-java" class="headerlink" title="MainActivity.java"></a>MainActivity.java</h2><pre><code>package com.m520it.test;
+          <h1 id="mkconfig文件内容（关键语句旁边用“-”注释）"><a href="#mkconfig文件内容（关键语句旁边用“-”注释）" class="headerlink" title="mkconfig文件内容（关键语句旁边用“##”注释）"></a>mkconfig文件内容（关键语句旁边用“##”注释）</h1><pre><code>#!/bin/sh -e
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.RadioGroup;
-import android.widget.Toast;
+# Script to create header files and links to configure
+# U-Boot for a specific board.
+#
+# Parameters:  Target  Architecture  CPU  Board [VENDOR] [SOC]
+#
+# (C) 2002-2006 DENX Software Engineering, Wolfgang Denk &lt;wd@denx.de&gt;
+#
 
+##MakeFile中的配置指令，即执行make 100ask24x0_config
+##mkconfig 100ask24x0 arm arm920t 100ask24x0 NULL s3c24x0
+##              $1      $2    $3        $4     $5    $6
 
-public class MainActivity extends Activity {
+APPEND=no    # Default: Create new config file
+BOARD_NAME=&quot;&quot;    # Name to print in make output
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+while [ $# -gt 0 ] ; do
+    case &quot;$1&quot; in
+    --) shift ; break ;;
+    -a) shift ; APPEND=yes ;;
+    -n) shift ; BOARD_NAME=&quot;${1%%_config}&quot; ; shift ;;
+    *)  break ;;
+    esac
+done
+##上面16~22行是检查指令中是否有--,-a,-n,*的，显然是没有的
 
-        //1、获取RadioGroup的id号
-        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+[ &quot;${BOARD_NAME}&quot; ] || BOARD_NAME=&quot;$1&quot;
+##这个和C语言的条件编译好像，实际上这行代码与下一行意思一样
+##BOARD_NAME = 100ask24x0
 
-        //2、设置RadioGroup的事件
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+[ $# -lt 4 ] &amp;&amp; exit 1
+[ $# -gt 6 ] &amp;&amp; exit 1
+##参数个数小于4个或者大于6个则退出
 
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                //3、判断点击的RadioButton
-                if(checkedId == R.id.radioButton1) {
-                    Toast.makeText(getApplicationContext(), &quot;男&quot;, Toast.LENGTH_SHORT).show();
-                }
-                else if(checkedId == R.id.radioButton2) {
-                    Toast.makeText(getApplicationContext(), &quot;女&quot;, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+echo &quot;Configuring for ${BOARD_NAME} board...&quot;
+##打印后面的字符串
 
-        CheckBox appleCbx = (CheckBox) findViewById(R.id.apple_cbx);
-        //一定要加上CompoundButton，因为上面已经有了RadioButton的OnCheckChangeListener了
-        appleCbx.setOnCheckedChangeListener(new  CompoundButton.OnCheckedChangeListener() {
+#
+# Create link to architecture specific headers
+#
+if [ &quot;$SRCTREE&quot; != &quot;$OBJTREE&quot; ] ; then
+##显然条件不成立，执行else语句
+    mkdir -p ${OBJTREE}/include
+    mkdir -p ${OBJTREE}/include2
+    cd ${OBJTREE}/include2
+    rm -f asm
+    ln -s ${SRCTREE}/include/asm-$2 asm
+    LNPREFIX=&quot;../../include2/asm/&quot;
+    cd ../include
+    rm -rf asm-$2
+    rm -f asm
+    mkdir asm-$2
+    ln -s asm-$2 asm
+else
+    cd ./include
+    ##此时已经进入到了include文件夹中
+    rm -f asm
+    ln -s asm-$2 asm
+fi
 
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(getApplicationContext(), isChecked?&quot;选中苹果&quot;:&quot;未选中苹果&quot;, Toast.LENGTH_SHORT).show();
-            }
+rm -f asm-$2/arch
 
-        });
+if [ -z &quot;$6&quot; -o &quot;$6&quot; = &quot;NULL&quot; ] ; then
+##判断第6个参数是为空或是等于&quot;NULL&quot;
+    ln -s ${LNPREFIX}arch-$3 asm-$2/arch
+else
+    ln -s ${LNPREFIX}arch-$6 asm-$2/arch
+fi
 
-        CheckBox bananaCbx = (CheckBox) findViewById(R.id.banana_cbx);
-        //一定要加上CompoundButton，因为上面已经有了RadioButton的OnCheckChangeListener了
-        bananaCbx.setOnCheckedChangeListener(new  CompoundButton.OnCheckedChangeListener() {
+if [ &quot;$2&quot; = &quot;arm&quot; ] ; then
+    rm -f asm-$2/proc
+    ln -s ${LNPREFIX}proc-armv asm-$2/proc
+fi
 
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(getApplicationContext(), isChecked?&quot;选中香蕉&quot;:&quot;未选中香蕉&quot;, Toast.LENGTH_SHORT).show();
-            }
+#
+# Create include file for Make
+#
+echo &quot;ARCH   = $2&quot; &gt;  config.mk
+echo &quot;CPU    = $3&quot; &gt;&gt; config.mk
+echo &quot;BOARD  = $4&quot; &gt;&gt; config.mk
+##一个&quot;&lt;&quot;表示创建文件，两个&quot;&lt;&lt;&quot;表示追加内容
+##上面78~81行相当于config.mk内容为
+##ARCH = arm
+##CPU = arm920t
+## BOARD = 100ask24x0
 
-        });
+[ &quot;$5&quot; ] &amp;&amp; [ &quot;$5&quot; != &quot;NULL&quot; ] &amp;&amp; echo &quot;VENDOR = $5&quot; &gt;&gt; config.mk
 
-        CheckBox orangeCbx = (CheckBox) findViewById(R.id.orange_cbx);
-        //一定要加上CompoundButton，因为上面已经有了RadioButton的OnCheckChangeListener了
-        orangeCbx.setOnCheckedChangeListener(new  CompoundButton.OnCheckedChangeListener() {
+[ &quot;$6&quot; ] &amp;&amp; [ &quot;$6&quot; != &quot;NULL&quot; ] &amp;&amp; echo &quot;SOC    = $6&quot; &gt;&gt; config.mk
+##继续在config.mk中追加SOC = s3c24x0
 
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(getApplicationContext(), isChecked?&quot;选中橘子&quot;:&quot;未选中橘子&quot;, Toast.LENGTH_SHORT).show();
-            }
+#
+# Create board specific header file
+#
+##创建一个单板相关的头文件
+if [ &quot;$APPEND&quot; = &quot;yes&quot; ]    # Append to existing config file
+then
+    echo &gt;&gt; config.h
+else
+    &gt; config.h        # Create new config file
+fi
+echo &quot;/* Automatically generated - do not edit */&quot; &gt;&gt;config.h
+echo &quot;#include &lt;configs/$1.h&gt;&quot; &gt;&gt;config.h
 
-        });
-    }
-}
-</code></pre><h2 id="activity-main-xml"><a href="#activity-main-xml" class="headerlink" title="activity_main.xml"></a>activity_main.xml</h2><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
-    android:layout_width=&quot;match_parent&quot;
-    android:layout_height=&quot;match_parent&quot;
-    android:orientation=&quot;vertical&quot; &gt;
-
-    &lt;ToggleButton 
-        android:layout_width=&quot;wrap_content&quot;
-        android:layout_height=&quot;wrap_content&quot; /&gt;
-
-
-    &lt;RadioGroup
-        android:id=&quot;@+id/radioGroup&quot;
-        android:layout_width=&quot;wrap_content&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:orientation=&quot;horizontal&quot;&gt;
-
-        &lt;RadioButton
-            android:id=&quot;@+id/radioButton1&quot;
-            android:layout_width=&quot;wrap_content&quot;
-            android:layout_height=&quot;wrap_content&quot;
-            android:checked=&quot;true&quot;
-            android:text=&quot;@string/male&quot;/&gt;
-
-        &lt;RadioButton 
-            android:id=&quot;@+id/radioButton2&quot;
-            android:layout_width=&quot;wrap_content&quot;
-            android:layout_height=&quot;wrap_content&quot;
-            android:text=&quot;@string/female&quot;/&gt;
-
-    &lt;/RadioGroup&gt;
-
-
-    &lt;CheckBox
-        android:id=&quot;@+id/apple_cbx&quot;
-        android:layout_width=&quot;wrap_content&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:text=&quot;@string/apple&quot; /&gt;
-
-    &lt;CheckBox
-        android:id=&quot;@+id/banana_cbx&quot;
-        android:layout_width=&quot;wrap_content&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:text=&quot;@string/banana&quot; /&gt;
-
-    &lt;CheckBox
-        android:id=&quot;@+id/orange_cbx&quot;
-        android:layout_width=&quot;wrap_content&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:text=&quot;@string/orange&quot; /&gt;
-
-&lt;/LinearLayout&gt;
-</code></pre><h1 id="WebView"><a href="#WebView" class="headerlink" title="WebView"></a>WebView</h1><h2 id="MainActivity"><a href="#MainActivity" class="headerlink" title="MainActivity"></a>MainActivity</h2><pre><code>package com.m520it.temp;
-
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.os.Bundle;
-import android.webkit.JsResult;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-
-
-public class MainActivity extends Activity {
-
-    @SuppressLint(&quot;SetJavaScriptEnabled&quot;) @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        //1、找到WebView控件
-        WebView webView = (WebView) findViewById(R.id.webView1);
-
-        //2、加载网页
-        webView.loadUrl(&quot;http://www.qq.com&quot;);
-
-        webView.setWebViewClient(new WebViewClient() {
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
-                //3、在当前的WebView中显示
-                view.loadUrl(url);
-                //4、禁止网页跳转
-                return true;
-            }
-        });
-
-        //5、JS默认是关闭的，可以打开
-        webView.getSettings().setJavaScriptEnabled(true);
-
-        //6、JS的弹窗如alerm()，prompt()，confirm()···默认是关闭的，而HTML的弹窗是默认开启的，当然是可以打开JS的弹窗的
-        webView.setWebChromeClient(new WebChromeClient() {
-
-            @Override
-            public boolean onJsAlert(WebView view, String url, String message,
-                    JsResult result) {
-                return false;
-            }
-
-        });
-    }
-}
+exit 0
 </code></pre>
         
       </div>
@@ -611,7 +546,7 @@ public class MainActivity extends Activity {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RadioGroup"><span class="nav-number">1.</span> <span class="nav-text">RadioGroup</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MainActivity-java"><span class="nav-number">1.1.</span> <span class="nav-text">MainActivity.java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#activity-main-xml"><span class="nav-number">1.2.</span> <span class="nav-text">activity_main.xml</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WebView"><span class="nav-number">2.</span> <span class="nav-text">WebView</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MainActivity"><span class="nav-number">2.1.</span> <span class="nav-text">MainActivity</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#mkconfig文件内容（关键语句旁边用“-”注释）"><span class="nav-number">1.</span> <span class="nav-text">mkconfig文件内容（关键语句旁边用“##”注释）</span></a></li></ol></div>
             
 
           </div>
