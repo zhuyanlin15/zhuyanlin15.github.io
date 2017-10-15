@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="YanLin">
 <meta property="og:description" content="cpu/arm920t/start.S/*  *  armboot - Startup Code for ARM920 CPU-core  *  *  Copyright (c) 2001    Marius Gr�ger &amp;lt;mag@sysgo.de&amp;gt;  *  Copyright (c) 2002    Alex Z�pke &amp;lt;azu@sysgo.de&amp;gt;  *  Copyr">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-13T13:37:36.351Z">
+<meta property="og:updated_time" content="2017-10-15T02:11:23.338Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="嵌入式linux之u-boot-1.1.6源码分析">
 <meta name="twitter:description" content="cpu/arm920t/start.S/*  *  armboot - Startup Code for ARM920 CPU-core  *  *  Copyright (c) 2001    Marius Gr�ger &amp;lt;mag@sysgo.de&amp;gt;  *  Copyright (c) 2002    Alex Z�pke &amp;lt;azu@sysgo.de&amp;gt;  *  Copyr">
@@ -366,6 +366,7 @@ _start:    b       reset
     ldr    pc, _irq
     ldr    pc, _fiq
 
+
 _undefined_instruction:    .word undefined_instruction
 _software_interrupt:    .word software_interrupt
 _prefetch_abort:    .word prefetch_abort
@@ -436,8 +437,8 @@ FIQ_STACK_START:
 /*
  * the actual reset code
  */
-
-reset:
+</code></pre><p>##　进入reset</p>
+<pre><code>reset:
     /*
      * set the cpu to SVC32 mode
      */
@@ -445,8 +446,25 @@ reset:
     bic    r0,r0,#0x1f
     orr    r0,r0,#0xd3
     msr    cpsr,r0
-
-/* turn off the watchdog */
+</code></pre><h2 id="设置ARM处理器的工作模式"><a href="#设置ARM处理器的工作模式" class="headerlink" title="设置ARM处理器的工作模式"></a>设置ARM处理器的工作模式</h2><h3 id="1）功能"><a href="#1）功能" class="headerlink" title="1）功能"></a>1）功能</h3><p>在CPSR[4:0]写入0b10011即可设置ARM处理器的工作模式为管理模式（特权模式），并且屏蔽IRQ和FRQ中断。</p>
+<h3 id="2）知识点"><a href="#2）知识点" class="headerlink" title="2）知识点"></a>2）知识点</h3><h4 id="MRS"><a href="#MRS" class="headerlink" title="MRS"></a>MRS</h4><p>MRS {<cond\>} <rd\>,CPSR</rd\></cond\></p>
+<p>MRS {<cond\>} <rd\>,SPSR</rd\></cond\></p>
+<p>MRS指令用于将状态寄存器的内容传送到通用寄存器中。</p>
+<h4 id="MSR"><a href="#MSR" class="headerlink" title="MSR"></a>MSR</h4><p>MRS {<cond\>} CPSR_<fields\>,#<immediate\></immediate\></fields\></cond\></p>
+<p>MRS {<cond\>} CPSR_<fields\>,<rm\></rm\></fields\></cond\></p>
+<p>MRS {<cond\>} SPSR_<fields\>,#<immediate\></immediate\></fields\></cond\></p>
+<p>MRS {<cond\>} SPSR_<fields\>,<rm\></rm\></fields\></cond\></p>
+<p><strong>CPSR_<fields\>是位域，状态寄存器可分为4个8位的域：</fields\></strong></p>
+<p>CPSR_f为CPSR[31：24]（条件标志位域）</p>
+<p>CPSR_s为CPSR[23：16]（状态位域）</p>
+<p>CPSR_x为CPSR[15：8]（扩展位域）</p>
+<p>CPSR_c为CPSR[7：0]（控制位域）</p>
+<p>MSR指令用于将通用寄存器的内容或一个立即数传送到状态寄存器中。</p>
+<h4 id="BIC"><a href="#BIC" class="headerlink" title="BIC"></a>BIC</h4><p>BIC{<cond\>}{S} <rd\>,<rn\>,<shifter_operand\> </shifter_operand\></rn\></rd\></cond\></p>
+<p>BIC指令将<shifter_operand\>表示的数值与寄存器<rn\>的值的反码按位做逻辑与操作，并把结果保存到目标寄存器<rd>中，同时根据操作的结果更新CPSR中相应的条件标志位。</rd></rn\></shifter_operand\></p>
+<h4 id="ORR"><a href="#ORR" class="headerlink" title="ORR"></a>ORR</h4><p>BIC{<cond\>}{S} <rd\>,<rn\>,<shifter_operand\></shifter_operand\></rn\></rd\></cond\></p>
+<p>ORR指令将<shifter_operand\>表示的数值与寄存器<rn\>的值按位做逻辑或操作，并把结果保存到目标寄存器<rd>中，同时，根据操作的结果更新CPSR中相应的条件标志位。</rd></rn\></shifter_operand\></p>
+<pre><code>/* turn off the watchdog */
 #if defined(CONFIG_S3C2400)
 # define pWTCON        0x15300000
 # define INTMSK        0x14400008    /* Interupt-Controller base addresses */
@@ -984,7 +1002,7 @@ fiq:
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#cpu-arm920t-start-S"><span class="nav-number">1.</span> <span class="nav-text">cpu/arm920t/start.S</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#cpu-arm920t-start-S"><span class="nav-number">1.</span> <span class="nav-text">cpu/arm920t/start.S</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#设置ARM处理器的工作模式"><span class="nav-number">1.1.</span> <span class="nav-text">设置ARM处理器的工作模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1）功能"><span class="nav-number">1.1.1.</span> <span class="nav-text">1）功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2）知识点"><span class="nav-number">1.1.2.</span> <span class="nav-text">2）知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MRS"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">MRS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MSR"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">MSR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BIC"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">BIC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ORR"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">ORR</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
