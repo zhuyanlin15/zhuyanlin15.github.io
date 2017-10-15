@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="数据库," />
 
 
 
@@ -94,17 +94,18 @@
 
 
 
-<meta name="description" content="这是zhuyanlin的第一条博文，以后我就可以将我的个人经历、学习方法和经验等等记录在博客上！">
+<meta name="description" content="MainActivity.javapackage com.m520it.temp;  import android.app.Activity; import android.os.Bundle; import android.view.View;  public class MainActivity extends Activity {      private ContactDao mConta">
+<meta name="keywords" content="数据库">
 <meta property="og:type" content="article">
-<meta property="og:title" content="zhuyanlin的第一个博文">
-<meta property="og:url" content="http://yoursite.com/2017/09/21/zhuyanlin的第一个博客/index.html">
+<meta property="og:title" content="Android应用开发之数据库的增删改查">
+<meta property="og:url" content="http://yoursite.com/2017/10/15/Android应用开发之数据库的增删改查/index.html">
 <meta property="og:site_name" content="YanLin">
-<meta property="og:description" content="这是zhuyanlin的第一条博文，以后我就可以将我的个人经历、学习方法和经验等等记录在博客上！">
+<meta property="og:description" content="MainActivity.javapackage com.m520it.temp;  import android.app.Activity; import android.os.Bundle; import android.view.View;  public class MainActivity extends Activity {      private ContactDao mConta">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-21T05:36:51.544Z">
+<meta property="og:updated_time" content="2017-10-15T10:16:18.214Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zhuyanlin的第一个博文">
-<meta name="twitter:description" content="这是zhuyanlin的第一条博文，以后我就可以将我的个人经历、学习方法和经验等等记录在博客上！">
+<meta name="twitter:title" content="Android应用开发之数据库的增删改查">
+<meta name="twitter:description" content="MainActivity.javapackage com.m520it.temp;  import android.app.Activity; import android.os.Bundle; import android.view.View;  public class MainActivity extends Activity {      private ContactDao mConta">
 
 
 
@@ -133,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/21/zhuyanlin的第一个博客/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/15/Android应用开发之数据库的增删改查/"/>
 
 
 
 
 
-  <title>zhuyanlin的第一个博文 | YanLin</title>
+  <title>Android应用开发之数据库的增删改查 | YanLin</title>
   
 
 
@@ -310,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/21/zhuyanlin的第一个博客/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/15/Android应用开发之数据库的增删改查/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuyanlin">
@@ -327,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">zhuyanlin的第一个博文</h1>
+          <h1 class="post-title" itemprop="name headline">Android应用开发之数据库的增删改查</h1>
         
 
         <div class="post-meta">
@@ -339,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-21T11:43:08+08:00">
-                2017-09-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-15T18:13:51+08:00">
+                2017-10-15
               </time>
             
 
@@ -349,6 +350,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android应用开发/" itemprop="url" rel="index">
+                    <span itemprop="name">Android应用开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -377,8 +400,157 @@
       
 
       
-        <p>这是zhuyanlin的第一条博文，以后我就可以将我的个人经历、学习方法和经验等等记录在博客上！</p>
+        <h1 id="MainActivity-java"><a href="#MainActivity-java" class="headerlink" title="MainActivity.java"></a>MainActivity.java</h1><pre><code>package com.m520it.temp;
 
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+
+public class MainActivity extends Activity {
+
+    private ContactDao mContactDao;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        mContactDao = new ContactDao(this);
+    }
+
+    public void insertContact(View v) {
+        mContactDao.insertContact(&quot;zhangsan&quot;, &quot;11111111111&quot;);
+    }
+
+    public void deleteContact(View v) {
+        mContactDao.deleteContact(&quot;zhangsan&quot;);
+    }
+
+    public void updateContact(View v) {
+        mContactDao.updateContact(&quot;zhangsan&quot;, &quot;22222222222&quot;);
+    }
+
+    public void queryContact(View v) {
+        mContactDao.queryContact(&quot;zhangsan&quot;);
+    }
+}
+</code></pre><h1 id="ContactDao-java"><a href="#ContactDao-java" class="headerlink" title="ContactDao.java"></a>ContactDao.java</h1><pre><code>package com.m520it.temp;
+
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+
+public class ContactDao {
+
+    private DbOpenHelper mHelper;
+
+    //*Context是一个场景，MainActivity就是一个场景，并且它本身就是继承自Context
+    public ContactDao(Context c) {
+        //1、首先是要创建一个数据库文件的帮助类，类似于File f = File(...)
+        mHelper = new DbOpenHelper(c);
+    }
+
+    public void insertContact(String username,String phone) {
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        //2、第二个参数是缺省值，补第一个字符串参数中&quot;?&quot;的位置，同时第二个参数直接内存分配数组，这样就不用另外定义String[]然后再传递了
+        //问号代表的缺省值已经是一个字符串了，所以要把单引号去掉，不然程序崩溃
+        db.execSQL(&quot;insert into contact (username,phone) values (?,?);&quot;, 
+                new String[]{username,phone});
+    }
+
+    public void deleteContact(String username) {
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        db.execSQL(&quot;delete from contact where username=?;&quot;,
+                new String[]{username});
+    }
+
+    public void updateContact(String username,String phone) {
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        db.execSQL(&quot;update contact set phone=? where username=?&quot;,
+                new String[]{phone,username});
+    }
+
+    public void queryContact(String username) {
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+        //3、这个光标是指向查找结果的行
+         Cursor cursor = db.rawQuery(&quot;select phone from contact where username=?&quot;, 
+                new String[]{username});
+         while(cursor.moveToNext()) {
+             //4、getString中的columnIndex参数我还搞不清楚是干什么的，难道是代表我们要查找的第0列吗？？
+             String string = cursor.getString(0);
+             Log.v(&quot;520it&quot;, string);
+         }
+    }
+
+}
+</code></pre><h1 id="DbOpenHelper-java"><a href="#DbOpenHelper-java" class="headerlink" title="DbOpenHelper.java"></a>DbOpenHelper.java</h1><pre><code>package com.m520it.temp;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.BaseColumns;
+import android.util.Log;
+
+public class DbOpenHelper extends SQLiteOpenHelper implements BaseColumns{
+
+    public static final String DB_NAME = &quot;contact.db&quot;;
+    public static final int DB_VERSION = 5;
+    public static final String _TABLENAME = &quot;contact&quot;;
+    public static final String _USERNAME = &quot;username&quot;;
+    public static final String _PHONE = &quot;phone&quot;;
+
+    public DbOpenHelper(Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
+    }
+
+    //当创建数据库文件是会调用这个函数
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(&quot;create table &quot;+_TABLENAME+&quot;(&quot;+_ID+&quot; integer primary key autoincrement,&quot; +
+                &quot;&quot;+_USERNAME+&quot; text,&quot;+_PHONE+&quot; text);&quot;);
+    }
+
+    //当跟新数据库信息是会调用这个函数
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.v(&quot;520it&quot;, &quot;oldVersion=&quot;+oldVersion+&quot;   newVersion=&quot;+newVersion);
+    }
+
+}
+</code></pre><h1 id="avtivity-main"><a href="#avtivity-main" class="headerlink" title="avtivity_main"></a>avtivity_main</h1><pre><code>&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:orientation=&quot;vertical&quot; &gt;
+
+    &lt;Button
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:onClick=&quot;insertContact&quot;
+        android:text=&quot;增加联系人&quot; /&gt;
+
+    &lt;Button
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:onClick=&quot;deleteContact&quot;
+        android:text=&quot;删除联系人&quot; /&gt;
+
+    &lt;Button
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:onClick=&quot;updateContact&quot;
+        android:text=&quot;更改联系人&quot; /&gt;
+
+    &lt;Button
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:onClick=&quot;queryContact&quot;
+        android:text=&quot;查找联系人&quot; /&gt;
+
+&lt;/LinearLayout&gt;
+</code></pre>
       
     </div>
     
@@ -393,6 +565,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+        </div>
+      
 
       
       
@@ -402,15 +580,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/10/13/Android应用开发之解析xml实例/" rel="next" title="Android应用开发之解析xml实例">
+                <i class="fa fa-chevron-left"></i> Android应用开发之解析xml实例
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/22/S3C2440嵌入式之SDRAM/" rel="prev" title="S3C2440嵌入式之SDRAM">
-                S3C2440嵌入式之SDRAM <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -462,8 +640,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -525,6 +712,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MainActivity-java"><span class="nav-number">1.</span> <span class="nav-text">MainActivity.java</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ContactDao-java"><span class="nav-number">2.</span> <span class="nav-text">ContactDao.java</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DbOpenHelper-java"><span class="nav-number">3.</span> <span class="nav-text">DbOpenHelper.java</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#avtivity-main"><span class="nav-number">4.</span> <span class="nav-text">avtivity_main</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
