@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="MainActivity.javapackage com.m520it.temp233;  import java.io.BufferedReader; import java.io.File; import java.io.FileOutputStream; import java.io.InputStream; import java.io.InputStreamReader; import">
+<meta name="description" content="MainActivity.javapackage com.m520it.temp23333;  import java.io.BufferedReader; import java.io.File; import java.io.FileOutputStream; import java.io.InputStream; import java.io.InputStreamReader; impor">
 <meta name="keywords" content="网络访问,缓存数据">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android应用开发之读取本地服务器图片并缓存">
 <meta property="og:url" content="http://yoursite.com/2017/10/19/Android应用开发之读取本地服务器图片并缓存/index.html">
 <meta property="og:site_name" content="YanLin">
-<meta property="og:description" content="MainActivity.javapackage com.m520it.temp233;  import java.io.BufferedReader; import java.io.File; import java.io.FileOutputStream; import java.io.InputStream; import java.io.InputStreamReader; import">
+<meta property="og:description" content="MainActivity.javapackage com.m520it.temp23333;  import java.io.BufferedReader; import java.io.File; import java.io.FileOutputStream; import java.io.InputStream; import java.io.InputStreamReader; impor">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-19T13:24:11.007Z">
+<meta property="og:updated_time" content="2017-10-20T08:42:47.127Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android应用开发之读取本地服务器图片并缓存">
-<meta name="twitter:description" content="MainActivity.javapackage com.m520it.temp233;  import java.io.BufferedReader; import java.io.File; import java.io.FileOutputStream; import java.io.InputStream; import java.io.InputStreamReader; import">
+<meta name="twitter:description" content="MainActivity.javapackage com.m520it.temp23333;  import java.io.BufferedReader; import java.io.File; import java.io.FileOutputStream; import java.io.InputStream; import java.io.InputStreamReader; impor">
 
 
 
@@ -400,7 +400,7 @@
       
 
       
-        <h1 id="MainActivity-java"><a href="#MainActivity-java" class="headerlink" title="MainActivity.java"></a>MainActivity.java</h1><pre><code>package com.m520it.temp233;
+        <h1 id="MainActivity-java"><a href="#MainActivity-java" class="headerlink" title="MainActivity.java"></a>MainActivity.java</h1><pre><code>package com.m520it.temp23333;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -411,18 +411,21 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-import com.m520it.temp.R;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.m520it.temp.R;
 
 public class MainActivity extends Activity {
 
@@ -430,6 +433,13 @@ public class MainActivity extends Activity {
     private ArrayList&lt;String&gt; mUrlStringList = new ArrayList&lt;String&gt;();
     private int mImageIndex = 0;
     private ImageView mImgIv;
+
+    @SuppressLint(&quot;HandlerLeak&quot;) private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            mImgIv.setImageBitmap((Bitmap) msg.obj);
+        };
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -515,13 +525,18 @@ public class MainActivity extends Activity {
                 //使用BitmapFactory这个工具类将文件转换成位图
                 final Bitmap decodeFile = BitmapFactory.decodeFile(f.getAbsolutePath());
                 //当然，显示图片需要再主线程中
-                runOnUiThread(new Runnable() {
+//                runOnUiThread(new Runnable() {
+//
+//                    @Override
+//                    public void run() {
+//                        mImgIv.setImageBitmap(decodeFile);
+//                    }
+//                });
+//                TODO
+                Message msg = new Message();
+                msg.obj = decodeFile;
+                mHandler.sendMessage(msg);
 
-                    @Override
-                    public void run() {
-                        mImgIv.setImageBitmap(decodeFile);
-                    }
-                });
                 return;
             }
 
@@ -542,15 +557,20 @@ public class MainActivity extends Activity {
                 bm.compress(CompressFormat.PNG, 100, openFileOutput);
 
                 //只有在主线程中才能显示图片，original thread = main thread = UI thread
-                //使用Activity.runOnUiThread()方法可以让代码转移到主线程中
-                runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        mImgIv.setImageBitmap(bm);
-                    }
-
-                });
+                //有两种方法，一种是使用runOnUiThread，另外一种是使用Handler
+                //使用Activity.runOnUiThread()方法可以让代码转移到主线程中，
+//                runOnUiThread(new Runnable() {
+//
+//                    @Override
+//                    public void run() {
+//                        mImgIv.setImageBitmap(bm);
+//                    }
+//                    
+//                });
+//                TODO
+                Message msg = new Message();
+                msg.obj = bm;
+                mHandler.sendMessage(msg);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -676,6 +696,10 @@ public class MainActivity extends Activity {
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/10/22/Android开发模块之从网络获取图片资源（多删少补）/" rel="prev" title="Android开发模块之从网络获取图片资源）（多删少补）">
+                Android开发模块之从网络获取图片资源）（多删少补） <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -751,7 +775,7 @@ public class MainActivity extends Activity {
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -762,7 +786,7 @@ public class MainActivity extends Activity {
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -773,7 +797,7 @@ public class MainActivity extends Activity {
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="新闻客户端主界面," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Java文件com.m520it.newsclient.activity.MainActivity.javapackage com.m520it.newsclient.activity;  import java.io.InputStream; import java.util.ArrayList;  import android.app.Activity; import android.os.B">
+<meta name="keywords" content="新闻客户端主界面">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android应用开发之新闻客户端（主界面）">
+<meta property="og:url" content="http://yoursite.com/2017/10/24/Android应用开发之新闻客户端（主界面）/index.html">
+<meta property="og:site_name" content="YanLin">
+<meta property="og:description" content="Java文件com.m520it.newsclient.activity.MainActivity.javapackage com.m520it.newsclient.activity;  import java.io.InputStream; import java.util.ArrayList;  import android.app.Activity; import android.os.B">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-24T12:52:17.239Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android应用开发之新闻客户端（主界面）">
+<meta name="twitter:description" content="Java文件com.m520it.newsclient.activity.MainActivity.javapackage com.m520it.newsclient.activity;  import java.io.InputStream; import java.util.ArrayList;  import android.app.Activity; import android.os.B">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '154664cad9247e0a815b49e17e029b04',
+      indexName: 'zhuyanlin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到与 [${query}] 相关的内容","hits_stats":"${hits} 条相关记录，共 ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/24/Android应用开发之新闻客户端（主界面）/"/>
+
+
+
+
+
+  <title>Android应用开发之新闻客户端（主界面） | YanLin</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanLin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/24/Android应用开发之新闻客户端（主界面）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuyanlin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanLin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android应用开发之新闻客户端（主界面）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-24T20:06:58+08:00">
+                2017-10-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android应用开发/" itemprop="url" rel="index">
+                    <span itemprop="name">Android应用开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Java文件"><a href="#Java文件" class="headerlink" title="Java文件"></a>Java文件</h1><h2 id="com-m520it-newsclient-activity-MainActivity-java"><a href="#com-m520it-newsclient-activity-MainActivity-java" class="headerlink" title="com.m520it.newsclient.activity.MainActivity.java"></a>com.m520it.newsclient.activity.MainActivity.java</h2><pre><code>package com.m520it.newsclient.activity;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.ListView;
+
+import com.m520it.newsclient.adapter.MyAdapter;
+import com.m520it.newsclient.bean.NewsBean;
+import com.m520it.newsclient.util.NetworkUtil;
+import com.m520it.newsclient.util.XmlUtil;
+import com.m520it.temp.R;
+
+
+public class MainActivity extends Activity {
+
+    ArrayList&lt;NewsBean&gt; mNewsInfo = new ArrayList&lt;NewsBean&gt;();
+    MyAdapter mNewsApadter;
+    ListView mNewsLv;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        new Thread() {
+            public void run() {
+                getNewsResource();
+            }
+        }.start();
+
+        //一定要给适配器赋初值，否则传递给ListView时（实际是地址），地址都是乱的
+        mNewsApadter = new MyAdapter();
+        mNewsLv = (ListView) findViewById(R.id.news_lv);
+        mNewsLv.setAdapter(mNewsApadter);
+    }
+
+    private void getNewsResource() {
+        String url = &quot;http://192.168.176.1:8080/news.xml&quot;;
+        try {
+            //获取xml资源并准备pull解析
+
+            InputStream is = NetworkUtil.getResource(url);
+
+            if (is != null) {
+                mNewsInfo = XmlUtil.parseXml(is);
+                //打印获取的xml信息
+//                for (int i = 0; i &lt; mNewsInfo.size(); i++) {
+//                    Log.v(&quot;520it&quot;, mNewsInfo.get(i)+&quot;&quot;);
+//                }
+                mNewsApadter.setDatas(mNewsInfo);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+}
+</code></pre><h2 id="com-m520it-newsclient-adapter-MyAdapter-java"><a href="#com-m520it-newsclient-adapter-MyAdapter-java" class="headerlink" title="com.m520it.newsclient.adapter.MyAdapter.java"></a>com.m520it.newsclient.adapter.MyAdapter.java</h2><pre><code>package com.m520it.newsclient.adapter;
+
+import java.util.ArrayList;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+import com.m520it.newsclient.bean.NewsBean;
+import com.m520it.newsclient.ui.ImageViewWithUrl;
+import com.m520it.temp.R;
+
+public class MyAdapter extends BaseAdapter {
+
+    private ArrayList&lt;NewsBean&gt; mNewsList;
+
+    //通过这个方法和ArrayList建立连接
+    public void setDatas(ArrayList&lt;NewsBean&gt; mNewsInfo) {
+        mNewsList = mNewsInfo;
+    }
+
+    //得到ArrayList中的数量
+    @Override
+    public int getCount() {
+        return mNewsList != null?mNewsList.size():0;
+    }
+
+    class Holder {
+        ImageViewWithUrl newsImgIv;
+        TextView newsTitleTv;
+        TextView newsDiscTv;
+        TextView newsTypeTv;
+    }
+
+    //可以将一组数据传到ListView中
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        Holder newsHolder = null;
+        if (convertView == null) {
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            convertView = inflater.inflate(R.layout.news_layout, null);
+            //这里做一个判断，当convertView为空的时候，则创建一个newsHolder对象，用于存放拿到的每个列表中的控件
+            //之所以有个判断语句是防止每次完成一个列表时，又重新创建一个newsHolder对象，这样提高了笑效率
+            newsHolder = new Holder();
+            newsHolder.newsImgIv = (ImageViewWithUrl) convertView.findViewById(R.id.img_iv);
+            newsHolder.newsTitleTv = (TextView) convertView.findViewById(R.id.title_tv);
+            newsHolder.newsDiscTv = (TextView) convertView.findViewById(R.id.disc_tv);
+            newsHolder.newsTypeTv = (TextView) convertView.findViewById(R.id.type_tv);
+
+            convertView.setTag(newsHolder);
+        }else {
+            newsHolder = (Holder) convertView.getTag();
+        }
+
+        //既然获取了信息，则将各种信息使用刚刚获取的控件表达出来
+        NewsBean newsBean = mNewsList.get(position);
+        newsHolder.newsImgIv.setImageUrl(newsBean.getImage());
+        newsHolder.newsTitleTv.setText(newsBean.getTitle());
+        newsHolder.newsDiscTv.setText(newsBean.getDescription());
+
+        //判断是评论、专题还是科技类型
+        initType(newsHolder, newsBean);
+        return convertView;
+    }
+
+    private void initType(Holder newsHolder, NewsBean newsBean) {
+        if (newsBean.getType() == 1) {
+            newsHolder.newsTypeTv.setText(&quot;评论：&quot;+newsBean.getComment());
+        }else if (newsBean.getType() == 2) {
+            newsHolder.newsTypeTv.setText(&quot;专题&quot;);
+        }else if (newsBean.getType() == 3) {
+            newsHolder.newsTypeTv.setText(&quot;科技&quot;);
+        }
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return null;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+}
+</code></pre><h2 id="com-m520it-newsclient-bean"><a href="#com-m520it-newsclient-bean" class="headerlink" title="com.m520it.newsclient.bean"></a>com.m520it.newsclient.bean</h2><pre><code>import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.Message;
+import android.util.AttributeSet;
+import android.widget.ImageView;
+
+import com.m520it.temp.R;
+
+//创建一个类存储xml中获取的标签对应的内容，符合JavaBean语法（get、set等）
+public class NewsBean {
+
+    private String title;
+    private String description;
+    private String image;
+    private int type;
+    private int comment;
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public String getImage() {
+        return image;
+    }
+    public void setImage(String image) {
+        this.image = image;
+    }
+    public int getType() {
+        return type;
+    }
+    public void setType(int type) {
+        this.type = type;
+    }
+    public int getComment() {
+        return comment;
+    }
+    public void setComment(int comment) {
+        this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;NewsBean [title=&quot; + title + &quot;, description=&quot; + description
+                + &quot;, image=&quot; + image + &quot;, type=&quot; + type + &quot;, comment=&quot;
+                + comment + &quot;]&quot;;
+    }
+
+}
+</code></pre><h2 id="com-m520it-newsclient-ui-ImageViewWithUrl-java"><a href="#com-m520it-newsclient-ui-ImageViewWithUrl-java" class="headerlink" title="com.m520it.newsclient.ui.ImageViewWithUrl.java"></a>com.m520it.newsclient.ui.ImageViewWithUrl.java</h2><pre><code>package com.m520it.newsclient.ui;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.Message;
+import android.util.AttributeSet;
+import android.widget.ImageView;
+
+import com.m520it.temp.R;
+
+@SuppressLint(&quot;HandlerLeak&quot;)
+public class ImageViewWithUrl extends ImageView {
+
+    public static final int GET_IMAGE_URL_SUCCESS = 0x01;
+    public static final int GET_IMAGE_URL_FAILED = 0x02;
+
+    //定义一个Handler对象用来接收子线程发送的消息并处理
+    Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+
+            //分为图片加载成功和图片加载失败
+            if (msg.what == GET_IMAGE_URL_SUCCESS) {
+
+                setImageBitmap((Bitmap) msg.obj);
+
+            } else if (msg.what == GET_IMAGE_URL_FAILED) {
+                setImageResource(R.drawable.ic_launcher);
+            }
+        };
+    };
+
+    // new一个控件的时候调用
+    public ImageViewWithUrl(Context context) {
+        super(context);
+    }
+
+    // 这个和xml文件的ui有关系
+    public ImageViewWithUrl(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    /**
+     * 注意啊，网络请求一定要放在子线程里面，改变ui一定要在UI线程（主线程）里面，在本程序中使用的Handler处理子线程
+     */
+    public void setImageUrl(final String imageUrl) {
+        new Thread() {
+            public void run() {
+
+                try {
+                    URL url = new URL(imageUrl);
+                    HttpURLConnection httpOpenConnection = (HttpURLConnection) url
+                            .openConnection();
+                    if (httpOpenConnection.getResponseCode() == 200) {
+                        InputStream inputStream = httpOpenConnection.getInputStream();
+                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                        Message msg = new Message();
+
+                        //一个int类型的条件，用于主线程判断是加载成功还是失败
+                        msg.what = GET_IMAGE_URL_SUCCESS;
+                        msg.obj = bitmap;
+                        mHandler.sendMessage(msg);
+                    } else {
+                        Message msg = new Message();
+                        msg.what = GET_IMAGE_URL_FAILED;
+                        mHandler.sendMessage(msg);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                    //出现异常当然也是加载失败了
+                    Message msg = new Message();
+                    msg.what = GET_IMAGE_URL_FAILED;
+                    mHandler.sendMessage(msg);
+                }
+            }
+
+        }.start();
+
+    }
+
+}
+</code></pre><h2 id="com-m520it-newsclient-util-NetWorkUtil-java"><a href="#com-m520it-newsclient-util-NetWorkUtil-java" class="headerlink" title="com.m520it.newsclient.util.NetWorkUtil.java"></a>com.m520it.newsclient.util.NetWorkUtil.java</h2><pre><code>package com.m520it.newsclient.util;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+//这个工具类的功能是获取xml文件，并将其保存为流
+public class NetworkUtil {
+
+    //帮助类的方法当然是static了
+    public static InputStream getResource(String string) throws Exception {
+        URL url = new URL(string);
+
+        HttpURLConnection openConnection = (HttpURLConnection) url.openConnection();
+
+        int responseCode = openConnection.getResponseCode();
+
+        if (responseCode == 200) {
+
+            return openConnection.getInputStream();
+        }
+
+        return null;
+    }
+
+}
+</code></pre><h2 id="com-m520it-newsclient-util-XmlUtil-java"><a href="#com-m520it-newsclient-util-XmlUtil-java" class="headerlink" title="com.m520it.newsclient.util.XmlUtil.java"></a>com.m520it.newsclient.util.XmlUtil.java</h2><pre><code>package com.m520it.newsclient.util;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+
+import org.xmlpull.v1.XmlPullParser;
+
+import android.util.Xml;
+
+import com.m520it.newsclient.bean.NewsBean;
+
+public class XmlUtil {
+
+    public static ArrayList&lt;NewsBean&gt; parseXml(InputStream is) throws Exception {
+
+        ArrayList&lt;NewsBean&gt; returnVal = new ArrayList&lt;NewsBean&gt;();
+
+        //创建一个xml的pull解析器，返回类型是XmlPullParser类
+        XmlPullParser newPullParser = Xml.newPullParser();
+
+        //设置输入流并设置编码方式
+        newPullParser.setInput(is, &quot;utf-8&quot;);
+
+        //获取xml文件的标签
+        int eventType = newPullParser.getEventType();
+        NewsBean newsBean = null;
+
+        //一直读取标签，直到xml文件的结束
+        while (eventType != XmlPullParser.END_DOCUMENT) {
+
+            //如果是开始标签，则判断标签的类型并作出相应的处理
+            if (eventType == XmlPullParser.START_TAG) {
+                if (newPullParser.getName().equals(&quot;item&quot;)) {
+                    newsBean = new NewsBean();
+
+                }else if (newPullParser.getName().equals(&quot;title&quot;)) {
+                    newsBean.setTitle(newPullParser.nextText());
+
+                }else if (newPullParser.getName().equals(&quot;description&quot;)) {
+                    newsBean.setDescription(newPullParser.nextText());
+
+                }else if (newPullParser.getName().equals(&quot;image&quot;)) {
+                    newsBean.setImage(newPullParser.nextText());
+
+                }else if (newPullParser.getName().equals(&quot;type&quot;)) {
+                    newsBean.setType(Integer.parseInt(newPullParser.nextText()));
+
+                }else if (newPullParser.getName().equals(&quot;comment&quot;)) {
+                    newsBean.setComment(Integer.parseInt(newPullParser.nextText()));
+
+                }
+
+            //当读到结束标签时，则保存到Arraylist类型对象中
+            }else if (eventType == XmlPullParser.END_TAG) {
+                if (newPullParser.getName().equals(&quot;item&quot;)) {
+                    returnVal.add(newsBean);
+                }
+            }
+
+            //一直往下查询，否则就死循环了
+            eventType = newPullParser.next();
+        }
+
+        return returnVal;
+    }
+
+}
+</code></pre><h1 id="xml界面文件"><a href="#xml界面文件" class="headerlink" title="xml界面文件"></a>xml界面文件</h1><h2 id="activity-main-xml"><a href="#activity-main-xml" class="headerlink" title="activity_main.xml"></a>activity_main.xml</h2><p>这个文件里面只有一个ListView这个控件，主要是和ArrayList类型的对象进行适配，将ArrayList类型的对象里面的数据在ListView控件中进行显示</p>
+<pre><code>&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot; &gt;
+
+    &lt;ListView 
+        android:id=&quot;@+id/news_lv&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot; /&gt;
+
+&lt;/LinearLayout&gt;
+</code></pre><h2 id="news-layout-xml"><a href="#news-layout-xml" class="headerlink" title="news_layout.xml"></a>news_layout.xml</h2><p>这个文件里面是设置ListView中显示的某一个表格的界面，比如在此程序中，每一个表格包含一个ImageView和三个TextView，即显示一个图片并显示标题、描述文本和新闻类型</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot; &gt;
+
+    &lt;com.m520it.newsclient.ui.ImageViewWithUrl 
+        android:id=&quot;@+id/img_iv&quot;
+        android:layout_width=&quot;80dp&quot;
+        android:layout_height=&quot;80dp&quot;
+        android:layout_marginLeft=&quot;20dp&quot;
+        android:layout_marginTop=&quot;20dp&quot;
+        android:layout_marginRight=&quot;10dp&quot; /&gt;
+
+    &lt;TextView 
+        android:id=&quot;@+id/title_tv&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:lines=&quot;1&quot;
+        android:layout_toRightOf=&quot;@id/img_iv&quot;
+        android:layout_alignTop=&quot;@id/img_iv&quot;
+        android:layout_marginRight=&quot;20dp&quot;
+        android:textStyle=&quot;bold&quot;
+        android:textSize=&quot;25sp&quot; /&gt;
+
+    &lt;TextView 
+        android:id=&quot;@+id/disc_tv&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:lines=&quot;2&quot;
+        android:ellipsize=&quot;end&quot;
+        android:layout_below=&quot;@id/title_tv&quot;
+        android:layout_alignLeft=&quot;@id/title_tv&quot;
+        android:layout_marginRight=&quot;20dp&quot;
+        android:textSize=&quot;18sp&quot; /&gt;
+
+    &lt;TextView 
+        android:id=&quot;@+id/type_tv&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_alignRight=&quot;@id/disc_tv&quot;
+        android:textColor=&quot;#F00&quot;
+        android:layout_below=&quot;@id/disc_tv&quot;
+        android:textSize=&quot;15sp&quot; /&gt;
+
+&lt;/RelativeLayout&gt;
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/新闻客户端主界面/" rel="tag"># 新闻客户端主界面</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/22/Android开发模块之使用PullParser解析XML文件/" rel="next" title="Android开发模块之使用PullParser解析XML文件">
+                <i class="fa fa-chevron-left"></i> Android开发模块之使用PullParser解析XML文件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="zhuyanlin" />
+          <p class="site-author-name" itemprop="name">zhuyanlin</p>
+           
+              <p class="site-description motion-element" itemprop="description">zhuyanlin的个人博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java文件"><span class="nav-number">1.</span> <span class="nav-text">Java文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#com-m520it-newsclient-activity-MainActivity-java"><span class="nav-number">1.1.</span> <span class="nav-text">com.m520it.newsclient.activity.MainActivity.java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#com-m520it-newsclient-adapter-MyAdapter-java"><span class="nav-number">1.2.</span> <span class="nav-text">com.m520it.newsclient.adapter.MyAdapter.java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#com-m520it-newsclient-bean"><span class="nav-number">1.3.</span> <span class="nav-text">com.m520it.newsclient.bean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#com-m520it-newsclient-ui-ImageViewWithUrl-java"><span class="nav-number">1.4.</span> <span class="nav-text">com.m520it.newsclient.ui.ImageViewWithUrl.java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#com-m520it-newsclient-util-NetWorkUtil-java"><span class="nav-number">1.5.</span> <span class="nav-text">com.m520it.newsclient.util.NetWorkUtil.java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#com-m520it-newsclient-util-XmlUtil-java"><span class="nav-number">1.6.</span> <span class="nav-text">com.m520it.newsclient.util.XmlUtil.java</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xml界面文件"><span class="nav-number">2.</span> <span class="nav-text">xml界面文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#activity-main-xml"><span class="nav-number">2.1.</span> <span class="nav-text">activity_main.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#news-layout-xml"><span class="nav-number">2.2.</span> <span class="nav-text">news_layout.xml</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhuyanlin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

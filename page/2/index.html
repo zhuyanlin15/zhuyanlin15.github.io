@@ -311,6 +311,861 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/12/Android应用开发之利用字节流向SDCard写入数据/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuyanlin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanLin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/12/Android应用开发之利用字节流向SDCard写入数据/" itemprop="url">Android应用开发之利用字节流向SDCard写入数据</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-12T10:26:13+08:00">
+                2017-10-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android应用开发/" itemprop="url" rel="index">
+                    <span itemprop="name">Android应用开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="MainActivity-java"><a href="#MainActivity-java" class="headerlink" title="MainActivity.java"></a>MainActivity.java</h1><pre><code>package com.m520it.temp;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+
+
+public class MainActivity extends Activity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+
+        Button downloadBtn = (Button) findViewById(R.id.download_btn);
+
+        downloadBtn.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Log.v(&quot;123456789&quot;, &quot;clicked&quot;);
+
+                try {
+
+                    String parentFile = Environment.getExternalStorageState();
+
+                    //1、判断SD卡是否已经挂载
+                    if(parentFile.equals(Environment.MEDIA_MOUNTED)) {
+
+                        //2、设置文件的句柄
+                        File f = new File(Environment.getExternalStorageDirectory(), &quot;demo.avi&quot;);
+
+                        //3、使用字节流向所在目录中输出
+                        FileOutputStream fos = new FileOutputStream(f);
+
+                        //4、因为是使用的字节流，所以应该创建一个字节流数组，并且以某个单位长度（在这里是1M）进行输出
+                        byte[] data = new byte[1024*1024];
+                        for(int i = 0;i&lt;10;i++) {
+                            fos.write(data);
+                        }
+
+                        //5、关闭字节流
+                        fos.close();
+
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
+    }
+
+}
+</code></pre><h1 id="acitvity-main-xml"><a href="#acitvity-main-xml" class="headerlink" title="acitvity_main.xml"></a>acitvity_main.xml</h1><pre><code>&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:orientation=&quot;vertical&quot; &gt;
+
+    &lt;Button
+        android:id=&quot;@+id/download_btn&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:text=&quot;@string/download2SDCard&quot; /&gt;
+
+&lt;/LinearLayout&gt;
+</code></pre><h1 id="AndroidManifest-xml-在这里主要是设置允许写入SDCard的权限-、"><a href="#AndroidManifest-xml-在这里主要是设置允许写入SDCard的权限-、" class="headerlink" title="AndroidManifest.xml(在这里主要是设置允许写入SDCard的权限)、"></a>AndroidManifest.xml(在这里主要是设置允许写入SDCard的权限)、</h1><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    package=&quot;com.m520it.temp&quot;
+    android:versionCode=&quot;1&quot;
+    android:versionName=&quot;1.0&quot; &gt;
+
+    &lt;uses-sdk
+        android:minSdkVersion=&quot;14&quot;
+        android:targetSdkVersion=&quot;19&quot; /&gt;
+
+    &lt;application
+        android:allowBackup=&quot;true&quot;
+        android:icon=&quot;@drawable/ic_launcher&quot;
+        android:label=&quot;@string/app_name&quot;
+        android:theme=&quot;@style/AppTheme&quot; &gt;
+        &lt;activity
+            android:name=&quot;.MainActivity&quot;
+            android:label=&quot;@string/app_name&quot; &gt;
+            &lt;intent-filter&gt;
+                &lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;
+
+                &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;
+            &lt;/intent-filter&gt;
+        &lt;/activity&gt;
+    &lt;/application&gt;
+    &lt;uses-permission 
+        android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;/&gt;
+&lt;/manifest&gt;
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/11/S3C2440嵌入式之mkconfig文件分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuyanlin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanLin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/11/S3C2440嵌入式之mkconfig文件分析/" itemprop="url">S3C2440嵌入式之mkconfig文件分析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-11T20:25:08+08:00">
+                2017-10-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/嵌入式linux开发/" itemprop="url" rel="index">
+                    <span itemprop="name">嵌入式linux开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="mkconfig文件内容（关键语句旁边用“-”注释）"><a href="#mkconfig文件内容（关键语句旁边用“-”注释）" class="headerlink" title="mkconfig文件内容（关键语句旁边用“##”注释）"></a>mkconfig文件内容（关键语句旁边用“##”注释）</h1><pre><code>#!/bin/sh -e
+
+# Script to create header files and links to configure
+# U-Boot for a specific board.
+#
+# Parameters:  Target  Architecture  CPU  Board [VENDOR] [SOC]
+#
+# (C) 2002-2006 DENX Software Engineering, Wolfgang Denk &lt;wd@denx.de&gt;
+#
+
+##MakeFile中的配置指令，即执行make 100ask24x0_config
+##mkconfig 100ask24x0 arm arm920t 100ask24x0 NULL s3c24x0
+##              $1      $2    $3        $4     $5    $6
+
+APPEND=no    # Default: Create new config file
+BOARD_NAME=&quot;&quot;    # Name to print in make output
+
+while [ $# -gt 0 ] ; do
+    case &quot;$1&quot; in
+    --) shift ; break ;;
+    -a) shift ; APPEND=yes ;;
+    -n) shift ; BOARD_NAME=&quot;${1%%_config}&quot; ; shift ;;
+    *)  break ;;
+    esac
+done
+##上面16~22行是检查指令中是否有--,-a,-n,*的，显然是没有的
+
+[ &quot;${BOARD_NAME}&quot; ] || BOARD_NAME=&quot;$1&quot;
+##这个和C语言的条件编译好像，实际上这行代码与下一行意思一样
+##BOARD_NAME = 100ask24x0
+
+[ $# -lt 4 ] &amp;&amp; exit 1
+[ $# -gt 6 ] &amp;&amp; exit 1
+##参数个数小于4个或者大于6个则退出
+
+echo &quot;Configuring for ${BOARD_NAME} board...&quot;
+##打印后面的字符串
+
+#
+# Create link to architecture specific headers
+#
+if [ &quot;$SRCTREE&quot; != &quot;$OBJTREE&quot; ] ; then
+##显然条件不成立，执行else语句
+    mkdir -p ${OBJTREE}/include
+    mkdir -p ${OBJTREE}/include2
+    cd ${OBJTREE}/include2
+    rm -f asm
+    ln -s ${SRCTREE}/include/asm-$2 asm
+    LNPREFIX=&quot;../../include2/asm/&quot;
+    cd ../include
+    rm -rf asm-$2
+    rm -f asm
+    mkdir asm-$2
+    ln -s asm-$2 asm
+else
+    cd ./include
+    ##此时已经进入到了include文件夹中
+    rm -f asm
+    ln -s asm-$2 asm
+fi
+
+rm -f asm-$2/arch
+
+if [ -z &quot;$6&quot; -o &quot;$6&quot; = &quot;NULL&quot; ] ; then
+##判断第6个参数是为空或是等于&quot;NULL&quot;
+    ln -s ${LNPREFIX}arch-$3 asm-$2/arch
+else
+    ln -s ${LNPREFIX}arch-$6 asm-$2/arch
+fi
+
+if [ &quot;$2&quot; = &quot;arm&quot; ] ; then
+    rm -f asm-$2/proc
+    ln -s ${LNPREFIX}proc-armv asm-$2/proc
+fi
+
+#
+# Create include file for Make
+#
+echo &quot;ARCH   = $2&quot; &gt;  config.mk
+echo &quot;CPU    = $3&quot; &gt;&gt; config.mk
+echo &quot;BOARD  = $4&quot; &gt;&gt; config.mk
+##一个&quot;&lt;&quot;表示创建文件，两个&quot;&lt;&lt;&quot;表示追加内容
+##上面78~81行相当于config.mk内容为
+##ARCH = arm
+##CPU = arm920t
+## BOARD = 100ask24x0
+
+[ &quot;$5&quot; ] &amp;&amp; [ &quot;$5&quot; != &quot;NULL&quot; ] &amp;&amp; echo &quot;VENDOR = $5&quot; &gt;&gt; config.mk
+
+[ &quot;$6&quot; ] &amp;&amp; [ &quot;$6&quot; != &quot;NULL&quot; ] &amp;&amp; echo &quot;SOC    = $6&quot; &gt;&gt; config.mk
+##继续在config.mk中追加SOC = s3c24x0
+
+#
+# Create board specific header file
+#
+##创建一个单板相关的头文件
+if [ &quot;$APPEND&quot; = &quot;yes&quot; ]    # Append to existing config file
+then
+    echo &gt;&gt; config.h
+else
+    &gt; config.h        # Create new config file
+fi
+echo &quot;/* Automatically generated - do not edit */&quot; &gt;&gt;config.h
+echo &quot;#include &lt;configs/$1.h&gt;&quot; &gt;&gt;config.h
+
+exit 0
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/11/Android应用开发之QQ登录界面/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuyanlin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanLin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/11/Android应用开发之QQ登录界面/" itemprop="url">Android应用开发之QQ登录界面</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-11T18:18:13+08:00">
+                2017-10-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android应用开发/" itemprop="url" rel="index">
+                    <span itemprop="name">Android应用开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="MainActivity-java"><a href="#MainActivity-java" class="headerlink" title="MainActivity.java"></a>MainActivity.java</h1><pre><code>package com.m520it.temp;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+
+
+@SuppressLint(&quot;SdCardPath&quot;) public class MainActivity extends Activity {
+
+    //1、定义全局变量，前面是m开头
+    private EditText mPassportEt;
+    private EditText mPasswordEt;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+
+        //2、获取账号和密码这两个控件的id
+        mPassportEt = (EditText) findViewById(R.id.passport_et);
+        mPasswordEt = (EditText) findViewById(R.id.password_et);
+
+        //6、读取保存的账号和密码，再下次打开app的时候回显，相当于记住账号和密码的功能
+        //本来是犯了一个很严重的错误，居然把读取数据放到了按钮下面，真是蠢啊
+        readData();
+    }
+
+    public void loginClick(View v) {
+
+        //3、获取EditText中的文本
+        String passport = mPassportEt.getText().toString();
+        String password = mPasswordEt.getText().toString();
+
+        //4、判断账号和密码是不是为空，调用TextUtils工具类进行判断
+        if(TextUtils.isEmpty(passport)&amp;&amp;TextUtils.isEmpty(password)) {
+            Toast.makeText(getApplicationContext(), &quot;请填写账号和密码&quot;, 0).show();
+            //视频教程中说加上return，但是我试了一下，不加return也没有什么影响
+            //return;
+        }
+
+        else if(TextUtils.isEmpty(passport)) {
+            Toast.makeText(getApplicationContext(), &quot;请填写账号&quot;, 0).show();
+        }
+
+        else if(TextUtils.isEmpty(password)) {
+            Toast.makeText(getApplicationContext(), &quot;请填写密码&quot;, 0).show();
+        }
+
+        //5、保存信息，主要是账号和密码
+        savaData(passport,password);
+
+    }
+
+    private void savaData(String passport, String password) {
+
+        try {
+            //5-1、声明一个文件类，并设置其句柄
+            //File file = new File(&quot;/data/data/com.m520it.temp/cache/qqinfo.txt&quot;);
+            File file = new File(getCacheDir(), &quot;qqinfo.txt&quot;);
+
+            //5-2、声明一个字符流缓冲区，实际上FileWriter类型变量才是写入数据的主力而不是File类型变量
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+
+            //5-3、写入字符串，账号和密码以&quot;#&quot;分隔
+            writer.write(passport+&quot;#&quot;+password);
+
+            //5-4、关闭文件
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void readData() {
+
+
+        try {
+            //6-1、声明一个文件类，并设置句柄
+            //File file = new File(&quot;/data/data/com.m520it.temp/cache/qqinfo.txt&quot;);
+            File file = new File(getCacheDir(), &quot;qqinfo.txt&quot;);
+
+            //6-2、检查文件是否存在，为了保险起见，同时检查文件中是否有内容
+            if(file.exists()) {
+
+                //6-3、字符流缓冲区，构造器中为FileReader类
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+
+                //6-4、读取文件中的单行数据
+                String line = reader.readLine();
+
+                //6-5、关闭文件
+                reader.close();
+
+                //6-6、判断文件中是否用&quot;#&quot;将账号和密码分隔开来
+                if(line.contains(&quot;#&quot;)) {
+
+                    //6-7、以&quot;#&quot;为参考分隔成两个字符串
+                    String[] datas = line.split(&quot;#&quot;);
+
+                    //6-8、使EditText回显
+                    mPassportEt.setText(datas[0]);
+                    mPasswordEt.setText(datas[1]);
+
+                }
+            }
+
+            //**注意这里原来是FileNotFoundException，但是因为已经检查文件是否存在了，就改为Exception
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+}
+</code></pre><h1 id="activity-main-xml"><a href="#activity-main-xml" class="headerlink" title="activity_main.xml"></a>activity_main.xml</h1><pre><code>&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot; 
+    android:orientation=&quot;vertical&quot;&gt;
+
+    &lt;ImageView 
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:src=&quot;@drawable/qq&quot;
+        android:layout_gravity=&quot;center_horizontal&quot;
+        android:layout_marginTop=&quot;75dp&quot;
+        android:contentDescription=&quot;@string/QQlogin_imv_dec&quot;/&gt;
+
+    &lt;LinearLayout 
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:orientation=&quot;horizontal&quot;
+        android:layout_marginTop=&quot;60dp&quot;
+        android:paddingLeft=&quot;35dp&quot;
+        android:paddingRight=&quot;35dp&quot;&gt;
+
+        &lt;TextView 
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:text=&quot;@string/passport_tvname&quot;
+            android:textSize=&quot;20sp&quot;/&gt;
+
+        &lt;EditText 
+            android:id=&quot;@+id/passport_et&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:layout_marginLeft=&quot;10dp&quot;
+            android:hint=&quot;@string/passport_hint&quot;
+            android:textSize=&quot;20sp&quot;/&gt;
+
+    &lt;/LinearLayout&gt;
+
+    &lt;LinearLayout 
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:orientation=&quot;horizontal&quot;
+        android:layout_marginTop=&quot;20dp&quot;
+        android:paddingLeft=&quot;35dp&quot;
+        android:paddingRight=&quot;35dp&quot;&gt;
+
+        &lt;TextView 
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:text=&quot;@string/password_tvname&quot;
+            android:textSize=&quot;20sp&quot;/&gt;
+
+        &lt;EditText 
+            android:id=&quot;@+id/password_et&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:layout_marginLeft=&quot;10dp&quot;
+            android:hint=&quot;@string/password_hin&quot;
+            android:textSize=&quot;20sp&quot;
+            android:inputType=&quot;textPassword&quot;/&gt;
+
+    &lt;/LinearLayout&gt;
+
+    &lt;LinearLayout 
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:orientation=&quot;horizontal&quot;
+        android:layout_marginTop=&quot;70dp&quot;
+        android:paddingLeft=&quot;10dp&quot;
+        android:paddingRight=&quot;10dp&quot;&gt;
+
+        &lt;Button 
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;50dp&quot;
+            android:layout_weight=&quot;1&quot;
+            android:text=&quot;@string/sign_btn_info&quot;
+            style=&quot;@android:attr/buttonStyle&quot;/&gt;
+
+        &lt;Button 
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_marginLeft=&quot;10dp&quot;
+            android:layout_height=&quot;50dp&quot;
+            android:layout_weight=&quot;1&quot;
+            android:onClick=&quot;loginClick&quot;
+            android:text=&quot;@string/login_btn_info&quot;
+            style=&quot;@android:attr/buttonStyle&quot;/&gt;
+
+    &lt;/LinearLayout&gt;
+
+&lt;/LinearLayout&gt;
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/28/S3C2440嵌入式之MMU/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1299,7 +2154,7 @@ bne loop2
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1310,7 +2165,7 @@ bne loop2
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1321,7 +2176,7 @@ bne loop2
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

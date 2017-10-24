@@ -311,6 +311,894 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/24/Android应用开发之新闻客户端（主界面）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuyanlin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanLin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/24/Android应用开发之新闻客户端（主界面）/" itemprop="url">Android应用开发之新闻客户端（主界面）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-24T20:06:58+08:00">
+                2017-10-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android应用开发/" itemprop="url" rel="index">
+                    <span itemprop="name">Android应用开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Java文件"><a href="#Java文件" class="headerlink" title="Java文件"></a>Java文件</h1><h2 id="com-m520it-newsclient-activity-MainActivity-java"><a href="#com-m520it-newsclient-activity-MainActivity-java" class="headerlink" title="com.m520it.newsclient.activity.MainActivity.java"></a>com.m520it.newsclient.activity.MainActivity.java</h2><pre><code>package com.m520it.newsclient.activity;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.ListView;
+
+import com.m520it.newsclient.adapter.MyAdapter;
+import com.m520it.newsclient.bean.NewsBean;
+import com.m520it.newsclient.util.NetworkUtil;
+import com.m520it.newsclient.util.XmlUtil;
+import com.m520it.temp.R;
+
+
+public class MainActivity extends Activity {
+
+    ArrayList&lt;NewsBean&gt; mNewsInfo = new ArrayList&lt;NewsBean&gt;();
+    MyAdapter mNewsApadter;
+    ListView mNewsLv;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        new Thread() {
+            public void run() {
+                getNewsResource();
+            }
+        }.start();
+
+        //一定要给适配器赋初值，否则传递给ListView时（实际是地址），地址都是乱的
+        mNewsApadter = new MyAdapter();
+        mNewsLv = (ListView) findViewById(R.id.news_lv);
+        mNewsLv.setAdapter(mNewsApadter);
+    }
+
+    private void getNewsResource() {
+        String url = &quot;http://192.168.176.1:8080/news.xml&quot;;
+        try {
+            //获取xml资源并准备pull解析
+
+            InputStream is = NetworkUtil.getResource(url);
+
+            if (is != null) {
+                mNewsInfo = XmlUtil.parseXml(is);
+                //打印获取的xml信息
+//                for (int i = 0; i &lt; mNewsInfo.size(); i++) {
+//                    Log.v(&quot;520it&quot;, mNewsInfo.get(i)+&quot;&quot;);
+//                }
+                mNewsApadter.setDatas(mNewsInfo);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+}
+</code></pre><h2 id="com-m520it-newsclient-adapter-MyAdapter-java"><a href="#com-m520it-newsclient-adapter-MyAdapter-java" class="headerlink" title="com.m520it.newsclient.adapter.MyAdapter.java"></a>com.m520it.newsclient.adapter.MyAdapter.java</h2><pre><code>package com.m520it.newsclient.adapter;
+
+import java.util.ArrayList;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+import com.m520it.newsclient.bean.NewsBean;
+import com.m520it.newsclient.ui.ImageViewWithUrl;
+import com.m520it.temp.R;
+
+public class MyAdapter extends BaseAdapter {
+
+    private ArrayList&lt;NewsBean&gt; mNewsList;
+
+    //通过这个方法和ArrayList建立连接
+    public void setDatas(ArrayList&lt;NewsBean&gt; mNewsInfo) {
+        mNewsList = mNewsInfo;
+    }
+
+    //得到ArrayList中的数量
+    @Override
+    public int getCount() {
+        return mNewsList != null?mNewsList.size():0;
+    }
+
+    class Holder {
+        ImageViewWithUrl newsImgIv;
+        TextView newsTitleTv;
+        TextView newsDiscTv;
+        TextView newsTypeTv;
+    }
+
+    //可以将一组数据传到ListView中
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        Holder newsHolder = null;
+        if (convertView == null) {
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            convertView = inflater.inflate(R.layout.news_layout, null);
+            //这里做一个判断，当convertView为空的时候，则创建一个newsHolder对象，用于存放拿到的每个列表中的控件
+            //之所以有个判断语句是防止每次完成一个列表时，又重新创建一个newsHolder对象，这样提高了笑效率
+            newsHolder = new Holder();
+            newsHolder.newsImgIv = (ImageViewWithUrl) convertView.findViewById(R.id.img_iv);
+            newsHolder.newsTitleTv = (TextView) convertView.findViewById(R.id.title_tv);
+            newsHolder.newsDiscTv = (TextView) convertView.findViewById(R.id.disc_tv);
+            newsHolder.newsTypeTv = (TextView) convertView.findViewById(R.id.type_tv);
+
+            convertView.setTag(newsHolder);
+        }else {
+            newsHolder = (Holder) convertView.getTag();
+        }
+
+        //既然获取了信息，则将各种信息使用刚刚获取的控件表达出来
+        NewsBean newsBean = mNewsList.get(position);
+        newsHolder.newsImgIv.setImageUrl(newsBean.getImage());
+        newsHolder.newsTitleTv.setText(newsBean.getTitle());
+        newsHolder.newsDiscTv.setText(newsBean.getDescription());
+
+        //判断是评论、专题还是科技类型
+        initType(newsHolder, newsBean);
+        return convertView;
+    }
+
+    private void initType(Holder newsHolder, NewsBean newsBean) {
+        if (newsBean.getType() == 1) {
+            newsHolder.newsTypeTv.setText(&quot;评论：&quot;+newsBean.getComment());
+        }else if (newsBean.getType() == 2) {
+            newsHolder.newsTypeTv.setText(&quot;专题&quot;);
+        }else if (newsBean.getType() == 3) {
+            newsHolder.newsTypeTv.setText(&quot;科技&quot;);
+        }
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return null;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+}
+</code></pre><h2 id="com-m520it-newsclient-bean"><a href="#com-m520it-newsclient-bean" class="headerlink" title="com.m520it.newsclient.bean"></a>com.m520it.newsclient.bean</h2><pre><code>import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.Message;
+import android.util.AttributeSet;
+import android.widget.ImageView;
+
+import com.m520it.temp.R;
+
+//创建一个类存储xml中获取的标签对应的内容，符合JavaBean语法（get、set等）
+public class NewsBean {
+
+    private String title;
+    private String description;
+    private String image;
+    private int type;
+    private int comment;
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public String getImage() {
+        return image;
+    }
+    public void setImage(String image) {
+        this.image = image;
+    }
+    public int getType() {
+        return type;
+    }
+    public void setType(int type) {
+        this.type = type;
+    }
+    public int getComment() {
+        return comment;
+    }
+    public void setComment(int comment) {
+        this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;NewsBean [title=&quot; + title + &quot;, description=&quot; + description
+                + &quot;, image=&quot; + image + &quot;, type=&quot; + type + &quot;, comment=&quot;
+                + comment + &quot;]&quot;;
+    }
+
+}
+</code></pre><h2 id="com-m520it-newsclient-ui-ImageViewWithUrl-java"><a href="#com-m520it-newsclient-ui-ImageViewWithUrl-java" class="headerlink" title="com.m520it.newsclient.ui.ImageViewWithUrl.java"></a>com.m520it.newsclient.ui.ImageViewWithUrl.java</h2><pre><code>package com.m520it.newsclient.ui;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.Message;
+import android.util.AttributeSet;
+import android.widget.ImageView;
+
+import com.m520it.temp.R;
+
+@SuppressLint(&quot;HandlerLeak&quot;)
+public class ImageViewWithUrl extends ImageView {
+
+    public static final int GET_IMAGE_URL_SUCCESS = 0x01;
+    public static final int GET_IMAGE_URL_FAILED = 0x02;
+
+    //定义一个Handler对象用来接收子线程发送的消息并处理
+    Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+
+            //分为图片加载成功和图片加载失败
+            if (msg.what == GET_IMAGE_URL_SUCCESS) {
+
+                setImageBitmap((Bitmap) msg.obj);
+
+            } else if (msg.what == GET_IMAGE_URL_FAILED) {
+                setImageResource(R.drawable.ic_launcher);
+            }
+        };
+    };
+
+    // new一个控件的时候调用
+    public ImageViewWithUrl(Context context) {
+        super(context);
+    }
+
+    // 这个和xml文件的ui有关系
+    public ImageViewWithUrl(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    /**
+     * 注意啊，网络请求一定要放在子线程里面，改变ui一定要在UI线程（主线程）里面，在本程序中使用的Handler处理子线程
+     */
+    public void setImageUrl(final String imageUrl) {
+        new Thread() {
+            public void run() {
+
+                try {
+                    URL url = new URL(imageUrl);
+                    HttpURLConnection httpOpenConnection = (HttpURLConnection) url
+                            .openConnection();
+                    if (httpOpenConnection.getResponseCode() == 200) {
+                        InputStream inputStream = httpOpenConnection.getInputStream();
+                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                        Message msg = new Message();
+
+                        //一个int类型的条件，用于主线程判断是加载成功还是失败
+                        msg.what = GET_IMAGE_URL_SUCCESS;
+                        msg.obj = bitmap;
+                        mHandler.sendMessage(msg);
+                    } else {
+                        Message msg = new Message();
+                        msg.what = GET_IMAGE_URL_FAILED;
+                        mHandler.sendMessage(msg);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                    //出现异常当然也是加载失败了
+                    Message msg = new Message();
+                    msg.what = GET_IMAGE_URL_FAILED;
+                    mHandler.sendMessage(msg);
+                }
+            }
+
+        }.start();
+
+    }
+
+}
+</code></pre><h2 id="com-m520it-newsclient-util-NetWorkUtil-java"><a href="#com-m520it-newsclient-util-NetWorkUtil-java" class="headerlink" title="com.m520it.newsclient.util.NetWorkUtil.java"></a>com.m520it.newsclient.util.NetWorkUtil.java</h2><pre><code>package com.m520it.newsclient.util;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+//这个工具类的功能是获取xml文件，并将其保存为流
+public class NetworkUtil {
+
+    //帮助类的方法当然是static了
+    public static InputStream getResource(String string) throws Exception {
+        URL url = new URL(string);
+
+        HttpURLConnection openConnection = (HttpURLConnection) url.openConnection();
+
+        int responseCode = openConnection.getResponseCode();
+
+        if (responseCode == 200) {
+
+            return openConnection.getInputStream();
+        }
+
+        return null;
+    }
+
+}
+</code></pre><h2 id="com-m520it-newsclient-util-XmlUtil-java"><a href="#com-m520it-newsclient-util-XmlUtil-java" class="headerlink" title="com.m520it.newsclient.util.XmlUtil.java"></a>com.m520it.newsclient.util.XmlUtil.java</h2><pre><code>package com.m520it.newsclient.util;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+
+import org.xmlpull.v1.XmlPullParser;
+
+import android.util.Xml;
+
+import com.m520it.newsclient.bean.NewsBean;
+
+public class XmlUtil {
+
+    public static ArrayList&lt;NewsBean&gt; parseXml(InputStream is) throws Exception {
+
+        ArrayList&lt;NewsBean&gt; returnVal = new ArrayList&lt;NewsBean&gt;();
+
+        //创建一个xml的pull解析器，返回类型是XmlPullParser类
+        XmlPullParser newPullParser = Xml.newPullParser();
+
+        //设置输入流并设置编码方式
+        newPullParser.setInput(is, &quot;utf-8&quot;);
+
+        //获取xml文件的标签
+        int eventType = newPullParser.getEventType();
+        NewsBean newsBean = null;
+
+        //一直读取标签，直到xml文件的结束
+        while (eventType != XmlPullParser.END_DOCUMENT) {
+
+            //如果是开始标签，则判断标签的类型并作出相应的处理
+            if (eventType == XmlPullParser.START_TAG) {
+                if (newPullParser.getName().equals(&quot;item&quot;)) {
+                    newsBean = new NewsBean();
+
+                }else if (newPullParser.getName().equals(&quot;title&quot;)) {
+                    newsBean.setTitle(newPullParser.nextText());
+
+                }else if (newPullParser.getName().equals(&quot;description&quot;)) {
+                    newsBean.setDescription(newPullParser.nextText());
+
+                }else if (newPullParser.getName().equals(&quot;image&quot;)) {
+                    newsBean.setImage(newPullParser.nextText());
+
+                }else if (newPullParser.getName().equals(&quot;type&quot;)) {
+                    newsBean.setType(Integer.parseInt(newPullParser.nextText()));
+
+                }else if (newPullParser.getName().equals(&quot;comment&quot;)) {
+                    newsBean.setComment(Integer.parseInt(newPullParser.nextText()));
+
+                }
+
+            //当读到结束标签时，则保存到Arraylist类型对象中
+            }else if (eventType == XmlPullParser.END_TAG) {
+                if (newPullParser.getName().equals(&quot;item&quot;)) {
+                    returnVal.add(newsBean);
+                }
+            }
+
+            //一直往下查询，否则就死循环了
+            eventType = newPullParser.next();
+        }
+
+        return returnVal;
+    }
+
+}
+</code></pre><h1 id="xml界面文件"><a href="#xml界面文件" class="headerlink" title="xml界面文件"></a>xml界面文件</h1><h2 id="activity-main-xml"><a href="#activity-main-xml" class="headerlink" title="activity_main.xml"></a>activity_main.xml</h2><p>这个文件里面只有一个ListView这个控件，主要是和ArrayList类型的对象进行适配，将ArrayList类型的对象里面的数据在ListView控件中进行显示</p>
+<pre><code>&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot; &gt;
+
+    &lt;ListView 
+        android:id=&quot;@+id/news_lv&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot; /&gt;
+
+&lt;/LinearLayout&gt;
+</code></pre><h2 id="news-layout-xml"><a href="#news-layout-xml" class="headerlink" title="news_layout.xml"></a>news_layout.xml</h2><p>这个文件里面是设置ListView中显示的某一个表格的界面，比如在此程序中，每一个表格包含一个ImageView和三个TextView，即显示一个图片并显示标题、描述文本和新闻类型</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot; &gt;
+
+    &lt;com.m520it.newsclient.ui.ImageViewWithUrl 
+        android:id=&quot;@+id/img_iv&quot;
+        android:layout_width=&quot;80dp&quot;
+        android:layout_height=&quot;80dp&quot;
+        android:layout_marginLeft=&quot;20dp&quot;
+        android:layout_marginTop=&quot;20dp&quot;
+        android:layout_marginRight=&quot;10dp&quot; /&gt;
+
+    &lt;TextView 
+        android:id=&quot;@+id/title_tv&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:lines=&quot;1&quot;
+        android:layout_toRightOf=&quot;@id/img_iv&quot;
+        android:layout_alignTop=&quot;@id/img_iv&quot;
+        android:layout_marginRight=&quot;20dp&quot;
+        android:textStyle=&quot;bold&quot;
+        android:textSize=&quot;25sp&quot; /&gt;
+
+    &lt;TextView 
+        android:id=&quot;@+id/disc_tv&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:lines=&quot;2&quot;
+        android:ellipsize=&quot;end&quot;
+        android:layout_below=&quot;@id/title_tv&quot;
+        android:layout_alignLeft=&quot;@id/title_tv&quot;
+        android:layout_marginRight=&quot;20dp&quot;
+        android:textSize=&quot;18sp&quot; /&gt;
+
+    &lt;TextView 
+        android:id=&quot;@+id/type_tv&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_alignRight=&quot;@id/disc_tv&quot;
+        android:textColor=&quot;#F00&quot;
+        android:layout_below=&quot;@id/disc_tv&quot;
+        android:textSize=&quot;15sp&quot; /&gt;
+
+&lt;/RelativeLayout&gt;
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/22/Android开发模块之使用PullParser解析XML文件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuyanlin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanLin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/22/Android开发模块之使用PullParser解析XML文件/" itemprop="url">Android开发模块之使用PullParser解析XML文件</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-22T10:02:55+08:00">
+                2017-10-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android模块开发/" itemprop="url" rel="index">
+                    <span itemprop="name">Android模块开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h1><h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/22/Android开发模块之从网络获取图片资源（多删少补）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuyanlin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanLin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/22/Android开发模块之从网络获取图片资源（多删少补）/" itemprop="url">Android开发模块之从网络获取图片资源）（多删少补）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-22T10:02:19+08:00">
+                2017-10-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android开发模块/" itemprop="url" rel="index">
+                    <span itemprop="name">Android开发模块</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="模块介绍"><a href="#模块介绍" class="headerlink" title="模块介绍"></a>模块介绍</h1><p>本模块为基础模块，其功能是：从给定的网站获取图片资源，并将其放到输入流中，等待后续操作。</p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>1)首先创建一个URL类，并将网址作为输入参数</p>
+<pre><code>URL url = new URL(&quot;https://www.baidu.com&quot;);
+</code></pre><p>2)打开URL的连接</p>
+<pre><code>HttpURLConnection ocnn = (HttpURLConnection) url.openConnection();
+</code></pre><p><strong>注意：openConnection()的返回类型是URLConnection类，但是因为要使用Http协议，所以最好进行强制转换为HttpURLConnection类，否则后面就不能获取访问状态码</strong></p>
+<p>3)判断ocnn的访问状态码，判断是否为200。当为200时，访问成功，执行后续的操作，否则访问失败。</p>
+<pre><code>int responseCode = ocnn.getResponseCode(); 
+if (responseCode == 200) {
+    //后续操作
+}
+</code></pre><p><strong>注意：为了使代码更加健壮，可以对访问失败进行处理</strong></p>
+<p>4)使用getInputStream()方法获取连接的资源并转换成输入流</p>
+<pre><code>InputStream inputStream = ocnn.getInputStream();
+</code></pre><h1 id="重点"><a href="#重点" class="headerlink" title="重点"></a>重点</h1><p>1)在安卓高版本中规定网络访问一定要在子线程中，防止网络出现错误后影响主线程；</p>
+<p>2)记得要加上try-catch或者抛出异常。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/19/Android应用开发之读取本地服务器图片并缓存/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -404,7 +1292,7 @@
       
         
           
-            <h1 id="MainActivity-java"><a href="#MainActivity-java" class="headerlink" title="MainActivity.java"></a>MainActivity.java</h1><pre><code>package com.m520it.temp233;
+            <h1 id="MainActivity-java"><a href="#MainActivity-java" class="headerlink" title="MainActivity.java"></a>MainActivity.java</h1><pre><code>package com.m520it.temp23333;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -415,18 +1303,21 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-import com.m520it.temp.R;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.m520it.temp.R;
 
 public class MainActivity extends Activity {
 
@@ -434,6 +1325,13 @@ public class MainActivity extends Activity {
     private ArrayList&lt;String&gt; mUrlStringList = new ArrayList&lt;String&gt;();
     private int mImageIndex = 0;
     private ImageView mImgIv;
+
+    @SuppressLint(&quot;HandlerLeak&quot;) private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            mImgIv.setImageBitmap((Bitmap) msg.obj);
+        };
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -519,13 +1417,18 @@ public class MainActivity extends Activity {
                 //使用BitmapFactory这个工具类将文件转换成位图
                 final Bitmap decodeFile = BitmapFactory.decodeFile(f.getAbsolutePath());
                 //当然，显示图片需要再主线程中
-                runOnUiThread(new Runnable() {
+//                runOnUiThread(new Runnable() {
+//
+//                    @Override
+//                    public void run() {
+//                        mImgIv.setImageBitmap(decodeFile);
+//                    }
+//                });
+//                TODO
+                Message msg = new Message();
+                msg.obj = decodeFile;
+                mHandler.sendMessage(msg);
 
-                    @Override
-                    public void run() {
-                        mImgIv.setImageBitmap(decodeFile);
-                    }
-                });
                 return;
             }
 
@@ -546,15 +1449,20 @@ public class MainActivity extends Activity {
                 bm.compress(CompressFormat.PNG, 100, openFileOutput);
 
                 //只有在主线程中才能显示图片，original thread = main thread = UI thread
-                //使用Activity.runOnUiThread()方法可以让代码转移到主线程中
-                runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        mImgIv.setImageBitmap(bm);
-                    }
-
-                });
+                //有两种方法，一种是使用runOnUiThread，另外一种是使用Handler
+                //使用Activity.runOnUiThread()方法可以让代码转移到主线程中，
+//                runOnUiThread(new Runnable() {
+//
+//                    @Override
+//                    public void run() {
+//                        mImgIv.setImageBitmap(bm);
+//                    }
+//                    
+//                });
+//                TODO
+                Message msg = new Message();
+                msg.obj = bm;
+                mHandler.sendMessage(msg);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -2271,861 +3179,6 @@ int test1 (void)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/12/Android应用开发之利用字节流向SDCard写入数据/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuyanlin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YanLin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/12/Android应用开发之利用字节流向SDCard写入数据/" itemprop="url">Android应用开发之利用字节流向SDCard写入数据</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-12T10:26:13+08:00">
-                2017-10-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android应用开发/" itemprop="url" rel="index">
-                    <span itemprop="name">Android应用开发</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="MainActivity-java"><a href="#MainActivity-java" class="headerlink" title="MainActivity.java"></a>MainActivity.java</h1><pre><code>package com.m520it.temp;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import android.app.Activity;
-import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-
-
-public class MainActivity extends Activity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-
-        Button downloadBtn = (Button) findViewById(R.id.download_btn);
-
-        downloadBtn.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                Log.v(&quot;123456789&quot;, &quot;clicked&quot;);
-
-                try {
-
-                    String parentFile = Environment.getExternalStorageState();
-
-                    //1、判断SD卡是否已经挂载
-                    if(parentFile.equals(Environment.MEDIA_MOUNTED)) {
-
-                        //2、设置文件的句柄
-                        File f = new File(Environment.getExternalStorageDirectory(), &quot;demo.avi&quot;);
-
-                        //3、使用字节流向所在目录中输出
-                        FileOutputStream fos = new FileOutputStream(f);
-
-                        //4、因为是使用的字节流，所以应该创建一个字节流数组，并且以某个单位长度（在这里是1M）进行输出
-                        byte[] data = new byte[1024*1024];
-                        for(int i = 0;i&lt;10;i++) {
-                            fos.write(data);
-                        }
-
-                        //5、关闭字节流
-                        fos.close();
-
-                    }
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-        });
-    }
-
-}
-</code></pre><h1 id="acitvity-main-xml"><a href="#acitvity-main-xml" class="headerlink" title="acitvity_main.xml"></a>acitvity_main.xml</h1><pre><code>&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
-    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
-    android:layout_width=&quot;match_parent&quot;
-    android:layout_height=&quot;match_parent&quot;
-    android:orientation=&quot;vertical&quot; &gt;
-
-    &lt;Button
-        android:id=&quot;@+id/download_btn&quot;
-        android:layout_width=&quot;wrap_content&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:text=&quot;@string/download2SDCard&quot; /&gt;
-
-&lt;/LinearLayout&gt;
-</code></pre><h1 id="AndroidManifest-xml-在这里主要是设置允许写入SDCard的权限-、"><a href="#AndroidManifest-xml-在这里主要是设置允许写入SDCard的权限-、" class="headerlink" title="AndroidManifest.xml(在这里主要是设置允许写入SDCard的权限)、"></a>AndroidManifest.xml(在这里主要是设置允许写入SDCard的权限)、</h1><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
-    package=&quot;com.m520it.temp&quot;
-    android:versionCode=&quot;1&quot;
-    android:versionName=&quot;1.0&quot; &gt;
-
-    &lt;uses-sdk
-        android:minSdkVersion=&quot;14&quot;
-        android:targetSdkVersion=&quot;19&quot; /&gt;
-
-    &lt;application
-        android:allowBackup=&quot;true&quot;
-        android:icon=&quot;@drawable/ic_launcher&quot;
-        android:label=&quot;@string/app_name&quot;
-        android:theme=&quot;@style/AppTheme&quot; &gt;
-        &lt;activity
-            android:name=&quot;.MainActivity&quot;
-            android:label=&quot;@string/app_name&quot; &gt;
-            &lt;intent-filter&gt;
-                &lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;
-
-                &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;
-            &lt;/intent-filter&gt;
-        &lt;/activity&gt;
-    &lt;/application&gt;
-    &lt;uses-permission 
-        android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;/&gt;
-&lt;/manifest&gt;
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/11/S3C2440嵌入式之mkconfig文件分析/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuyanlin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YanLin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/11/S3C2440嵌入式之mkconfig文件分析/" itemprop="url">S3C2440嵌入式之mkconfig文件分析</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-11T20:25:08+08:00">
-                2017-10-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/嵌入式linux开发/" itemprop="url" rel="index">
-                    <span itemprop="name">嵌入式linux开发</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="mkconfig文件内容（关键语句旁边用“-”注释）"><a href="#mkconfig文件内容（关键语句旁边用“-”注释）" class="headerlink" title="mkconfig文件内容（关键语句旁边用“##”注释）"></a>mkconfig文件内容（关键语句旁边用“##”注释）</h1><pre><code>#!/bin/sh -e
-
-# Script to create header files and links to configure
-# U-Boot for a specific board.
-#
-# Parameters:  Target  Architecture  CPU  Board [VENDOR] [SOC]
-#
-# (C) 2002-2006 DENX Software Engineering, Wolfgang Denk &lt;wd@denx.de&gt;
-#
-
-##MakeFile中的配置指令，即执行make 100ask24x0_config
-##mkconfig 100ask24x0 arm arm920t 100ask24x0 NULL s3c24x0
-##              $1      $2    $3        $4     $5    $6
-
-APPEND=no    # Default: Create new config file
-BOARD_NAME=&quot;&quot;    # Name to print in make output
-
-while [ $# -gt 0 ] ; do
-    case &quot;$1&quot; in
-    --) shift ; break ;;
-    -a) shift ; APPEND=yes ;;
-    -n) shift ; BOARD_NAME=&quot;${1%%_config}&quot; ; shift ;;
-    *)  break ;;
-    esac
-done
-##上面16~22行是检查指令中是否有--,-a,-n,*的，显然是没有的
-
-[ &quot;${BOARD_NAME}&quot; ] || BOARD_NAME=&quot;$1&quot;
-##这个和C语言的条件编译好像，实际上这行代码与下一行意思一样
-##BOARD_NAME = 100ask24x0
-
-[ $# -lt 4 ] &amp;&amp; exit 1
-[ $# -gt 6 ] &amp;&amp; exit 1
-##参数个数小于4个或者大于6个则退出
-
-echo &quot;Configuring for ${BOARD_NAME} board...&quot;
-##打印后面的字符串
-
-#
-# Create link to architecture specific headers
-#
-if [ &quot;$SRCTREE&quot; != &quot;$OBJTREE&quot; ] ; then
-##显然条件不成立，执行else语句
-    mkdir -p ${OBJTREE}/include
-    mkdir -p ${OBJTREE}/include2
-    cd ${OBJTREE}/include2
-    rm -f asm
-    ln -s ${SRCTREE}/include/asm-$2 asm
-    LNPREFIX=&quot;../../include2/asm/&quot;
-    cd ../include
-    rm -rf asm-$2
-    rm -f asm
-    mkdir asm-$2
-    ln -s asm-$2 asm
-else
-    cd ./include
-    ##此时已经进入到了include文件夹中
-    rm -f asm
-    ln -s asm-$2 asm
-fi
-
-rm -f asm-$2/arch
-
-if [ -z &quot;$6&quot; -o &quot;$6&quot; = &quot;NULL&quot; ] ; then
-##判断第6个参数是为空或是等于&quot;NULL&quot;
-    ln -s ${LNPREFIX}arch-$3 asm-$2/arch
-else
-    ln -s ${LNPREFIX}arch-$6 asm-$2/arch
-fi
-
-if [ &quot;$2&quot; = &quot;arm&quot; ] ; then
-    rm -f asm-$2/proc
-    ln -s ${LNPREFIX}proc-armv asm-$2/proc
-fi
-
-#
-# Create include file for Make
-#
-echo &quot;ARCH   = $2&quot; &gt;  config.mk
-echo &quot;CPU    = $3&quot; &gt;&gt; config.mk
-echo &quot;BOARD  = $4&quot; &gt;&gt; config.mk
-##一个&quot;&lt;&quot;表示创建文件，两个&quot;&lt;&lt;&quot;表示追加内容
-##上面78~81行相当于config.mk内容为
-##ARCH = arm
-##CPU = arm920t
-## BOARD = 100ask24x0
-
-[ &quot;$5&quot; ] &amp;&amp; [ &quot;$5&quot; != &quot;NULL&quot; ] &amp;&amp; echo &quot;VENDOR = $5&quot; &gt;&gt; config.mk
-
-[ &quot;$6&quot; ] &amp;&amp; [ &quot;$6&quot; != &quot;NULL&quot; ] &amp;&amp; echo &quot;SOC    = $6&quot; &gt;&gt; config.mk
-##继续在config.mk中追加SOC = s3c24x0
-
-#
-# Create board specific header file
-#
-##创建一个单板相关的头文件
-if [ &quot;$APPEND&quot; = &quot;yes&quot; ]    # Append to existing config file
-then
-    echo &gt;&gt; config.h
-else
-    &gt; config.h        # Create new config file
-fi
-echo &quot;/* Automatically generated - do not edit */&quot; &gt;&gt;config.h
-echo &quot;#include &lt;configs/$1.h&gt;&quot; &gt;&gt;config.h
-
-exit 0
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/11/Android应用开发之QQ登录界面/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuyanlin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YanLin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/11/Android应用开发之QQ登录界面/" itemprop="url">Android应用开发之QQ登录界面</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-11T18:18:13+08:00">
-                2017-10-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android应用开发/" itemprop="url" rel="index">
-                    <span itemprop="name">Android应用开发</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="MainActivity-java"><a href="#MainActivity-java" class="headerlink" title="MainActivity.java"></a>MainActivity.java</h1><pre><code>package com.m520it.temp;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
-
-
-@SuppressLint(&quot;SdCardPath&quot;) public class MainActivity extends Activity {
-
-    //1、定义全局变量，前面是m开头
-    private EditText mPassportEt;
-    private EditText mPasswordEt;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-
-        //2、获取账号和密码这两个控件的id
-        mPassportEt = (EditText) findViewById(R.id.passport_et);
-        mPasswordEt = (EditText) findViewById(R.id.password_et);
-
-        //6、读取保存的账号和密码，再下次打开app的时候回显，相当于记住账号和密码的功能
-        //本来是犯了一个很严重的错误，居然把读取数据放到了按钮下面，真是蠢啊
-        readData();
-    }
-
-    public void loginClick(View v) {
-
-        //3、获取EditText中的文本
-        String passport = mPassportEt.getText().toString();
-        String password = mPasswordEt.getText().toString();
-
-        //4、判断账号和密码是不是为空，调用TextUtils工具类进行判断
-        if(TextUtils.isEmpty(passport)&amp;&amp;TextUtils.isEmpty(password)) {
-            Toast.makeText(getApplicationContext(), &quot;请填写账号和密码&quot;, 0).show();
-            //视频教程中说加上return，但是我试了一下，不加return也没有什么影响
-            //return;
-        }
-
-        else if(TextUtils.isEmpty(passport)) {
-            Toast.makeText(getApplicationContext(), &quot;请填写账号&quot;, 0).show();
-        }
-
-        else if(TextUtils.isEmpty(password)) {
-            Toast.makeText(getApplicationContext(), &quot;请填写密码&quot;, 0).show();
-        }
-
-        //5、保存信息，主要是账号和密码
-        savaData(passport,password);
-
-    }
-
-    private void savaData(String passport, String password) {
-
-        try {
-            //5-1、声明一个文件类，并设置其句柄
-            //File file = new File(&quot;/data/data/com.m520it.temp/cache/qqinfo.txt&quot;);
-            File file = new File(getCacheDir(), &quot;qqinfo.txt&quot;);
-
-            //5-2、声明一个字符流缓冲区，实际上FileWriter类型变量才是写入数据的主力而不是File类型变量
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-
-            //5-3、写入字符串，账号和密码以&quot;#&quot;分隔
-            writer.write(passport+&quot;#&quot;+password);
-
-            //5-4、关闭文件
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void readData() {
-
-
-        try {
-            //6-1、声明一个文件类，并设置句柄
-            //File file = new File(&quot;/data/data/com.m520it.temp/cache/qqinfo.txt&quot;);
-            File file = new File(getCacheDir(), &quot;qqinfo.txt&quot;);
-
-            //6-2、检查文件是否存在，为了保险起见，同时检查文件中是否有内容
-            if(file.exists()) {
-
-                //6-3、字符流缓冲区，构造器中为FileReader类
-                BufferedReader reader = new BufferedReader(new FileReader(file));
-
-                //6-4、读取文件中的单行数据
-                String line = reader.readLine();
-
-                //6-5、关闭文件
-                reader.close();
-
-                //6-6、判断文件中是否用&quot;#&quot;将账号和密码分隔开来
-                if(line.contains(&quot;#&quot;)) {
-
-                    //6-7、以&quot;#&quot;为参考分隔成两个字符串
-                    String[] datas = line.split(&quot;#&quot;);
-
-                    //6-8、使EditText回显
-                    mPassportEt.setText(datas[0]);
-                    mPasswordEt.setText(datas[1]);
-
-                }
-            }
-
-            //**注意这里原来是FileNotFoundException，但是因为已经检查文件是否存在了，就改为Exception
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-}
-</code></pre><h1 id="activity-main-xml"><a href="#activity-main-xml" class="headerlink" title="activity_main.xml"></a>activity_main.xml</h1><pre><code>&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
-    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
-    android:layout_width=&quot;match_parent&quot;
-    android:layout_height=&quot;match_parent&quot; 
-    android:orientation=&quot;vertical&quot;&gt;
-
-    &lt;ImageView 
-        android:layout_width=&quot;wrap_content&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:src=&quot;@drawable/qq&quot;
-        android:layout_gravity=&quot;center_horizontal&quot;
-        android:layout_marginTop=&quot;75dp&quot;
-        android:contentDescription=&quot;@string/QQlogin_imv_dec&quot;/&gt;
-
-    &lt;LinearLayout 
-        android:layout_width=&quot;match_parent&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:orientation=&quot;horizontal&quot;
-        android:layout_marginTop=&quot;60dp&quot;
-        android:paddingLeft=&quot;35dp&quot;
-        android:paddingRight=&quot;35dp&quot;&gt;
-
-        &lt;TextView 
-            android:layout_width=&quot;wrap_content&quot;
-            android:layout_height=&quot;wrap_content&quot;
-            android:text=&quot;@string/passport_tvname&quot;
-            android:textSize=&quot;20sp&quot;/&gt;
-
-        &lt;EditText 
-            android:id=&quot;@+id/passport_et&quot;
-            android:layout_width=&quot;match_parent&quot;
-            android:layout_height=&quot;wrap_content&quot;
-            android:layout_marginLeft=&quot;10dp&quot;
-            android:hint=&quot;@string/passport_hint&quot;
-            android:textSize=&quot;20sp&quot;/&gt;
-
-    &lt;/LinearLayout&gt;
-
-    &lt;LinearLayout 
-        android:layout_width=&quot;match_parent&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:orientation=&quot;horizontal&quot;
-        android:layout_marginTop=&quot;20dp&quot;
-        android:paddingLeft=&quot;35dp&quot;
-        android:paddingRight=&quot;35dp&quot;&gt;
-
-        &lt;TextView 
-            android:layout_width=&quot;wrap_content&quot;
-            android:layout_height=&quot;wrap_content&quot;
-            android:text=&quot;@string/password_tvname&quot;
-            android:textSize=&quot;20sp&quot;/&gt;
-
-        &lt;EditText 
-            android:id=&quot;@+id/password_et&quot;
-            android:layout_width=&quot;match_parent&quot;
-            android:layout_height=&quot;wrap_content&quot;
-            android:layout_marginLeft=&quot;10dp&quot;
-            android:hint=&quot;@string/password_hin&quot;
-            android:textSize=&quot;20sp&quot;
-            android:inputType=&quot;textPassword&quot;/&gt;
-
-    &lt;/LinearLayout&gt;
-
-    &lt;LinearLayout 
-        android:layout_width=&quot;match_parent&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:orientation=&quot;horizontal&quot;
-        android:layout_marginTop=&quot;70dp&quot;
-        android:paddingLeft=&quot;10dp&quot;
-        android:paddingRight=&quot;10dp&quot;&gt;
-
-        &lt;Button 
-            android:layout_width=&quot;match_parent&quot;
-            android:layout_height=&quot;50dp&quot;
-            android:layout_weight=&quot;1&quot;
-            android:text=&quot;@string/sign_btn_info&quot;
-            style=&quot;@android:attr/buttonStyle&quot;/&gt;
-
-        &lt;Button 
-            android:layout_width=&quot;match_parent&quot;
-            android:layout_marginLeft=&quot;10dp&quot;
-            android:layout_height=&quot;50dp&quot;
-            android:layout_weight=&quot;1&quot;
-            android:onClick=&quot;loginClick&quot;
-            android:text=&quot;@string/login_btn_info&quot;
-            style=&quot;@android:attr/buttonStyle&quot;/&gt;
-
-    &lt;/LinearLayout&gt;
-
-&lt;/LinearLayout&gt;
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3176,7 +3229,7 @@ import android.widget.Toast;
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -3187,7 +3240,7 @@ import android.widget.Toast;
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -3198,7 +3251,7 @@ import android.widget.Toast;
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
