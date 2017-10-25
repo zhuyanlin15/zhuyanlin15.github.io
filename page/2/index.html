@@ -311,6 +311,217 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/12/C语言白学系列_1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuyanlin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanLin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/12/C语言白学系列_1/" itemprop="url">C语言白学系列_1</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-12T21:35:59+08:00">
+                2017-10-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C语言白学/" itemprop="url" rel="index">
+                    <span itemprop="name">C语言白学</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="在u-boot中的一行代码，让我感到C语言白学了"><a href="#在u-boot中的一行代码，让我感到C语言白学了" class="headerlink" title="在u-boot中的一行代码，让我感到C语言白学了"></a>在u-boot中的一行代码，让我感到C语言白学了</h1><pre><code>/*这里定义了一个新的数据类型init_fnc_t，
+ *这个数据类型是参数为空，返回值为int的函数。
+ */
+typedef int (init_fnc_t) (void);
+/*init_sequence是一个指针数组，指向的是init_fnc_t类型的函数*/
+init_fnc_t *init_sequence[] = {
+    cpu_init, /* basic cpu dependent setup */
+    board_init, /* basic board dependent setup */
+    interrupt_init, /* set up exceptions */
+    env_init, /* initialize environment */
+    init_baudrate, /* initialze baudrate settings */
+    serial_init, /* serial communications setup */
+    console_init_f, /* stage 1 init of console */
+    display_banner, /* say that we are here */
+    dram_init, /* configure available RAM banks */
+    display_dram_config,
+#if defined(CONFIG_VCMA9) || defined (CONFIG_CMC_PU2)
+    checkboard,
+#endif
+    NULL,
+};
+
+/*init_fnc_ptr为指向函数指针的指针*/
+init_fnc_t **init_fnc_ptr;
+/*init_fnc_ptr初始化指向init_sequence指针数组，下面的循环遇到NULL结束*/
+for (init_fnc_ptr = init_sequence; *init_fnc_ptr; ++init_fnc_ptr) {
+    if ((*init_fnc_ptr)() != 0) {/*(*init_fnc_ptr)()为C中调用指针指向的函数*/
+        hang ();
+    }
+}
+</code></pre><h1 id="一位大神的例子"><a href="#一位大神的例子" class="headerlink" title="一位大神的例子"></a>一位大神的例子</h1><h2 id="他写了两个函数-：-typedef-int-test-fnc-t-void-和一个typedef-int-test-fnc-t-void"><a href="#他写了两个函数-：-typedef-int-test-fnc-t-void-和一个typedef-int-test-fnc-t-void" class="headerlink" title="他写了两个函数 ： typedef int (test_fnc_t) (void);和一个typedef int (*test_fnc_t) (void);"></a>他写了两个函数 ： typedef int (test_fnc_t) (void);和一个typedef int (*test_fnc_t) (void);</h2><pre><code>#include&lt;stdio.h&gt;
+
+int test0 (void);
+int test1 (void);
+
+typedef int (*test_fnc_t) (void);
+
+test_fnc_t test_sequence[] = {
+    test0,        
+    test1,        
+    NULL,
+};
+
+
+//int _tmain(int argc, _TCHAR* argv[])
+
+int main()
+{
+    test_fnc_t *test_fnc_ptr;
+
+    for (test_fnc_ptr = test_sequence; *test_fnc_ptr; ++test_fnc_ptr) {
+        if ((*test_fnc_ptr)() != 0) {
+            printf(&quot;error here!&quot;);
+        }
+    }
+
+    return 0;
+}
+
+int test0 (void)
+{
+    printf(&quot;test0/n&quot;);
+    return 0;
+}
+
+int test1 (void)
+{
+    printf(&quot;test1/n&quot;);
+    return 0;
+}
+</code></pre><h1 id="来源是http-blog-csdn-net-delphi308-article-details-6459596"><a href="#来源是http-blog-csdn-net-delphi308-article-details-6459596" class="headerlink" title="来源是http://blog.csdn.net/delphi308/article/details/6459596"></a>来源是<a href="http://blog.csdn.net/delphi308/article/details/6459596" target="_blank" rel="external">http://blog.csdn.net/delphi308/article/details/6459596</a></h1>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/12/Android应用开发之利用字节流向SDCard写入数据/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2154,7 +2365,7 @@ bne loop2
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2176,7 +2387,7 @@ bne loop2
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

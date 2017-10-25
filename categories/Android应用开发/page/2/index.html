@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content=",," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -94,18 +94,16 @@
 
 
 
-<meta name="description" content="mkconfig文件内容（关键语句旁边用“##”注释）#!/bin/sh -e  # Script to create header files and links to configure # U-Boot for a specific board. # # Parameters:  Target  Architecture  CPU  Board [VENDOR] [SOC] # # (C)">
-<meta name="keywords" content="S3C2440,mkconfig">
+<meta name="description" content="zhuyanlin的个人博客">
 <meta property="og:type" content="website">
-<meta property="og:title" content="S3C2440嵌入式之mkconfig文件分析">
-<meta property="og:url" content="http://yoursite.com/bk_posts/S3C2440嵌入式之mkconfig文件分析.html">
+<meta property="og:title" content="YanLin">
+<meta property="og:url" content="http://yoursite.com/categories/Android应用开发/page/2/index.html">
 <meta property="og:site_name" content="YanLin">
-<meta property="og:description" content="mkconfig文件内容（关键语句旁边用“##”注释）#!/bin/sh -e  # Script to create header files and links to configure # U-Boot for a specific board. # # Parameters:  Target  Architecture  CPU  Board [VENDOR] [SOC] # # (C)">
+<meta property="og:description" content="zhuyanlin的个人博客">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-11T12:28:41.525Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="S3C2440嵌入式之mkconfig文件分析">
-<meta name="twitter:description" content="mkconfig文件内容（关键语句旁边用“##”注释）#!/bin/sh -e  # Script to create header files and links to configure # U-Boot for a specific board. # # Parameters:  Target  Architecture  CPU  Board [VENDOR] [SOC] # # (C)">
+<meta name="twitter:title" content="YanLin">
+<meta name="twitter:description" content="zhuyanlin的个人博客">
 
 
 
@@ -134,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/bk_posts/S3C2440嵌入式之mkconfig文件分析.html"/>
+  <link rel="canonical" href="http://yoursite.com/categories/Android应用开发/page/2/"/>
 
 
 
 
 
-  <title>S3C2440嵌入式之mkconfig文件分析 | YanLin</title>
+  <title>分类: Android应用开发 | YanLin</title>
   
 
 
@@ -165,7 +163,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -297,142 +295,59 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-    
-    
-    <div class="post-block page">
-      <header class="post-header">
+  
+  
+  
+  <div class="post-block category">
 
-	<h1 class="post-title" itemprop="name headline">S3C2440嵌入式之mkconfig文件分析</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
-        
-        
-          <h1 id="mkconfig文件内容（关键语句旁边用“-”注释）"><a href="#mkconfig文件内容（关键语句旁边用“-”注释）" class="headerlink" title="mkconfig文件内容（关键语句旁边用“##”注释）"></a>mkconfig文件内容（关键语句旁边用“##”注释）</h1><pre><code>#!/bin/sh -e
-
-# Script to create header files and links to configure
-# U-Boot for a specific board.
-#
-# Parameters:  Target  Architecture  CPU  Board [VENDOR] [SOC]
-#
-# (C) 2002-2006 DENX Software Engineering, Wolfgang Denk &lt;wd@denx.de&gt;
-#
-
-##MakeFile中的配置指令，即执行make 100ask24x0_config
-##mkconfig 100ask24x0 arm arm920t 100ask24x0 NULL s3c24x0
-##              $1      $2    $3        $4     $5    $6
-
-APPEND=no    # Default: Create new config file
-BOARD_NAME=&quot;&quot;    # Name to print in make output
-
-while [ $# -gt 0 ] ; do
-    case &quot;$1&quot; in
-    --) shift ; break ;;
-    -a) shift ; APPEND=yes ;;
-    -n) shift ; BOARD_NAME=&quot;${1%%_config}&quot; ; shift ;;
-    *)  break ;;
-    esac
-done
-##上面16~22行是检查指令中是否有--,-a,-n,*的，显然是没有的
-
-[ &quot;${BOARD_NAME}&quot; ] || BOARD_NAME=&quot;$1&quot;
-##这个和C语言的条件编译好像，实际上这行代码与下一行意思一样
-##BOARD_NAME = 100ask24x0
-
-[ $# -lt 4 ] &amp;&amp; exit 1
-[ $# -gt 6 ] &amp;&amp; exit 1
-##参数个数小于4个或者大于6个则退出
-
-echo &quot;Configuring for ${BOARD_NAME} board...&quot;
-##打印后面的字符串
-
-#
-# Create link to architecture specific headers
-#
-if [ &quot;$SRCTREE&quot; != &quot;$OBJTREE&quot; ] ; then
-##显然条件不成立，执行else语句
-    mkdir -p ${OBJTREE}/include
-    mkdir -p ${OBJTREE}/include2
-    cd ${OBJTREE}/include2
-    rm -f asm
-    ln -s ${SRCTREE}/include/asm-$2 asm
-    LNPREFIX=&quot;../../include2/asm/&quot;
-    cd ../include
-    rm -rf asm-$2
-    rm -f asm
-    mkdir asm-$2
-    ln -s asm-$2 asm
-else
-    cd ./include
-    ##此时已经进入到了include文件夹中
-    rm -f asm
-    ln -s asm-$2 asm
-fi
-
-rm -f asm-$2/arch
-
-if [ -z &quot;$6&quot; -o &quot;$6&quot; = &quot;NULL&quot; ] ; then
-##判断第6个参数是为空或是等于&quot;NULL&quot;
-    ln -s ${LNPREFIX}arch-$3 asm-$2/arch
-else
-    ln -s ${LNPREFIX}arch-$6 asm-$2/arch
-fi
-
-if [ &quot;$2&quot; = &quot;arm&quot; ] ; then
-    rm -f asm-$2/proc
-    ln -s ${LNPREFIX}proc-armv asm-$2/proc
-fi
-
-#
-# Create include file for Make
-#
-echo &quot;ARCH   = $2&quot; &gt;  config.mk
-echo &quot;CPU    = $3&quot; &gt;&gt; config.mk
-echo &quot;BOARD  = $4&quot; &gt;&gt; config.mk
-##一个&quot;&lt;&quot;表示创建文件，两个&quot;&lt;&lt;&quot;表示追加内容
-##上面78~81行相当于config.mk内容为
-##ARCH = arm
-##CPU = arm920t
-## BOARD = 100ask24x0
-
-[ &quot;$5&quot; ] &amp;&amp; [ &quot;$5&quot; != &quot;NULL&quot; ] &amp;&amp; echo &quot;VENDOR = $5&quot; &gt;&gt; config.mk
-
-[ &quot;$6&quot; ] &amp;&amp; [ &quot;$6&quot; != &quot;NULL&quot; ] &amp;&amp; echo &quot;SOC    = $6&quot; &gt;&gt; config.mk
-##继续在config.mk中追加SOC = s3c24x0
-
-#
-# Create board specific header file
-#
-##创建一个单板相关的头文件
-if [ &quot;$APPEND&quot; = &quot;yes&quot; ]    # Append to existing config file
-then
-    echo &gt;&gt; config.h
-else
-    &gt; config.h        # Create new config file
-fi
-echo &quot;/* Automatically generated - do not edit */&quot; &gt;&gt;config.h
-echo &quot;#include &lt;configs/$1.h&gt;&quot; &gt;&gt;config.h
-
-exit 0
-</code></pre>
-        
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>Android应用开发<small>分类</small>
+        </h1>
       </div>
+
       
-      
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2017/09/24/Android应用开发之点击事件的四种写法/" itemprop="url">
+              
+                <span itemprop="name">Android应用开发之点击事件的四种写法</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-09-24T10:42:46+08:00"
+              content="2017-09-24" >
+          09-24
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
       
     </div>
-    
-    
-    
+
   </div>
+  
+  
+  
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/categories/Android应用开发/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/categories/Android应用开发/">1</a><span class="page-number current">2</span>
+  </nav>
+
+
 
 
           </div>
@@ -440,10 +355,6 @@ exit 0
 
 
           
-  <div class="comments" id="comments">
-    
-  </div>
-
 
         </div>
         
@@ -464,17 +375,8 @@ exit 0
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -536,22 +438,6 @@ exit 0
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#mkconfig文件内容（关键语句旁边用“-”注释）"><span class="nav-number">1.</span> <span class="nav-text">mkconfig文件内容（关键语句旁边用“##”注释）</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
