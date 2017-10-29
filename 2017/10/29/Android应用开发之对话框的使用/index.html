@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="网络访问,缓存数据," />
+  <meta name="keywords" content="对话框,定时器," />
 
 
 
@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="MainActivity.javapackage com.m520it.temp23333;  import java.io.BufferedReader; import java.io.File; import java.io.FileOutputStream; import java.io.InputStream; import java.io.InputStreamReader; impor">
-<meta name="keywords" content="网络访问,缓存数据">
+<meta name="description" content="MainActivity.javapackage com.m520it.myapp;  import java.util.Timer; import java.util.TimerTask;  import android.app.Activity; import android.app.AlertDialog; import android.app.ProgressDialog; import">
+<meta name="keywords" content="对话框,定时器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android应用开发之读取本地服务器图片并缓存">
-<meta property="og:url" content="http://yoursite.com/2017/10/19/Android应用开发之读取本地服务器图片并缓存/index.html">
+<meta property="og:title" content="Android应用开发之对话框的使用">
+<meta property="og:url" content="http://yoursite.com/2017/10/29/Android应用开发之对话框的使用/index.html">
 <meta property="og:site_name" content="YanLin">
-<meta property="og:description" content="MainActivity.javapackage com.m520it.temp23333;  import java.io.BufferedReader; import java.io.File; import java.io.FileOutputStream; import java.io.InputStream; import java.io.InputStreamReader; impor">
+<meta property="og:description" content="MainActivity.javapackage com.m520it.myapp;  import java.util.Timer; import java.util.TimerTask;  import android.app.Activity; import android.app.AlertDialog; import android.app.ProgressDialog; import">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-20T08:42:47.127Z">
+<meta property="og:updated_time" content="2017-10-29T09:02:28.861Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android应用开发之读取本地服务器图片并缓存">
-<meta name="twitter:description" content="MainActivity.javapackage com.m520it.temp23333;  import java.io.BufferedReader; import java.io.File; import java.io.FileOutputStream; import java.io.InputStream; import java.io.InputStreamReader; impor">
+<meta name="twitter:title" content="Android应用开发之对话框的使用">
+<meta name="twitter:description" content="MainActivity.javapackage com.m520it.myapp;  import java.util.Timer; import java.util.TimerTask;  import android.app.Activity; import android.app.AlertDialog; import android.app.ProgressDialog; import">
 
 
 
@@ -134,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/10/19/Android应用开发之读取本地服务器图片并缓存/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/29/Android应用开发之对话框的使用/"/>
 
 
 
 
 
-  <title>Android应用开发之读取本地服务器图片并缓存 | YanLin</title>
+  <title>Android应用开发之对话框的使用 | YanLin</title>
   
 
 
@@ -311,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/19/Android应用开发之读取本地服务器图片并缓存/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/29/Android应用开发之对话框的使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuyanlin">
@@ -328,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Android应用开发之读取本地服务器图片并缓存</h1>
+          <h1 class="post-title" itemprop="name headline">Android应用开发之对话框的使用</h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-19T21:14:48+08:00">
-                2017-10-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-29T17:00:31+08:00">
+                2017-10-29
               </time>
             
 
@@ -400,223 +400,228 @@
       
 
       
-        <h1 id="MainActivity-java"><a href="#MainActivity-java" class="headerlink" title="MainActivity.java"></a>MainActivity.java</h1><pre><code>package com.m520it.temp23333;
+        <h1 id="MainActivity-java"><a href="#MainActivity-java" class="headerlink" title="MainActivity.java"></a>MainActivity.java</h1><pre><code>package com.m520it.myapp;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
-import android.graphics.BitmapFactory;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
-
-import com.m520it.temp.R;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
-
-    //注意ArrayList&lt;String&gt;是一个类，相比较String[]，这个类有更多的方法，使用起来更加方便
-    private ArrayList&lt;String&gt; mUrlStringList = new ArrayList&lt;String&gt;();
-    private int mImageIndex = 0;
-    private ImageView mImgIv;
-
-    @SuppressLint(&quot;HandlerLeak&quot;) private Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            mImgIv.setImageBitmap((Bitmap) msg.obj);
-        };
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /**
-         * 开发步骤：
-         * 1.从网络上读取photo.txt，并封装成ArrayList&lt;String&gt;
-         * 2.创建一个索引变量，用来控制当前的显示图片索引
-         * 3.根据索引从ArrayList&lt;String&gt;取出一个字符串（图片的网址），并根据网址获取图片显示到控件上来
-         */
-        mImgIv = (ImageView) findViewById(R.id.img_iv);
-        Button presBtn = (Button) findViewById(R.id.pres_btn);
-        Button nextBtn = (Button) findViewById(R.id.next_btn);
-
-
-        //网络请求一定要放在子线程里面，主要是万一访问失败，不会影响到主线程
-        new Thread() {
-            public void run() {
-                //加载网络或得的图片，而且设计到网络的话就要打开允许网络的权限
-                loadUrlImages();
-
-//                for (int i = 0; i &lt; mUrlStringList.size(); i++) {
-//                    Log.v(&quot;520it&quot;, mUrlStringList.get(i));
-//                }
-                loadImages(mImageIndex);
-            }
-        }.start();
-
-        //上一张按钮的点击事件
-        presBtn.setOnClickListener(new OnClickListener() {
+        Button dialogBtn0 = (Button) findViewById(R.id.dialog_btn0);
+        Button dialogBtn1 = (Button) findViewById(R.id.dialog_btn1);
+        Button dialogBtn2 = (Button) findViewById(R.id.dialog_btn2);
+        Button dialogBtn3 = (Button) findViewById(R.id.dialog_btn3);
+//
+//普通的对话框
+//*******************************************************************************************************        
+        dialogBtn0.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                mImageIndex--;
-                if (mImageIndex == -1) {
-                    mImageIndex = mUrlStringList.size()-1;
-                }
+                //这里的context一定要用MainActivity，不能用getApplicationContext()方法获取context，这个因为前者MainActivity
+                //的生命周期明显要小于整个应用的context的生命周期，而dialog明显是在MainActivity里面的，如果写反的话就出bug了，这里
+                //我是深有体会的
+                //真的是非常喜欢建造模式的风格
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
-                //网络请求一定要放在子线程里面，主要是万一访问失败，不会影响到主线程
-                new Thread() {
-                    public void run() {
-                        loadImages(mImageIndex);
-                    }
-                }.start();
+                //建造模式创建AlertDialog实例（链式调用）
+                AlertDialog dialog = builder.setTitle(&quot;提示&quot;)   //设置标题
+                                            .setMessage(&quot;是否退出应用？&quot;)  //设置显示文本
+                                            .setPositiveButton(&quot;是&quot;, new DialogInterface.OnClickListener(){
+
+                                                @Override
+                                                public void onClick(
+                                                        DialogInterface dialog,
+                                                        int which) {
+
+                                                    //关闭当前程序
+                                                    MainActivity.this.finish();
+                                                }
+
+                                            })     //设置确定按钮
+                                            .setNegativeButton(&quot;否&quot;, null)  //设置取消按钮
+                                            .create();
+                dialog.show();    //这个跟toast差不多，都要show一下
+            }
+
+        });
+//*******************************************************************************************************        
+//
+//带有单选的对话框       
+//*******************************************************************************************************
+
+        dialogBtn1.setOnClickListener(new OnClickListener() {
+
+            String[] items = new String[]{&quot;苹果&quot;,&quot;香蕉&quot;};
+            int index = 0;
+
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                AlertDialog dialog = builder.setTitle(&quot;请选择水果&quot;)
+                                             .setSingleChoiceItems(items, 0
+                                                     , new DialogInterface.OnClickListener() {
+
+                                                        @Override
+                                                        public void onClick(
+                                                                DialogInterface dialog,
+                                                                int which) {
+//                                                            Toast.makeText(MainActivity.this, 
+//                                                                    which+&quot;&quot;, Toast.LENGTH_SHORT)
+//                                                                    .show();
+                                                            index = which;
+                                                        }
+
+                                             })
+                                             .setPositiveButton(&quot;确认&quot;, 
+                                                     new DialogInterface.OnClickListener() {
+
+                                                        @Override
+                                                        public void onClick(
+                                                                DialogInterface dialog,
+                                                                int which) {
+                                                            dialog.dismiss();   //退出对话框
+                                                            switch (index) {
+                                                            case 0:
+                                                                Toast.makeText(MainActivity.this, 
+                                                                        &quot;选择&quot;+items[index], 
+                                                                        Toast.LENGTH_SHORT).show();
+                                                                break;
+
+                                                            case 1:
+                                                                Toast.makeText(MainActivity.this, 
+                                                                        &quot;选择&quot;+items[index], 
+                                                                        Toast.LENGTH_SHORT).show();
+
+                                                            }
+                                                        }
+
+                                             })
+                                             .create();
+
+                dialog.show();
+
             }
 
         });
 
-        //下一张按钮的点击事件
-        nextBtn.setOnClickListener(new OnClickListener() {
+//*******************************************************************************************************
+//
+//带有多选的对话框
+//*******************************************************************************************************
+
+        dialogBtn2.setOnClickListener(new OnClickListener() {
+
+            String[] items = new String[]{&quot;苹果&quot;,&quot;香蕉&quot;,&quot;橘子&quot;};
+            boolean[] checkedItems = new boolean[]{true,false,false};
 
             @Override
             public void onClick(View v) {
-                mImageIndex++;
-                if (mImageIndex == mUrlStringList.size()) {
-                    mImageIndex = 0;
-                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                AlertDialog dialog = builder.setTitle(&quot;请选择多个水果&quot;)
+                                            .setMultiChoiceItems(items, checkedItems, 
+                                                    new DialogInterface.OnMultiChoiceClickListener() {
 
-                //网络请求一定要放在子线程里面，主要是万一访问失败，不会影响到主线程
-                new Thread() {
-                    public void run() {
-                        loadImages(mImageIndex);
-                    }
-                }.start();
+                                                        @Override
+                                                        public void onClick(
+                                                                DialogInterface dialog,
+                                                                int which,
+                                                                boolean isChecked) {
+                                                            checkedItems[which] = isChecked;
+                                                        }
+
+                                                    })
+                                             .setPositiveButton(&quot;确定&quot;, new DialogInterface.OnClickListener() {
+
+                                                @Override
+                                                public void onClick(
+                                                        DialogInterface dialog,
+                                                        int which) {
+
+                                                    String result = &quot;选择的是:&quot;;
+                                                    for (int i = 0; i &lt; checkedItems.length; i++) {
+                                                        if (checkedItems[i]) {
+                                                            result += items[i]+&quot;   &quot;;
+                                                        }
+                                                    }
+                                                    //当什么也没选时，进行另外的处理，在项目中一定要多方面的考虑
+                                                    if (result.equals(&quot;选择的是:&quot;)) {
+                                                        result = &quot;什么也没选&quot;;
+                                                    }
+                                                    Toast.makeText(MainActivity.this, 
+                                                            result, Toast.LENGTH_SHORT).show();
+
+                                                    dialog.dismiss();
+                                                }
+
+                                             })
+                                             .create();
+
+                dialog.show();                                
+
             }
 
         });
-    }
 
-    private void loadImages(int index) {
-        try {
-            String string = mUrlStringList.get(index);
-
-            //获得网络连接的图片名称
-            //String imgName = getImageName(string);
-
-            //获得文件的路径
-            File f = new File(getFilesDir(),getImageName(string));
-
-            //如果文件存在并且文件里面有内容，则读取，就不需要网络获取图片了
-            if (f.exists()&amp;&amp;f.length()&gt;0) {
-                //使用BitmapFactory这个工具类将文件转换成位图
-                final Bitmap decodeFile = BitmapFactory.decodeFile(f.getAbsolutePath());
-                //当然，显示图片需要再主线程中
-//                runOnUiThread(new Runnable() {
+//*******************************************************************************************************
 //
-//                    @Override
-//                    public void run() {
-//                        mImgIv.setImageBitmap(decodeFile);
-//                    }
-//                });
-//                TODO
-                Message msg = new Message();
-                msg.obj = decodeFile;
-                mHandler.sendMessage(msg);
+//带有进度条的对话框，这里没有使用建造模式，是直接创建了一个进度条对话框，因为这个进度条对话框本身需要初始化的参数可能比较少，不使用建造模式也能看得很清爽
+//******************************************************************************************************* 
 
-                return;
+        dialogBtn3.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+                dialog.setTitle(&quot;提示&quot;);
+                dialog.setMessage(&quot;加载中...&quot;);
+                dialog.show();
+
+                //在上面的对话框会一直转转转，我们希望能设置一个定时器，在特定的时间之后自动关闭这个进度条对话框
+                //现在设置在3秒之后关闭对话框
+                //实际上定时器也是一个子线程，当然如果更改主线程的控件，则需要使用runOnUiThread方法
+                new Timer().schedule(new TimerTask() {
+
+                    public void run() {
+
+                        //下面的代码是将run方法里面包含的代码放到主线程中去运行
+                        runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+
+                                dialog.dismiss();
+
+                            }
+                        });
+
+                    }
+
+                }, 3000);
+
             }
 
-            Log.v(&quot;520it&quot;, string);
-            URL url = new URL(string);
-            //一定要使用HttpURLConnection类，这个比较方便，因为这个网络请求就是Http的协议
-            HttpURLConnection ocnn = (HttpURLConnection) url.openConnection();
-            int responseCode = ocnn.getResponseCode(); 
-            if (responseCode == 200) {
-                InputStream inputStream = ocnn.getInputStream();
+        });
 
-                final Bitmap bm = BitmapFactory.decodeStream(inputStream);
+//*******************************************************************************************************
 
-                //使用这个FileOutputStream比较方便，直接是继承自OutputStream
-                FileOutputStream openFileOutput = openFileOutput(getImageName(string), MODE_PRIVATE);
-
-                //注意压缩格式在CompressFormat这个枚举中
-                bm.compress(CompressFormat.PNG, 100, openFileOutput);
-
-                //只有在主线程中才能显示图片，original thread = main thread = UI thread
-                //有两种方法，一种是使用runOnUiThread，另外一种是使用Handler
-                //使用Activity.runOnUiThread()方法可以让代码转移到主线程中，
-//                runOnUiThread(new Runnable() {
-//
-//                    @Override
-//                    public void run() {
-//                        mImgIv.setImageBitmap(bm);
-//                    }
-//                    
-//                });
-//                TODO
-                Message msg = new Message();
-                msg.obj = bm;
-                mHandler.sendMessage(msg);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private String getImageName(String imageUrl) {
-        //获取类似http://192.168.176.1:8080/images/a.png的最后一个“/”
-        int index = imageUrl.lastIndexOf(&quot;/&quot;);
-        //拆分字符串
-        String returnVal = imageUrl.substring(index+1);
-        return returnVal;
-    }
-
-    private void loadUrlImages() {
-        try {
-            //设置URL
-            URL url = new URL(&quot;http://192.168.176.1:8080/images/photo.txt&quot;);
-
-            //使用http协议打开连接
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-            //**这里一定要注意，本机上的ip是127.0.0.1，但是在安卓虚拟机上访问主机的ip一定要通过arp -a指令在命令行中进行查找安卓虚拟机中
-            //主机显示的ip地址，否则在安卓上面访问127.0.0.1，实际上是安卓虚拟机的本地ip，一定要注意
-            int responseCode = conn.getResponseCode(); 
-
-            if (responseCode == 200) {
-                //读取文件，现在是字节流
-                InputStream is = conn.getInputStream();
-
-                //字符流
-                InputStreamReader isr = new InputStreamReader(is);
-
-                //缓冲流，因为不需要讲数据存到文件中，所以直接搞个缓冲区即可
-                BufferedReader reader = new BufferedReader(isr);
-
-                String line = null;
-
-                while ((line = reader.readLine()) != null) {
-                    mUrlStringList.add(line);
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 }
@@ -626,32 +631,34 @@ public class MainActivity extends Activity {
     android:layout_height=&quot;match_parent&quot;
     android:orientation=&quot;vertical&quot; &gt;
 
-    &lt;ImageView 
-        android:id=&quot;@+id/img_iv&quot;
-        android:layout_width=&quot;match_parent&quot;
-        android:layout_height=&quot;0dp&quot;
-        android:layout_weight=&quot;1&quot;/&gt;
-
-    &lt;LinearLayout 
-        android:layout_width=&quot;match_parent&quot;
+    &lt;Button
+        android:id=&quot;@+id/dialog_btn0&quot;
+        android:layout_width=&quot;wrap_content&quot;
         android:layout_height=&quot;wrap_content&quot;
-        android:orientation=&quot;horizontal&quot;&gt;
+        android:layout_marginLeft=&quot;10dp&quot;
+        android:layout_marginTop=&quot;10dp&quot;
+        android:text=&quot;普通的对话框&quot; /&gt;
 
-        &lt;Button 
-            android:id=&quot;@+id/pres_btn&quot;
-            android:layout_width=&quot;0dp&quot;
-            android:layout_height=&quot;wrap_content&quot;
-            android:layout_weight=&quot;1&quot;
-            android:text=&quot;上一张&quot;/&gt;
+    &lt;Button
+        android:id=&quot;@+id/dialog_btn1&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_marginLeft=&quot;10dp&quot;
+        android:text=&quot;带有单选的对话框&quot; /&gt;
 
-        &lt;Button 
-            android:id=&quot;@+id/next_btn&quot;
-            android:layout_width=&quot;0dp&quot;
-            android:layout_height=&quot;wrap_content&quot;
-            android:layout_weight=&quot;1&quot;
-            android:text=&quot;下一张&quot;/&gt;
+    &lt;Button
+        android:id=&quot;@+id/dialog_btn2&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_marginLeft=&quot;10dp&quot;
+        android:text=&quot;带有多选的对话框&quot; /&gt;
 
-    &lt;/LinearLayout&gt;
+    &lt;Button
+        android:id=&quot;@+id/dialog_btn3&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_marginLeft=&quot;10dp&quot;
+        android:text=&quot;带有进度条的对话框&quot; /&gt;
 
 &lt;/LinearLayout&gt;
 </code></pre>
@@ -671,9 +678,9 @@ public class MainActivity extends Activity {
       
         <div class="post-tags">
           
-            <a href="/tags/网络访问/" rel="tag"># 网络访问</a>
+            <a href="/tags/对话框/" rel="tag"># 对话框</a>
           
-            <a href="/tags/缓存数据/" rel="tag"># 缓存数据</a>
+            <a href="/tags/定时器/" rel="tag"># 定时器</a>
           
         </div>
       
@@ -686,8 +693,8 @@ public class MainActivity extends Activity {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/15/Android应用开发之数据库增删改查的Google实现/" rel="next" title="Android应用开发之数据库增删改查的Google实现">
-                <i class="fa fa-chevron-left"></i> Android应用开发之数据库增删改查的Google实现
+              <a href="/2017/10/25/Android应用开发之使用第三方框架实现Post请求以及文件的上传/" rel="next" title="Android应用开发之使用第三方框架实现Post请求以及文件的上传">
+                <i class="fa fa-chevron-left"></i> Android应用开发之使用第三方框架实现Post请求以及文件的上传
               </a>
             
           </div>
@@ -695,10 +702,6 @@ public class MainActivity extends Activity {
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/22/Android开发模块之从网络获取图片资源（多删少补）/" rel="prev" title="Android开发模块之从网络获取图片资源）（多删少补）">
-                Android开发模块之从网络获取图片资源）（多删少补） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
