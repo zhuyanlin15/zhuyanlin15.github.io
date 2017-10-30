@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="资料汇总," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Android资料1)Android线程详解 http://blog.csdn.net/cswhale/article/details/39053857 2)TextView中ellipsize属性 http://blog.csdn.net/hejiangjie/article/details/6370911 3)Android开源项目汇总 https://github.com/Trinea/an">
+<meta name="keywords" content="资料汇总">
+<meta property="og:type" content="article">
+<meta property="og:title" content="资料汇总">
+<meta property="og:url" content="http://yoursite.com/2017/10/30/资料汇总/index.html">
+<meta property="og:site_name" content="YanLin">
+<meta property="og:description" content="Android资料1)Android线程详解 http://blog.csdn.net/cswhale/article/details/39053857 2)TextView中ellipsize属性 http://blog.csdn.net/hejiangjie/article/details/6370911 3)Android开源项目汇总 https://github.com/Trinea/an">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-30T04:28:07.429Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="资料汇总">
+<meta name="twitter:description" content="Android资料1)Android线程详解 http://blog.csdn.net/cswhale/article/details/39053857 2)TextView中ellipsize属性 http://blog.csdn.net/hejiangjie/article/details/6370911 3)Android开源项目汇总 https://github.com/Trinea/an">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '154664cad9247e0a815b49e17e029b04',
+      indexName: 'zhuyanlin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到与 [${query}] 相关的内容","hits_stats":"${hits} 条相关记录，共 ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/30/资料汇总/"/>
+
+
+
+
+
+  <title>资料汇总 | YanLin</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanLin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/30/资料汇总/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuyanlin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanLin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">资料汇总</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-30T11:25:03+08:00">
+                2017-10-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/资料汇总/" itemprop="url" rel="index">
+                    <span itemprop="name">资料汇总</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Android资料"><a href="#Android资料" class="headerlink" title="Android资料"></a>Android资料</h1><p>1)Android线程详解</p>
+<p><a href="http://blog.csdn.net/cswhale/article/details/39053857" target="_blank" rel="external">http://blog.csdn.net/cswhale/article/details/39053857</a></p>
+<p>2)TextView中ellipsize属性</p>
+<p><a href="http://blog.csdn.net/hejiangjie/article/details/6370911" target="_blank" rel="external">http://blog.csdn.net/hejiangjie/article/details/6370911</a></p>
+<p>3)Android开源项目汇总</p>
+<p><a href="https://github.com/Trinea/android-open-project" target="_blank" rel="external">https://github.com/Trinea/android-open-project</a></p>
+<p>4)codeKK网站（里面有很多安卓开源资源）</p>
+<p><a href="http://p.codekk.com/" target="_blank" rel="external">http://p.codekk.com/</a></p>
+<p>5)Android组件及UI框架大全</p>
+<p><a href="http://blog.csdn.net/boonya/article/details/38704229" target="_blank" rel="external">http://blog.csdn.net/boonya/article/details/38704229</a></p>
+<p>6)Android资料网站</p>
+<p><a href="http://www.android100.cn/resource.php?mod=category&amp;catid=3" target="_blank" rel="external">http://www.android100.cn/resource.php?mod=category&amp;catid=3</a></p>
+<p>7)Android开发中常见的设计模式</p>
+<p><a href="http://www.cnblogs.com/android-blogs/p/5530239.html" target="_blank" rel="external">http://www.cnblogs.com/android-blogs/p/5530239.html</a></p>
+<p>8)android学习—— context 和 getApplicationContext()</p>
+<p><a href="http://blog.csdn.net/janronehoo/article/details/7348566" target="_blank" rel="external">http://blog.csdn.net/janronehoo/article/details/7348566</a></p>
+<p>9)Android开发的四大组件</p>
+<p><a href="http://www.cnblogs.com/pepcod/archive/2013/02/11/2937403.html" target="_blank" rel="external">http://www.cnblogs.com/pepcod/archive/2013/02/11/2937403.html</a></p>
+<p>10)Java中的Timer和TimerTask在Android中的用法</p>
+<p><a href="http://blog.csdn.net/zuolongsnail/article/details/8168689" target="_blank" rel="external">http://blog.csdn.net/zuolongsnail/article/details/8168689</a></p>
+<p>11)java为什么匿名内部类的参数引用时final？</p>
+<p><a href="https://www.zhihu.com/question/21395848" target="_blank" rel="external">https://www.zhihu.com/question/21395848</a></p>
+<p>12)Android 用Animation-list实现逐帧动画</p>
+<p><a href="http://blog.csdn.net/aminfo/article/details/7847761/" target="_blank" rel="external">http://blog.csdn.net/aminfo/article/details/7847761/</a></p>
+<p>13)</p>
+<h1 id="Java资料"><a href="#Java资料" class="headerlink" title="Java资料"></a>Java资料</h1><p>1)如何理解“ArrayList<e\>”中的<e\>？</e\></e\></p>
+<p><a href="https://www.zhihu.com/question/24670370" target="_blank" rel="external">https://www.zhihu.com/question/24670370</a></p>
+<p>2)使用Java实现简单的串口通信</p>
+<p><a href="http://www.cnblogs.com/Dreamer-1/p/5523046.html" target="_blank" rel="external">http://www.cnblogs.com/Dreamer-1/p/5523046.html</a></p>
+<p>3)JavaBean概念</p>
+<p><a href="https://www.zhihu.com/question/19773379" target="_blank" rel="external">https://www.zhihu.com/question/19773379</a></p>
+<p>4)toString的好处是在碰到“println”之类的输出方法时会自动调用，不用显式打出来所以直接在println中打出类名即可，不用将toString打出来</p>
+<p>5)对多线程的解释</p>
+<p><a href="https://www.zhihu.com/question/19901763" target="_blank" rel="external">https://www.zhihu.com/question/19901763</a></p>
+<p>6)Java之美[从菜鸟到高手演变]之设计模式</p>
+<p><a href="http://blog.csdn.net/zhangerqing/article/details/8194653" target="_blank" rel="external">http://blog.csdn.net/zhangerqing/article/details/8194653</a></p>
+<p>7)接口实现多态</p>
+<p><a href="http://blog.csdn.net/nextstand/article/details/51510923" target="_blank" rel="external">http://blog.csdn.net/nextstand/article/details/51510923</a></p>
+<p>8)java synchronized详解</p>
+<p><a href="http://www.cnblogs.com/GnagWang/archive/2011/02/27/1966606.html" target="_blank" rel="external">http://www.cnblogs.com/GnagWang/archive/2011/02/27/1966606.html</a></p>
+<p>9)JAVA中的反射机制</p>
+<p><a href="http://blog.csdn.net/liujiahan629629/article/details/18013523" target="_blank" rel="external">http://blog.csdn.net/liujiahan629629/article/details/18013523</a></p>
+<p>10)Class.forName()用法详解</p>
+<p><a href="http://blog.csdn.net/kaiwii/article/details/7405761" target="_blank" rel="external">http://blog.csdn.net/kaiwii/article/details/7405761</a></p>
+<p>11)Linux系统下运用开源RXTX库实现JAVA串口通讯</p>
+<p><a href="http://blog.csdn.net/educast/article/details/47907115" target="_blank" rel="external">http://blog.csdn.net/educast/article/details/47907115</a></p>
+<p>12)java中的类修饰符、成员变量修饰符、方法修饰符</p>
+<p><a href="http://www.cnblogs.com/lixiaolun/p/4311727.html" target="_blank" rel="external">http://www.cnblogs.com/lixiaolun/p/4311727.html</a></p>
+<p>13)Java基础第十二讲：面向对象基础（六）[内部类]（这位博主也有一个叫做Java基础的系列，也是很不错）</p>
+<p><a href="http://blog.csdn.net/jiangxinyu/article/details/8177326" target="_blank" rel="external">http://blog.csdn.net/jiangxinyu/article/details/8177326</a></p>
+<p>14)静态方法与非静态方法的区别</p>
+<p><strong>注意：静态方法只能访问静态成员</strong></p>
+<p><a href="http://blog.csdn.net/mayzilee/article/details/51434896" target="_blank" rel="external">http://blog.csdn.net/mayzilee/article/details/51434896</a></p>
+<h1 id="嵌入式linux资料"><a href="#嵌入式linux资料" class="headerlink" title="嵌入式linux资料"></a>嵌入式linux资料</h1><p>1)函数调用的汇编层次原理</p>
+<p><a href="http://blog.csdn.net/zuotian5212008/article/details/47005003" target="_blank" rel="external">http://blog.csdn.net/zuotian5212008/article/details/47005003</a></p>
+<p>2)局部变量、 全局变量、 堆、 堆栈之间的关系</p>
+<p><a href="http://www.cnblogs.com/eva0/p/4999192.html" target="_blank" rel="external">http://www.cnblogs.com/eva0/p/4999192.html</a></p>
+<p>3)bss段为什么要清零</p>
+<p><a href="https://www.zhihu.com/question/23147702" target="_blank" rel="external">https://www.zhihu.com/question/23147702</a></p>
+<p>4)地址对齐算法</p>
+<p><a href="http://www.cnblogs.com/waytofall/p/4109514.html" target="_blank" rel="external">http://www.cnblogs.com/waytofall/p/4109514.html</a></p>
+<p>5)多寄存器寻址指令ldmia/ldmib和ARM存储器访问指令——多寄存器存取</p>
+<p><a href="http://blog.csdn.net/gzzaigcnforever/article/details/8652290" target="_blank" rel="external">http://blog.csdn.net/gzzaigcnforever/article/details/8652290</a></p>
+<p>6)移植u-boot-1.3.4到S3C2440</p>
+<p><a href="http://blog.csdn.net/bbs598598/article/details/51332449" target="_blank" rel="external">http://blog.csdn.net/bbs598598/article/details/51332449</a></p>
+<p>7)uboot启动第一阶段分析</p>
+<p><a href="http://blog.csdn.net/u014104588/article/details/45568841" target="_blank" rel="external">http://blog.csdn.net/u014104588/article/details/45568841</a></p>
+<p>8)uboot启动第二阶段分析</p>
+<p><a href="http://blog.csdn.net/u014104588/article/details/46500537" target="_blank" rel="external">http://blog.csdn.net/u014104588/article/details/46500537</a></p>
+<p>9)U-Boot两个重要的结构体：global_data 和 bd_info</p>
+<p><a href="http://blog.csdn.net/techping/article/details/64920482" target="_blank" rel="external">http://blog.csdn.net/techping/article/details/64920482</a></p>
+<p>10)移植QT5.6到嵌入式开发板（史上最详细的QT移植教程）</p>
+<p><a href="http://blog.csdn.net/lizuobin2/article/details/52673494" target="_blank" rel="external">http://blog.csdn.net/lizuobin2/article/details/52673494</a></p>
+<p>11)u-boot与linux内核间的参数传递过程分析</p>
+<p>u-boot分为启动内核或是u-boot界面，实现方式是命令，可以说命令是u-boot的核心</p>
+<p><a href="http://blog.chinaunix.net/uid-20672257-id-2395102.html" target="_blank" rel="external">http://blog.chinaunix.net/uid-20672257-id-2395102.html</a></p>
+<p>12)Exynos4412 Uboot 移植（一）—— Uboot 编译流程分析（这位博主的文章都很不错）</p>
+<p><a href="http://blog.csdn.net/zqixiao_09/article/details/50805205" target="_blank" rel="external">http://blog.csdn.net/zqixiao_09/article/details/50805205</a></p>
+<p>13)uboot详解——板子刚上电时都干了些什么（这位博主也有很多文章）</p>
+<p><a href="http://blog.csdn.net/lee244868149/article/details/49681987" target="_blank" rel="external">http://blog.csdn.net/lee244868149/article/details/49681987</a></p>
+<p>14)</p>
+<p>15)</p>
+<h1 id="网络资料"><a href="#网络资料" class="headerlink" title="网络资料"></a>网络资料</h1><p>1)http和https的区别</p>
+<p><a href="http://www.cnblogs.com/wqhwe/p/5407468.html" target="_blank" rel="external">http://www.cnblogs.com/wqhwe/p/5407468.html</a>  </p>
+<p>2)http状态码                                                                                            </p>
+<p><a href="http://blog.csdn.net/zll01/article/details/5018413" target="_blank" rel="external">http://blog.csdn.net/zll01/article/details/5018413</a></p>
+<p>3)JavaWeb学习总结</p>
+<p><a href="http://www.cnblogs.com/xdp-gacl/tag/JavaWeb%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/" target="_blank" rel="external">http://www.cnblogs.com/xdp-gacl/tag/JavaWeb%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/</a></p>
+<p>4)JSP与HTML的区别</p>
+<p><a href="http://blog.csdn.net/lwj734114646/article/details/46898517" target="_blank" rel="external">http://blog.csdn.net/lwj734114646/article/details/46898517</a></p>
+<p>5)</p>
+<p>6)</p>
+<p>7)</p>
+<p>8)</p>
+<h1 id="服务器-amp-数据库"><a href="#服务器-amp-数据库" class="headerlink" title="服务器&amp;数据库"></a>服务器&amp;数据库</h1><p>1)Linux下安装Tomcat服务器和部署Web应用</p>
+<p><a href="http://www.cnblogs.com/xdp-gacl/p/4097608.html" target="_blank" rel="external">http://www.cnblogs.com/xdp-gacl/p/4097608.html</a></p>
+<p>2)tomcat上配置数据库连接和项目部署</p>
+<p><a href="http://blog.csdn.net/qq_22778717/article/details/52608265" target="_blank" rel="external">http://blog.csdn.net/qq_22778717/article/details/52608265</a></p>
+<p>3)【一步一个脚印】使用Tomcat+MySQL为自己的app打造服务器（优质资料，这位博主同时也有很多其他的文章，讲得不错）</p>
+<p><a href="http://blog.csdn.net/a_running_wolf/article/category/6188707" target="_blank" rel="external">http://blog.csdn.net/a_running_wolf/article/category/6188707</a></p>
+<p>4)navicat连接mysql： 报错1042 cant get hostname for your address</p>
+<p><a href="http://blog.csdn.net/it_noob/article/details/51864062" target="_blank" rel="external">http://blog.csdn.net/it_noob/article/details/51864062</a></p>
+<p>5)mysql本地部署并通过jdbc连接的操作步骤</p>
+<p><a href="http://blog.csdn.net/qq_26676207/article/details/52021043" target="_blank" rel="external">http://blog.csdn.net/qq_26676207/article/details/52021043</a></p>
+<p>6)如何搭建网站？</p>
+<p><a href="https://www.zhihu.com/question/21535441" target="_blank" rel="external">https://www.zhihu.com/question/21535441</a></p>
+<p>7)通过JDBC进行简单的增删改查（以MySQL为例）</p>
+<p><a href="http://www.cnblogs.com/wuyuegb2312/p/3872607.html" target="_blank" rel="external">http://www.cnblogs.com/wuyuegb2312/p/3872607.html</a></p>
+<p>8)</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/资料汇总/" rel="tag"># 资料汇总</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/29/Android应用开发之对话框的使用/" rel="next" title="Android应用开发之对话框的使用">
+                <i class="fa fa-chevron-left"></i> Android应用开发之对话框的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="zhuyanlin" />
+          <p class="site-author-name" itemprop="name">zhuyanlin</p>
+           
+              <p class="site-description motion-element" itemprop="description">zhuyanlin的个人博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android资料"><span class="nav-number">1.</span> <span class="nav-text">Android资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java资料"><span class="nav-number">2.</span> <span class="nav-text">Java资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#嵌入式linux资料"><span class="nav-number">3.</span> <span class="nav-text">嵌入式linux资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络资料"><span class="nav-number">4.</span> <span class="nav-text">网络资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#服务器-amp-数据库"><span class="nav-number">5.</span> <span class="nav-text">服务器&数据库</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhuyanlin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
