@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Fragment," />
 
 
 
@@ -94,17 +94,18 @@
 
 
 
-<meta name="description" content="zhuyanlin的个人博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://yoursite.com/tags/index.html">
+<meta name="description" content="背景如果要对多个activity进行管理，那么就需要使用Fragment，再本文中，我们只要实现在一个布局之内切换不同的activity即可。 分析1)首先需要定义一个FragmentManager，这个类主要是用来管理Fragment FragmentManager mSupportFragmentManager = getSupportFragmentManager() import andr">
+<meta name="keywords" content="Fragment">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发模块之Fragment的实现">
+<meta property="og:url" content="http://yoursite.com/2017/11/03/Android开发模块之Fragment的实现/index.html">
 <meta property="og:site_name" content="YanLin">
-<meta property="og:description" content="zhuyanlin的个人博客">
+<meta property="og:description" content="背景如果要对多个activity进行管理，那么就需要使用Fragment，再本文中，我们只要实现在一个布局之内切换不同的activity即可。 分析1)首先需要定义一个FragmentManager，这个类主要是用来管理Fragment FragmentManager mSupportFragmentManager = getSupportFragmentManager() import andr">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-24T03:13:36.091Z">
+<meta property="og:updated_time" content="2017-11-03T13:18:17.619Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
-<meta name="twitter:description" content="zhuyanlin的个人博客">
+<meta name="twitter:title" content="Android开发模块之Fragment的实现">
+<meta name="twitter:description" content="背景如果要对多个activity进行管理，那么就需要使用Fragment，再本文中，我们只要实现在一个布局之内切换不同的activity即可。 分析1)首先需要定义一个FragmentManager，这个类主要是用来管理Fragment FragmentManager mSupportFragmentManager = getSupportFragmentManager() import andr">
 
 
 
@@ -133,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/11/03/Android开发模块之Fragment的实现/"/>
 
 
 
 
 
-  <title>tags | YanLin</title>
+  <title>Android开发模块之Fragment的实现 | YanLin</title>
   
 
 
@@ -298,40 +299,175 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/03/Android开发模块之Fragment的实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuyanlin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanLin">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">tags</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-                目前共计 24 个标签
-            </div>
-            <div class="tag-cloud-tags">
-              <a href="/tags/C语言白学/" style="font-size: 12px; color: #ccc">C语言白学</a> <a href="/tags/Fragment/" style="font-size: 12px; color: #ccc">Fragment</a> <a href="/tags/POST访问/" style="font-size: 12px; color: #ccc">POST访问</a> <a href="/tags/S3C2440/" style="font-size: 30px; color: #111">S3C2440</a> <a href="/tags/SDCard/" style="font-size: 12px; color: #ccc">SDCard</a> <a href="/tags/mkconfig/" style="font-size: 12px; color: #ccc">mkconfig</a> <a href="/tags/xml/" style="font-size: 12px; color: #ccc">xml</a> <a href="/tags/图片/" style="font-size: 12px; color: #ccc">图片</a> <a href="/tags/外部SDRAM/" style="font-size: 21px; color: #6f6f6f">外部SDRAM</a> <a href="/tags/字节流/" style="font-size: 12px; color: #ccc">字节流</a> <a href="/tags/存储和解析xml/" style="font-size: 21px; color: #6f6f6f">存储和解析xml</a> <a href="/tags/定时器/" style="font-size: 12px; color: #ccc">定时器</a> <a href="/tags/对话框/" style="font-size: 12px; color: #ccc">对话框</a> <a href="/tags/数据库/" style="font-size: 21px; color: #6f6f6f">数据库</a> <a href="/tags/新闻客户端主界面/" style="font-size: 12px; color: #ccc">新闻客户端主界面</a> <a href="/tags/点击事件/" style="font-size: 12px; color: #ccc">点击事件</a> <a href="/tags/登录界面/" style="font-size: 12px; color: #ccc">登录界面</a> <a href="/tags/第三方框架/" style="font-size: 12px; color: #ccc">第三方框架</a> <a href="/tags/缓存数据/" style="font-size: 12px; color: #ccc">缓存数据</a> <a href="/tags/网络/" style="font-size: 12px; color: #ccc">网络</a> <a href="/tags/网络访问/" style="font-size: 12px; color: #ccc">网络访问</a> <a href="/tags/网络请求/" style="font-size: 12px; color: #ccc">网络请求</a> <a href="/tags/解析xml/" style="font-size: 12px; color: #ccc">解析xml</a> <a href="/tags/资料汇总/" style="font-size: 12px; color: #ccc">资料汇总</a>
-            </div>
-          </div>
+          <h1 class="post-title" itemprop="name headline">Android开发模块之Fragment的实现</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-03T20:58:24+08:00">
+                2017-11-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android开发模块/" itemprop="url" rel="index">
+                    <span itemprop="name">Android开发模块</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>如果要对多个activity进行管理，那么就需要使用Fragment，再本文中，我们只要实现在一个布局之内切换不同的activity即可。</p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>1)首先需要定义一个FragmentManager，这个类主要是用来管理Fragment</p>
+<pre><code>FragmentManager mSupportFragmentManager = getSupportFragmentManager()
+</code></pre><p><strong>import android.support.v4.app.FragmentManager的是getSupportFragmentManager</strong></p>
+<p>2)接下来开启一个业务：</p>
+<pre><code>FragmentTransaction transaction = mSupportFragmentManager.beginTransaction();
+</code></pre><p>3)然后替换掉容器里面的Fragment</p>
+<pre><code>transaction.replace(R.id.top_bar, new HomeFragment());
+</code></pre><p>4)提交业务，完成一个简单的Fragment切换</p>
+<pre><code>transaction.commit();
+</code></pre>
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Fragment/" rel="tag"># Fragment</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/30/资料汇总/" rel="next" title="资料汇总">
+                <i class="fa fa-chevron-left"></i> 资料汇总
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -364,8 +500,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -427,6 +572,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分析"><span class="nav-number">2.</span> <span class="nav-text">分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -540,10 +701,10 @@
   
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
-  
+
 
   
 

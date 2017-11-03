@@ -311,6 +311,157 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/03/Android开发模块之Fragment的实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuyanlin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanLin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/03/Android开发模块之Fragment的实现/" itemprop="url">Android开发模块之Fragment的实现</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-03T20:58:24+08:00">
+                2017-11-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android开发模块/" itemprop="url" rel="index">
+                    <span itemprop="name">Android开发模块</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>如果要对多个activity进行管理，那么就需要使用Fragment，再本文中，我们只要实现在一个布局之内切换不同的activity即可。</p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>1)首先需要定义一个FragmentManager，这个类主要是用来管理Fragment</p>
+<pre><code>FragmentManager mSupportFragmentManager = getSupportFragmentManager()
+</code></pre><p><strong>import android.support.v4.app.FragmentManager的是getSupportFragmentManager</strong></p>
+<p>2)接下来开启一个业务：</p>
+<pre><code>FragmentTransaction transaction = mSupportFragmentManager.beginTransaction();
+</code></pre><p>3)然后替换掉容器里面的Fragment</p>
+<pre><code>transaction.replace(R.id.top_bar, new HomeFragment());
+</code></pre><p>4)提交业务，完成一个简单的Fragment切换</p>
+<pre><code>transaction.commit();
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/30/资料汇总/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2306,8 +2457,8 @@ public class XmlUtil {
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android模块开发/" itemprop="url" rel="index">
-                    <span itemprop="name">Android模块开发</span>
+                  <a href="/categories/Android开发模块/" itemprop="url" rel="index">
+                    <span itemprop="name">Android开发模块</span>
                   </a>
                 </span>
 
@@ -3230,297 +3381,6 @@ public class ContactDao {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/15/Android应用开发之数据库的增删改查/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuyanlin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YanLin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/15/Android应用开发之数据库的增删改查/" itemprop="url">Android应用开发之数据库的增删改查</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-15T18:13:51+08:00">
-                2017-10-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android应用开发/" itemprop="url" rel="index">
-                    <span itemprop="name">Android应用开发</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="MainActivity-java"><a href="#MainActivity-java" class="headerlink" title="MainActivity.java"></a>MainActivity.java</h1><pre><code>package com.m520it.temp;
-
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.View;
-
-public class MainActivity extends Activity {
-
-    private ContactDao mContactDao;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        mContactDao = new ContactDao(this);
-    }
-
-    public void insertContact(View v) {
-        mContactDao.insertContact(&quot;zhangsan&quot;, &quot;11111111111&quot;);
-    }
-
-    public void deleteContact(View v) {
-        mContactDao.deleteContact(&quot;zhangsan&quot;);
-    }
-
-    public void updateContact(View v) {
-        mContactDao.updateContact(&quot;zhangsan&quot;, &quot;22222222222&quot;);
-    }
-
-    public void queryContact(View v) {
-        mContactDao.queryContact(&quot;zhangsan&quot;);
-    }
-}
-</code></pre><h1 id="ContactDao-java"><a href="#ContactDao-java" class="headerlink" title="ContactDao.java"></a>ContactDao.java</h1><pre><code>package com.m520it.temp;
-
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
-
-public class ContactDao {
-
-    private DbOpenHelper mHelper;
-
-    //*Context是一个场景，MainActivity就是一个场景，并且它本身就是继承自Context
-    public ContactDao(Context c) {
-        //1、首先是要创建一个数据库文件的帮助类，类似于File f = File(...)
-        mHelper = new DbOpenHelper(c);
-    }
-
-    public void insertContact(String username,String phone) {
-        SQLiteDatabase db = mHelper.getWritableDatabase();
-        //2、第二个参数是缺省值，补第一个字符串参数中&quot;?&quot;的位置，同时第二个参数直接内存分配数组，这样就不用另外定义String[]然后再传递了
-        //问号代表的缺省值已经是一个字符串了，所以要把单引号去掉，不然程序崩溃
-        db.execSQL(&quot;insert into contact (username,phone) values (?,?);&quot;, 
-                new String[]{username,phone});
-    }
-
-    public void deleteContact(String username) {
-        SQLiteDatabase db = mHelper.getWritableDatabase();
-        db.execSQL(&quot;delete from contact where username=?;&quot;,
-                new String[]{username});
-    }
-
-    public void updateContact(String username,String phone) {
-        SQLiteDatabase db = mHelper.getWritableDatabase();
-        db.execSQL(&quot;update contact set phone=? where username=?&quot;,
-                new String[]{phone,username});
-    }
-
-    public void queryContact(String username) {
-        SQLiteDatabase db = mHelper.getReadableDatabase();
-        //3、这个光标是指向查找结果的行
-         Cursor cursor = db.rawQuery(&quot;select phone from contact where username=?&quot;, 
-                new String[]{username});
-         while(cursor.moveToNext()) {
-             //4、getString中的columnIndex参数我还搞不清楚是干什么的，难道是代表我们要查找的第0列吗？？
-             String string = cursor.getString(0);
-             Log.v(&quot;520it&quot;, string);
-         }
-    }
-
-}
-</code></pre><h1 id="DbOpenHelper-java"><a href="#DbOpenHelper-java" class="headerlink" title="DbOpenHelper.java"></a>DbOpenHelper.java</h1><pre><code>package com.m520it.temp;
-
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.BaseColumns;
-import android.util.Log;
-
-public class DbOpenHelper extends SQLiteOpenHelper implements BaseColumns{
-
-    public static final String DB_NAME = &quot;contact.db&quot;;
-    public static final int DB_VERSION = 5;
-    public static final String _TABLENAME = &quot;contact&quot;;
-    public static final String _USERNAME = &quot;username&quot;;
-    public static final String _PHONE = &quot;phone&quot;;
-
-    public DbOpenHelper(Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
-    }
-
-    //当创建数据库文件是会调用这个函数
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(&quot;create table &quot;+_TABLENAME+&quot;(&quot;+_ID+&quot; integer primary key autoincrement,&quot; +
-                &quot;&quot;+_USERNAME+&quot; text,&quot;+_PHONE+&quot; text);&quot;);
-    }
-
-    //当跟新数据库信息是会调用这个函数
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.v(&quot;520it&quot;, &quot;oldVersion=&quot;+oldVersion+&quot;   newVersion=&quot;+newVersion);
-    }
-
-}
-</code></pre><h1 id="avtivity-main"><a href="#avtivity-main" class="headerlink" title="avtivity_main"></a>avtivity_main</h1><pre><code>&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
-    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
-    android:layout_width=&quot;match_parent&quot;
-    android:layout_height=&quot;match_parent&quot;
-    android:orientation=&quot;vertical&quot; &gt;
-
-    &lt;Button
-        android:layout_width=&quot;wrap_content&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:onClick=&quot;insertContact&quot;
-        android:text=&quot;增加联系人&quot; /&gt;
-
-    &lt;Button
-        android:layout_width=&quot;wrap_content&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:onClick=&quot;deleteContact&quot;
-        android:text=&quot;删除联系人&quot; /&gt;
-
-    &lt;Button
-        android:layout_width=&quot;wrap_content&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:onClick=&quot;updateContact&quot;
-        android:text=&quot;更改联系人&quot; /&gt;
-
-    &lt;Button
-        android:layout_width=&quot;wrap_content&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:onClick=&quot;queryContact&quot;
-        android:text=&quot;查找联系人&quot; /&gt;
-
-&lt;/LinearLayout&gt;
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3571,7 +3431,7 @@ public class DbOpenHelper extends SQLiteOpenHelper implements BaseColumns{
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -3582,7 +3442,7 @@ public class DbOpenHelper extends SQLiteOpenHelper implements BaseColumns{
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -3593,7 +3453,7 @@ public class DbOpenHelper extends SQLiteOpenHelper implements BaseColumns{
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
